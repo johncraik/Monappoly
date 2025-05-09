@@ -1,4 +1,6 @@
-@inject SignInManager<IdentityUser> SignInManager
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Monappoly_ASP.Authentication.User
+@inject SignInManager<ApplicationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
