@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Monappoly_Asp.Pages;
+namespace Monappoly_ASP.Pages;
 
 public class PrivacyModel : PageModel
 {

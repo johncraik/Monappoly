@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Monappoly_Asp.Data;
+namespace Monappoly_ASP.Data;
 
 public class ApplicationDbContext : IdentityDbContext
 {

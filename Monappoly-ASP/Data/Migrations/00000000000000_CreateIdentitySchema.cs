@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Monappoly_Asp.Data.Migrations
+namespace Monappoly_ASP.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

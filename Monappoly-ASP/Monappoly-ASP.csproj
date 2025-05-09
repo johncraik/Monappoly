@@ -4,8 +4,8 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <UserSecretsId>aspnet-Monappoly_Asp-9BC62FF2-BFB9-4948-A320-7CA997FD6863</UserSecretsId>
-        <RootNamespace>Monappoly_Asp</RootNamespace>
+        <UserSecretsId>aspnet-Monappoly_ASP-B605CDC4-577F-4C9E-9403-6D1F262A622A</UserSecretsId>
+        <RootNamespace>Monappoly_ASP</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
