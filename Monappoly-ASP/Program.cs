@@ -5,6 +5,7 @@ using Monappoly_ASP.Authentication.User;
 using Monappoly_ASP.Data;
 using Monappoly_ASP.Middleware;
 using MonappolyLibrary;
+using MonappolyLibrary.Data;
 using UserClaimsPrincipalFactory = Monappoly_ASP.Authentication.User.UserClaims.UserClaimsPrincipalFactory;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,13 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
+
+var libString = builder.Configuration.GetConnectionString("LibraryConnection") ??
+                       throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+builder.Services.AddDbContext<MonappolyDbContext>(options =>
+    options.UseSqlite(libString));
+
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
@@ -77,11 +85,13 @@ async Task Defaults()
     using var scope = app.Services.CreateScope();
     var sp = scope.ServiceProvider;
     var context = sp.GetRequiredService<ApplicationDbContext>();
+    var libDb = sp.GetRequiredService<MonappolyDbContext>();
     
     var userManager = sp.GetRequiredService<UserManager<ApplicationUser>>();
     var roleManager = sp.GetRequiredService<RoleManager<IdentityRole>>();
 
     await context.Database.MigrateAsync();
+    await libDb.Database.MigrateAsync();
     
     app.UseUserInfo();
     
