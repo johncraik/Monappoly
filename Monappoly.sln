@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monappoly-ASP", "Monappoly-ASP\Monappoly-ASP.csproj", "{5ED8C865-7018-4CB8-8052-125981D20B8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonappolyLibrary", "MonappolyLibrary\MonappolyLibrary.csproj", "{8FA7B273-A1BE-4C4E-ADC8-5E6EBB23A1F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{5ED8C865-7018-4CB8-8052-125981D20B8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5ED8C865-7018-4CB8-8052-125981D20B8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5ED8C865-7018-4CB8-8052-125981D20B8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FA7B273-A1BE-4C4E-ADC8-5E6EBB23A1F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA7B273-A1BE-4C4E-ADC8-5E6EBB23A1F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FA7B273-A1BE-4C4E-ADC8-5E6EBB23A1F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA7B273-A1BE-4C4E-ADC8-5E6EBB23A1F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

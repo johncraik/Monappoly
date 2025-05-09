@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Monappoly_ASP.Data;
+using Monappoly_ASP.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +35,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseUserInfo();
 
 app.MapRazorPages();
 
