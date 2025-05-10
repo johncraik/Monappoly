@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using MonappolyLibrary.GameModels.Enums;
 using MonappolyLibrary.Models;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions;
@@ -13,7 +14,8 @@ public class ActionGroup : DataModel
     
     public bool IsKeep { get; set; } = false;
     public ActionPlayCondition PlayCondition { get; set; } = ActionPlayCondition.Default;
-    public ActionPlayer Player { get; set; }
+    public ActionLengthType LengthType { get; set; } = ActionLengthType.Default;
+    public ObjectPlayer Player { get; set; }
     public bool IsForced { get; set; } = false;
     
     [NotMapped]

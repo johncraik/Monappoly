@@ -1,0 +1,29 @@
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+
+namespace MonappolyLibrary.GameModels.Cards.CardActions.Dice;
+
+public class ConvertDiceAction : ICardAction, IDiceAction
+{
+    public ActionType Type { get; set; } = ActionType.Dice;
+    public DiceActionType DiceType { get; set; } = DiceActionType.Convert;
+    
+    public int Id { get; set; }
+    public int GroupId { get; set; }
+    public uint TurnLength { get; set; }
+
+    public byte DiceCount { get; set; }
+    public bool ToTriple { get; set; } = true;
+    
+    public void Validate(ModelStateDictionary modelState)
+    {
+        if(Type != ActionType.Dice || DiceType != DiceActionType.Convert)
+        {
+            throw new InvalidOperationException("Invalid ActionType or DiceActionType.");
+        }
+        
+        if(DiceCount > 3)
+        {
+            modelState.AddModelError(nameof(DiceCount), "Dice count must be 1, 2, or 3.");
+        }
+    }
+}

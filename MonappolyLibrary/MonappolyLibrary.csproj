@@ -9,13 +9,6 @@
     <ItemGroup>
       <Folder Include="Data\Migrations\" />
       <Folder Include="Exstensions\" />
-      <Folder Include="GameModels\Cards\CardActions\BoardSpace\" />
-      <Folder Include="GameModels\Cards\CardActions\Dice\" />
-      <Folder Include="GameModels\Cards\CardActions\Money\" />
-      <Folder Include="GameModels\Cards\CardActions\Player\" />
-      <Folder Include="GameModels\Cards\CardActions\Property\" />
-      <Folder Include="GameModels\Cards\CardActions\TakeCard\" />
-      <Folder Include="GameModels\Cards\CardActions\Turn\" />
       <Folder Include="GameServices\" />
       <Folder Include="Services\" />
     </ItemGroup>
@@ -36,6 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
