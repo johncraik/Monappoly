@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.Move;
@@ -11,7 +12,10 @@ public class SpecialMoveAction : ICardAction, IMoveAction
     public int GroupId { get; set; }
     public uint TurnLength { get; set; }
     
+    [DisplayName("Advance to Nearest")]
     public SpecialMoveActionType SpecialMoveType {get; set;}
+    [DisplayName("Is Owned by a Player?")]
+    public bool OwnedSpace { get; set; } = false;
     public bool IsBackwards { get; set; } = false;
 
     public void Validate(ModelStateDictionary modelState)

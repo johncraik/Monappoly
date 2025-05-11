@@ -6,6 +6,8 @@ using Monappoly_ASP.Data;
 using Monappoly_ASP.Middleware;
 using MonappolyLibrary;
 using MonappolyLibrary.Data;
+using MonappolyLibrary.FileManagement;
+using MonappolyLibrary.GameServices.Cards;
 using UserClaimsPrincipalFactory = Monappoly_ASP.Authentication.User.UserClaims.UserClaimsPrincipalFactory;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,14 +20,6 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
-
-var libString = builder.Configuration.GetConnectionString("LibraryConnection") ??
-                       throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<MonappolyDbContext>(options =>
-    options.UseSqlite(libString));
-
-
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     {
@@ -47,6 +41,19 @@ builder.Services.Configure<SecurityStampValidatorOptions>(options =>
 
 builder.Services.AddScoped<UserInfo>(sp => new UserInfo());
 builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, UserClaimsPrincipalFactory>();
+
+var libString = builder.Configuration.GetConnectionString("LibraryConnection") ??
+                throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+builder.Services.AddDbContext<MonappolyDbContext>((sp, options) =>
+{
+    var userInfo = sp.GetRequiredService<UserInfo>();
+    options.UseSqlite(libString);
+});
+
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddTransient<CardActionService>();
+builder.Services.AddTransient<FilePathProvider>();
 
 builder.Services.AddControllers();
 builder.Services.AddRazorPages();

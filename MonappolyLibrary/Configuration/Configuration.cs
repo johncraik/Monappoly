@@ -11,7 +11,7 @@ public class Configuration : IConfiguration
     public Configuration()
     {
         _innerConfig = new ConfigurationBuilder()
-            .AddJsonFile("/Configuration/Configuration.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"{Environment.CurrentDirectory}/../MonappolyLibrary/Configuration/Configuration.json", optional: false, reloadOnChange: true)
             .Build();
     }
 

@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MonappolyLibrary.GameModels.Enums;
 
@@ -13,6 +14,7 @@ public class ExtraTurnAction : ICardAction, ITurnAction
     public uint TurnLength { get; set; }
     
     public ObjectPlayer Player { get; set; }
+    [DisplayName("Roll the Third Dice?")]
     public bool RollThirdDice { get; set; } = true;
 
     public void Validate(ModelStateDictionary modelState)

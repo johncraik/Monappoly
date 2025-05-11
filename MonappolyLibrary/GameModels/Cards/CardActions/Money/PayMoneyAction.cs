@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MonappolyLibrary.GameModels.Enums;
 
@@ -12,7 +13,9 @@ public class PayMoneyAction : ICardAction, IMoneyAction
     public int GroupId { get; set; }
     public uint TurnLength { get; set; }
     
+    [DisplayName("Pay Amount")]
     public int Value { get; set; }
+    [DisplayName("Payment Multiplier")]
     public ObjectMultiplier MoneyMultiplier { get; set; }
     
     public ObjectTarget Source { get; set; }

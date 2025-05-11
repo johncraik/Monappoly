@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.TakeCard;
@@ -11,6 +12,7 @@ public class SingleCardAction : ICardAction, ITakeCardAction
     public int GroupId { get; set; }
     public uint TurnLength { get; set; }
 
+    [DisplayName("Card Type")]
     public int CardTypeId { get; set; }
     
     public void Validate(ModelStateDictionary modelState)

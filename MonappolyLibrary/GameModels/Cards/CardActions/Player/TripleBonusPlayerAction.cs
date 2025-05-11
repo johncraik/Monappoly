@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MonappolyLibrary.GameModels.Enums;
 
@@ -13,11 +14,16 @@ public class TripleBonusPlayerAction : ICardAction, IPlayerAction
     public uint TurnLength { get; set; }
 
     public ObjectPlayer Player { get; set; }
+    [DisplayName("Reset Triple Bonus?")]
     public bool IsReset { get; set; }
 
+    [DisplayName("Increase Triple Bonus?")]
     public bool IsIncreased { get; set; } = true;
+    [DisplayName("Triple Bonus Multiplier")]
     public ObjectMultiplier? CostMultiplier {get; set;}
+    [DisplayName("Fixed Triple Bonus")]
     public uint FixedCost { get; set; }
+    [DisplayName("Custom Triple Bonus Multiplier")]
     public uint CustomMultiplier { get; set; }
     
     public void Validate(ModelStateDictionary modelState)

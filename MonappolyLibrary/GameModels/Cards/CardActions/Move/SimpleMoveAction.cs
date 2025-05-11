@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.Move;
@@ -11,8 +12,10 @@ public class SimpleMoveAction : ICardAction, IMoveAction
     public int GroupId { get; set; }
     public uint TurnLength { get; set; }
 
+    [DisplayName("Spaces")]
     public uint Value { get; set; }
     public bool IsBackwards { get; set; } = false;
+    [DisplayName("Advance to Space?")]
     public bool IsAdvance { get; set; } = false;
     
     public void Validate(ModelStateDictionary modelState)

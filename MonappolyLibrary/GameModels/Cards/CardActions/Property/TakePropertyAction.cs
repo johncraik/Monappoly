@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MonappolyLibrary.GameModels.Enums;
 
@@ -17,6 +18,7 @@ public class TakePropertyAction : ICardAction, IPropertyAction
     
     public ObjectPlayer Player { get; set; }
     public ObjectTarget Target { get; set; }
+    [DisplayName("Target Player")]
     public ObjectPlayer? TargetPlayer { get; set; }
     
     public void Validate(ModelStateDictionary modelState)

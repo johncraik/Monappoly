@@ -14,7 +14,7 @@ public class ActionGroup : DataModel
     
     public bool IsKeep { get; set; } = false;
     public ActionPlayCondition PlayCondition { get; set; } = ActionPlayCondition.Default;
-    public ActionLengthType LengthType { get; set; } = ActionLengthType.Default;
+    public ActionLengthType GroupLengthType { get; set; } = ActionLengthType.Default;
     public ObjectPlayer Player { get; set; }
     public bool IsForced { get; set; } = false;
     
@@ -29,6 +29,15 @@ public enum ActionPlayCondition
     Double,
     Triple,
     Go,
-    Jail,
+    Jail,   //in jail NOT go to
     FreeParking
+}
+
+public enum ActionLengthType
+{
+    Default = -1,
+    Turns,
+    Jail,
+    Double,
+    Triple,
 }

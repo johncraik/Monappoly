@@ -1,15 +1,42 @@
+using System.Linq.Expressions;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using MonappolyLibrary.GameModels.Cards;
 using MonappolyLibrary.GameModels.Cards.CardActions;
+using MonappolyLibrary.Models;
 
 namespace MonappolyLibrary.Data;
 
 public class MonappolyDbContext : DbContext
 {
-    public MonappolyDbContext(DbContextOptions<MonappolyDbContext> options)
+    private readonly int _tenantId;
+    public MonappolyDbContext(DbContextOptions<MonappolyDbContext> options, UserInfo userInfo)
         : base(options)
     {
+        _tenantId = userInfo.TenantId;
     }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Apply global filter for all types inheriting from DataModel
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            if (typeof(DataModel).IsAssignableFrom(entityType.ClrType))
+            {
+                var method = typeof(MonappolyDbContext).GetMethod(nameof(SetGlobalQuery), BindingFlags.Instance | BindingFlags.NonPublic)
+                    .MakeGenericMethod(entityType.ClrType);
+                method.Invoke(this, new object[] { modelBuilder });
+
+            }
+        }
+    }
+    
+    private void SetGlobalQuery<T>(ModelBuilder modelBuilder) where T : DataModel
+    {
+        modelBuilder.Entity<T>().HasQueryFilter(e =>
+            (e.TenantId == _tenantId || e.TenantId < 0) && !e.IsDeleted);
+    }
+
 
     #region Cards
 

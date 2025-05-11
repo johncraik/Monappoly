@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MonappolyLibrary.GameModels.Enums;
 
@@ -13,11 +14,16 @@ public class JailCostPlayerAction : ICardAction, IPlayerAction
     public uint TurnLength { get; set; }
 
     public ObjectPlayer Player { get; set; }
+    [DisplayName("Reset Jail Cost?")]
     public bool IsReset { get; set; }
 
+    [DisplayName("Increase Jail Cost?")]
     public bool IsIncreased { get; set; } = true;
+    [DisplayName("Jail Cost Multiplier")]
     public ObjectMultiplier? CostMultiplier {get; set;}
+    [DisplayName("Fixed Jail Cost")]
     public uint FixedCost { get; set; }
+    [DisplayName("Custom Jail Cost Multiplier")]
     public uint CustomMultiplier { get; set; }
     
     public void Validate(ModelStateDictionary modelState)

@@ -17,7 +17,7 @@ public class FilePathProvider
 
     public string GetFilePath(FileType type, int tenantId)
     {
-        var basePath = Path.Combine(_basePath, "tenant-files");
+        var basePath = Path.Combine(_basePath, "tenant-files", tenantId.ToString());
 
         var path = type switch
         {
@@ -30,6 +30,7 @@ public class FilePathProvider
         return path;
     }
 
+    public string GetFile(string path) => File.ReadAllText(path);
 }
 
 public enum FileType

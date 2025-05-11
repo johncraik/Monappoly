@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MonappolyLibrary.Data;
 
@@ -10,9 +11,11 @@ using MonappolyLibrary.Data;
 namespace MonappolyLibrary.Data.Migrations
 {
     [DbContext(typeof(MonappolyDbContext))]
-    partial class MonappolyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250511101959_AddedCardTypeRule")]
+    partial class AddedCardTypeRule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
@@ -37,6 +40,7 @@ namespace MonappolyLibrary.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("DeletedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("DeletedDate")
@@ -46,9 +50,10 @@ namespace MonappolyLibrary.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("ModifiedDate")
+                    b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("TenantId")
@@ -84,6 +89,7 @@ namespace MonappolyLibrary.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("DeletedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("DeletedDate")
@@ -102,9 +108,10 @@ namespace MonappolyLibrary.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("ModifiedDate")
+                    b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("PlayCondition")
@@ -137,6 +144,7 @@ namespace MonappolyLibrary.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("DeletedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("DeletedDate")
@@ -153,9 +161,10 @@ namespace MonappolyLibrary.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("ModifiedDate")
+                    b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -190,6 +199,7 @@ namespace MonappolyLibrary.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("DeletedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("DeletedDate")
@@ -202,9 +212,10 @@ namespace MonappolyLibrary.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("ModifiedDate")
+                    b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")

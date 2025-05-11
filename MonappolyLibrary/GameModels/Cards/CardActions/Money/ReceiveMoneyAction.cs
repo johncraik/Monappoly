@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using System.Runtime.InteropServices.JavaScript;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MonappolyLibrary.GameModels.Enums;
 
@@ -12,7 +14,9 @@ public class ReceiveMoneyAction : ICardAction, IMoneyAction
     public int GroupId { get; set; }
     public uint TurnLength { get; set; }
     
+    [DisplayName("Receive Amount")]
     public int Value { get; set; }
+    [DisplayName("Received Amount Multiplier")]
     public ObjectMultiplier MoneyMultiplier { get; set; }
     
     public ObjectTarget Source { get; set; }

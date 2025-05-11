@@ -10,6 +10,7 @@ public class CardType : DataModel
     
     public string? Colour { get; set; }
     public CardTypeCondition Condition { get; set; }
+    public CardTypeRule Rule { get; set; }
 }
 
 public enum CardTypeCondition
@@ -24,4 +25,10 @@ public enum CardTypeCondition
     Jail,
     Go,
     Other = -1
+}
+
+public enum CardTypeRule
+{
+    Default,
+    PercentageRule
 }

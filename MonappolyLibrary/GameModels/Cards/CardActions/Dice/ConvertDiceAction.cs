@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.Dice;
@@ -12,6 +13,7 @@ public class ConvertDiceAction : ICardAction, IDiceAction
     public uint TurnLength { get; set; }
 
     public byte DiceCount { get; set; }
+    [DisplayName("Convert a Double to a Triple?")]
     public bool ToTriple { get; set; } = true;
     
     public void Validate(ModelStateDictionary modelState)

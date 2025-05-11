@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MonappolyLibrary.GameModels.Enums;
 
@@ -15,6 +16,7 @@ public class UnmortgagePropertyAction : ICardAction, IPropertyAction
     public ObjectPlayer Player { get; set; }
     public uint PropertyCount { get; set; }
     public bool IsSet { get; set; }
+    [DisplayName("Pay Unmortgage Cost?")]
     public bool IsPayValue { get; set; } = true;
 
     public void Validate(ModelStateDictionary modelState)

@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MonappolyLibrary.GameModels.Enums;
 
@@ -12,9 +13,12 @@ public class SwapMoveAction : ICardAction, IMoveAction
     public int GroupId { get; set; }
     public uint TurnLength { get; set; }
     
+    [DisplayName("Source Player")]
     public ObjectPlayer SourcePlayer { get; set; }
+    [DisplayName("Target Player")]
     public ObjectPlayer TargetPlayer { get; set; }
     
+    [DisplayName("Do Space Action when Swapped?")]
     public bool IsDoSpaceAction { get; set; } = true;
     public bool IsBackwards { get; set; }
     

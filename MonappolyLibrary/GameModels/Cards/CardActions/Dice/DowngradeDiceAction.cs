@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.Dice;
@@ -12,6 +13,7 @@ public class DowngradeDiceAction : ICardAction, IDiceAction
     public uint TurnLength { get; set; }
 
     public byte DiceCount { get; set; }
+    [DisplayName("Downgrade a Triple to a Double?")]
     public bool ToDouble { get; set; } = true;
     
     public void Validate(ModelStateDictionary modelState)

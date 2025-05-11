@@ -5,6 +5,11 @@ public interface IBoardSpaceAction
     BoardSpaceActionType BoardSpaceType { get; set; }
 }
 
+public class BaseBoardSpaceAction : IBoardSpaceAction
+{
+    public BoardSpaceActionType BoardSpaceType { get; set; }
+}
+
 public enum BoardSpaceActionType
 {
     Go,

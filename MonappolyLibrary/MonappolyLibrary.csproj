@@ -8,8 +8,6 @@
 
     <ItemGroup>
       <Folder Include="Data\Migrations\" />
-      <Folder Include="Exstensions\" />
-      <Folder Include="GameServices\" />
       <Folder Include="Services\" />
     </ItemGroup>
 
@@ -39,6 +37,7 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
 </Project>

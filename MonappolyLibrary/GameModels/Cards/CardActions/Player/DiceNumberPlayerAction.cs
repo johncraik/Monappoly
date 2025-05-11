@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MonappolyLibrary.GameModels.Enums;
 
@@ -13,9 +14,12 @@ public class DiceNumberPlayerAction : ICardAction, IPlayerAction
     public uint TurnLength { get; set; }
 
     public ObjectPlayer Player { get; set; }
+    [DisplayName("Reset Dice Number?")]
     public bool IsReset { get; set; }
     
+    [DisplayName("Have Player's Number Rolled?")]
     public bool CallNumber { get; set; } = false;
+    [DisplayName("Has Player Rolled the Number?")]
     public bool HasRolled { get; set; } = false;
     
     public void Validate(ModelStateDictionary modelState)

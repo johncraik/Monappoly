@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MonappolyLibrary.GameModels.Enums;
 
@@ -15,7 +16,9 @@ public class MortgagePropertyAction : ICardAction, IPropertyAction
     public ObjectPlayer Player { get; set; }
     public uint PropertyCount { get; set; }
     public bool IsSet { get; set; }
+    [DisplayName("Receive Mortgage Value?")]
     public bool IsReceiveValue { get; set; } = true;
+    [DisplayName("Pay Mortgage Penalty?")]
     public bool PayPenalty { get; set; } = true;
 
     public void Validate(ModelStateDictionary modelState)
