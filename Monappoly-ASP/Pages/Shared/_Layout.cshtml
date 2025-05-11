@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Version = Monappoly_ASP.Version
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -11,19 +12,61 @@
 <body>
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <a class="navbar-brand" asp-area="" asp-page="/Index">Monappoly_ASP</a>
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-page="/Index">
+                <div style="display: flex">
+                    <img class="mx-2" src="~/favicon.ico" width="30px" height="30px" alt="Logo"/>
+                    <b>Monappoly</b>
+                </div>
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                    <li class="nav-item dropdown mx-2">
+                        <a class="dropdown-toggle text-white btn btn-main" href="#" id="game-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Games    
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="game-dropdown">
+                            <li><a class="dropdown-item" href="#">Game Helper</a></li>
+                            <li><a class="dropdown-item" href="#">Full Game</a></li>
+                        </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+
+                    <li class="nav-item dropdown mx-2">
+                        <a class="dropdown-toggle text-white btn btn-main-light" href="#" id="game-objs-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Game Objects
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="game-objs-dropdown">
+                            <li><a class="dropdown-item" href="#">Boards</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Cards</a></li>
+                            <li><a class="dropdown-item" href="#">Card Types</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item dropdown mx-2">
+                        <a class="dropdown-toggle text-dark btn btn-sub" href="#" id="player-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Players
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="player-dropdown">
+                            <li><a class="dropdown-item" href="#">Player List</a></li>
+                            <li><a class="dropdown-item" href="#">New Player</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Player Statistics</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown mx-2">
+                        <a class="dropdown-toggle text-white btn btn-info" href="#" id="about-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            About
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="about-dropdown">
+                            <li><a class="dropdown-item" href="#">Game Types</a></li>
+                            <li><a class="dropdown-item" href="#">Version History</a></li>
+                        </ul>
                     </li>
                 </ul>
                 <partial name="_LoginPartial"/>
@@ -31,15 +74,15 @@
         </div>
     </nav>
 </header>
-<div class="container">
+<div class="container-fluid">
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
 </div>
 
 <footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2025 - Monappoly_ASP - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    <div class="container-fluid mt-3">
+        Monappoly - @Version.GetVersion() - 2025
     </div>
 </footer>
 

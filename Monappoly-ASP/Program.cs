@@ -15,6 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication();
 
+builder.Services.AddSingleton<Monappoly_ASP.Version>();
+
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -129,13 +131,13 @@ async Task Defaults()
     await ConfirmRoleSetup(UserRoles.TenantAdmin);
     
     //Create admin user:
-    var adminUser = await userManager.FindByNameAsync("serveradmin");
+    var adminUser = await userManager.FindByNameAsync("systemadmin");
     if (adminUser == null)
     {
         adminUser = new ApplicationUser
         {
             Email = "jcraik23@gmail.com",
-            UserName = "serveradmin",
+            UserName = "systemadmin",
             EmailConfirmed = true,
             TwoFactorEnabled = false,
             DisplayName = "Admin",

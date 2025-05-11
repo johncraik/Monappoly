@@ -1,0 +1,25 @@
+@import "../../node_modules/bootstrap/scss/functions";
+
+$monopoly-colours: (
+        "brown": #4f2f16,
+        "light-blue": #46a4e8,
+        "pink": #de1b96,
+        "orange": #f78e0c,
+        "red": #bf2424,
+        "yellow": #e8d52c,
+        "green": #1d691a,
+        "dark-blue": #1f1352,
+        "station":#222222,
+        "utility":#fefefe,
+        "main": #56667a,
+        "main-light": #8797af,
+        "sub": #a7adc6,
+        "highlight": #33032f,
+        "dark-highlight": #170312
+);
+
+@import "../../node_modules/bootstrap/scss/variables";
+
+$theme-colors: map-merge($theme-colors, $monopoly-colours);
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
