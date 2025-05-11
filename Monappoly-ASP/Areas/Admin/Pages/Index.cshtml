@@ -1,0 +1,15 @@
+@page
+@model Monappoly_ASP.Areas.Admin.Pages.Index
+
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h5 class="card-title">Users in Tenant: @Model.Tenant.TenantName</h5>
+    </div>
+    <div class="card-body bg-light">
+        <partial name="Shared/_UserTable" model="Model.Users"/>
+    </div>
+</div>

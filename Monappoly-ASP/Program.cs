@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Monappoly_ASP.Areas.Admin.Services;
 using Monappoly_ASP.Authentication.Tenant;
 using Monappoly_ASP.Authentication.User;
 using Monappoly_ASP.Data;
@@ -16,6 +17,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddAuthentication();
 
 builder.Services.AddSingleton<Monappoly_ASP.Version>();
+builder.Services.AddScoped<AdminService>();
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
@@ -85,6 +87,8 @@ app.UseAuthorization();
 app.UseUserInfo();
 
 app.MapRazorPages();
+app.MapControllers();
+app.MapControllerRoute(name: "user", pattern: "{controller=User}/{action=Index}");
 
 Defaults().Wait();
 app.Run();

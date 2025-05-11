@@ -1,0 +1,22 @@
+@page
+@model Monappoly_ASP.Areas.Admin.Pages.Tenants.New
+
+@{
+    ViewData["Title"] = "Create New Tenant";
+}
+
+<div class="card">
+    <div class="card-header bg-success text-white">
+        <h5 class="card-title">New Tenant</h5>
+    </div>
+    <div class="card-body bg-light">
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="TenantName" class="form-label"></label>
+                <input asp-for="TenantName" class="form-control"/>
+                <span asp-validation-for="TenantName" class="text-danger"></span>
+            </div>
+            <button class="btn btn-warning">Add Tenant</button>
+        </form>
+    </div>
+</div>

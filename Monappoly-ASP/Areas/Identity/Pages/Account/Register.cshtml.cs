@@ -122,7 +122,7 @@ namespace Monappoly_ASP.Areas.Identity.Pages.Account
                 user.TenantId = 1;
                 user.DisplayName = Input.Username;
                 user.EmailConfirmed = true;
-                user.TwoFactorEnabled = true;
+                user.TwoFactorEnabled = false;
 
                 await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

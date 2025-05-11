@@ -1,0 +1,52 @@
+@model List<Monappoly_ASP.Areas.Admin.Models.UserWithRoles>
+
+@if (Model.Count > 0)
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr class="table-dark">
+            <th>Display Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th style="width: 60px"></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach(var userWithRoles in Model)
+        {
+            <tr>
+                <td>@userWithRoles.User.DisplayName</td>
+                <td>@userWithRoles.User.UserName</td>
+                <td>@userWithRoles.User.Email</td>
+                <td>
+                    @{
+                        var roles = "No Roles";
+                        if(userWithRoles.Roles.Count > 0)
+                        {
+                            roles = string.Join(", ", userWithRoles.Roles);
+                        }
+                    }
+                    @roles
+                </td>
+                <td>
+                    <button class="btn btn-sm btn-link" title="Manage User" onclick="ManageUser('@(userWithRoles.User.Id)')">
+                        <span class="text-highlight fa-solid fa-user-pen"></span>
+                    </button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No Users</p>
+}
+
+
+<script>
+    function ManageUser(userId){
+        location.assign('/Admin/User/' + userId);
+    }
+</script>

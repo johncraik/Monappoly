@@ -1,0 +1,182 @@
+@page "{id}"
+@model Monappoly_ASP.Areas.Admin.Pages.User
+
+@{
+    ViewData["Title"] = "Manage User";
+}
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">
+        @Model.ErrorMessage
+    </div>
+}
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-success">
+        @Model.Message
+    </div>
+}
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title">User: @Model.ManagedUser.DisplayName</h5>
+            </div>
+            <div class="card-body bg-light">
+                <div class="mb-2">
+                    <label class="form-label"><b>Username</b></label>
+                    <div class="clearfix">
+                        <label class="float-start mt-1">@(string.IsNullOrEmpty(Model.ManagedUser.UserName) ? "Not Set" : Model.ManagedUser.UserName)</label>
+                        <button class="btn btn-sm btn-link float-start" title="Edit Username" onclick="UpdateUserName('@(Model.ManagedUser.Id)')">
+                            <span class="fa-solid fa-pen-to-square text-highlight"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label"><b>Display Name</b></label>
+                    <div class="clearfix">
+                        <label class="float-start mt-1">@(string.IsNullOrEmpty(Model.ManagedUser.DisplayName) ? "Not Set" : Model.ManagedUser.DisplayName)</label>
+                        <button class="btn btn-sm btn-link float-start" title="Edit Display Name" onclick="UpdateDisplayName('@(Model.ManagedUser.Id)')">
+                            <span class="fa-solid fa-pen-to-square text-highlight"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label"><b>Email</b></label>
+                    <div class="clearfix">
+                        <label class="float-start mt-1">@(string.IsNullOrEmpty(Model.ManagedUser.Email) ? "Not Set" : Model.ManagedUser.Email)</label>
+                        <button class="btn btn-sm btn-link float-start" title="Edit Email" onclick="UpdateEmail('@(Model.ManagedUser.Id)')">
+                            <span class="fa-solid fa-pen-to-square text-highlight"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label"><b>Phone Number</b></label>
+                    <div class="clearfix">
+                        <label class="float-start mt-1">@(string.IsNullOrEmpty(Model.ManagedUser.PhoneNumber) ? "Not Set" : Model.ManagedUser.PhoneNumber)</label>
+                        <button class="btn btn-sm btn-link float-start" title="Edit Phone Number" onclick="UpdatePhone('@(Model.ManagedUser.Id)')">
+                            <span class="fa-solid fa-pen-to-square text-highlight"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="card-title">User's Tenant</h5>
+            </div>
+            <div class="card-body bg-light">
+                <div class="mb-2">
+                    <label class="form-label"><b>Tenant ID</b></label><br/>
+                    <label class="form-label">@Model.Tenant.Id</label>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label"><b>Tenant Name</b></label><br/>
+                    <label class="form-label">@Model.Tenant.TenantName</label>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label"><b>Date Created</b></label><br/>
+                    <label class="form-label">@Model.Tenant.DateCreated.ToString("g")</label>
+                </div>
+                @if (Model.Tenant.IsDeleted)
+                {
+                    <div class="mb-2">
+                        <label class="form-label text-danger"><b>DELETED TENANT</b></label><br/>
+                        <label class="form-label"><b>Date Deleted</b></label><br/>
+                        <label class="form-label">@Model.Tenant.DateDeleted?.ToString("g")</label>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card mb-3">
+            <div class="card-header bg-danger text-white">
+                <h5 class="card-title">User Actions</h5>
+            </div>
+            <div class="card-body bg-light">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <form method="post" asp-page-handler="Tenant" id="tenant-form">
+                            <input type="hidden" asp-for="TenantId" id="tenant-id"/>
+                            <button class="btn btn-info text-white" style="width: 100%" type="button" onclick="ChangeTenant()">Change Tenant</button>
+                        </form>
+                    </div>
+                    <div class="col-sm-4">
+                        <form method="post" asp-page-handler="ResetPassword">
+                            <button class="btn btn-warning" style="width: 100%" type="submit">Reset Password</button>
+                        </form>
+                    </div>
+                    <div class="col-sm-4">
+                        <form method="post" asp-page-handler="DeleteUser">
+                            <button class="btn btn-danger text-white" style="width: 100%" type="submit">Delete User</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header bg-highlight text-white">
+                <h5 class="card-title">User Roles</h5>
+            </div>
+            <div class="card-body bg-light">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <form method="post" asp-page-handler="AddRole">
+                            <div class="mb-3">
+                                <label asp-for="SelectedRole" class="form-label">Add Role</label>
+                                <select asp-for="SelectedRole" asp-items="Model.AddRoles" class="form-select"></select>
+                                <span asp-validation-for="SelectedRole" class="text-danger"></span>
+                            </div>
+                            <button class="btn btn-warning mb-3">Add Role</button>
+                        </form>
+                    </div>
+                    <div class="col-sm-6">
+                        <form method="post" asp-page-handler="RemoveRole">
+                            <div class="mb-3">
+                                <label asp-for="SelectedRole" class="form-label">Remove Role</label>
+                                <select asp-for="SelectedRole" asp-items="Model.RemoveRoles" class="form-select"></select>
+                                <span asp-validation-for="SelectedRole" class="text-danger"></span>
+                            </div>
+                            <button class="btn btn-warning mb-3">Remove Role</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-3">
+    <div class="card-header bg-sub">
+        <h5 class="card-title">User Logs</h5>
+    </div>
+    <div class="card-body bg-light">
+        @if (Model.AuditRecords.Count > 0)
+        {
+            <table class="table table-borderless table-striped table-hover">
+                <tbody>
+                @foreach(var record in Model.AuditRecords)
+                {
+                    <tr>
+                        <td>@record.EntityName</td>
+                        <td>@record.Action</td>
+                        <td>@record.Date?.ToString("g")</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No audit logs for this user.</p>
+        }
+    </div>
+</div>
+
+<script src="~/js/admin.js"></script>

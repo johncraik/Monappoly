@@ -9,11 +9,14 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/Monappoly_ASP.styles.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/chosen.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/sweetalert2.css" asp-append-version="true"/>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
+        <div class="container-fluid px-3">
             <a class="navbar-brand" asp-area="" asp-page="/Index">
                 <div style="display: flex">
                     <img class="mx-2" src="~/favicon.ico" width="30px" height="30px" alt="Logo"/>
@@ -26,7 +29,7 @@
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item dropdown mx-2">
+                    <li class="nav-item dropdown mx-2 mb-2">
                         <a class="dropdown-toggle text-dark nav-link border-bottom border-5 border-main rounded-pill px-4" href="#" id="game-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Games    
                         </a>
@@ -36,7 +39,7 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item dropdown mx-2">
+                    <li class="nav-item dropdown mx-2 mb-2">
                         <a class="dropdown-toggle text-dark nav-link border-bottom border-5 border-main-light rounded-pill px-4" href="#" id="game-objs-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Game Objects
                         </a>
@@ -48,7 +51,7 @@
                         </ul>
                     </li>
                     
-                    <li class="nav-item dropdown mx-2">
+                    <li class="nav-item dropdown mx-2 mb-2">
                         <a class="dropdown-toggle text-dark nav-link border-bottom border-5 border-sub rounded-pill px-4" href="#" id="player-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Players
                         </a>
@@ -60,7 +63,7 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item dropdown mx-2">
+                    <li class="nav-item dropdown mx-2 mb-2">
                         <a class="dropdown-toggle text-dark nav-link border-bottom border-5 border-info rounded-pill px-4" href="#" id="about-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             About
                         </a>
@@ -75,14 +78,14 @@
         </div>
     </nav>
 </header>
-<div class="container-fluid">
+<div class="container-fluid px-3">
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
 </div>
 
 <footer class="border-top footer text-muted">
-    <div class="container-fluid mt-3">
+    <div class="container-fluid mt-3 px-3">
         Monappoly - @Version.GetVersion() - 2025
     </div>
 </footer>
@@ -90,6 +93,9 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/js/sweetalert2.min.js" asp-append-version="true"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://kit.fontawesome.com/29bf1169ee.js" crossorigin="anonymous"></script>
 
 @await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -1,0 +1,52 @@
+@page
+@model Monappoly_ASP.Areas.Admin.Pages.Tenants.Index
+
+@{
+    ViewData["Title"] = "All Tenants";
+}
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h5 class="card-title">Tenants</h5>
+    </div>
+    <div class="card-body bg-light">
+        <div>
+            <p><strong>Active Tenants</strong></p>
+            <table class="table table-hover table-bordered table-secondary">
+                <thead>
+                <tr class="table-dark">
+                    <th style="width: 80px">ID</th>
+                    <th>Tenant Name</th>
+                    <th>Users</th>
+                    <th style="width: 150px">Created</th>
+                    <th style="width: 60px"></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach(var vm in Model.TenantList)
+                {
+                    <tr>
+                        <td>@vm.Tenant.Id</td>
+                        <td>@vm.Tenant.TenantName</td>
+                        <td>
+                            <partial name="Shared/_UserTable" model="vm.Users"/>
+                        </td>
+                        <td>@vm.Tenant.DateCreated.ToString("g")</td>
+                        <td>
+                            <button class="btn btn-sm btn-link" title="Manage Tenant" onclick="ManageTenant('@(vm.Tenant.Id)')">
+                                <span class="text-highlight fa-solid fa-building-circle-arrow-right"></span>
+                            </button>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ManageTenant(tenantId){
+        location.assign('/Admin/Tenants/Manage/' + tenantId);
+    }
+</script>

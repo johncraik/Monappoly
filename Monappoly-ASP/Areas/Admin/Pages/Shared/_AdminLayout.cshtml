@@ -1,0 +1,30 @@
+@using Monappoly_ASP.Authentication.User
+@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout !=  null)
+    {
+        Layout = parentLayout.ToString();
+    }
+    else
+    {
+        Layout = "../../../Pages/Shared/_Layout";
+    }
+}
+
+<h1 style="margin-bottom: 8px">Admin Centre</h1>
+<div class="row">
+    <div class="col-sm-3">
+        <ul class="list-group">
+            <button type="button" class="list-group-item list-group-item-action py-4 bg-main text-white" onclick="location.assign('/Admin')">Users</button>
+            <button type="button" class="list-group-item list-group-item-action py-4 bg-main text-white" onclick="location.assign('/Admin/Files')">File Management</button>
+            @if (User.IsInRole(UserRoles.ServerAdmin))
+            {
+                <li class="list-group-item py-1 bg-main-light"></li>
+                <button type="button" class="list-group-item list-group-item-action py-4 bg-main text-white" onclick="location.assign('/Admin/Tenants')">All Tenants</button>   
+                <button type="button" class="list-group-item list-group-item-action py-4 bg-main text-white" onclick="location.assign('/Admin/Tenants/New')">New Tenant</button>   
+            }
+        </ul>
+    </div>
+    <div class="col-sm-9">
+        @RenderBody()
+    </div>
+</div>
