@@ -35,8 +35,8 @@ public class UserInfoMiddleware
             }
             else
             {
-                userInfo.UserName = context.User.FindFirst(UserClaims.DisplayNameClaim)?.Value;
-                userInfo.DisplayName = userInfo.DisplayName;
+                userInfo.UserName = context.User.Identity.Name;
+                userInfo.DisplayName = context.User.FindFirst(UserClaims.DisplayNameClaim)?.Value;
                 userInfo.UserName = context.User.FindFirst(io.Value.ClaimsIdentity.EmailClaimType)?.Value;
 
                 var tidClaim = context.User.FindFirst(UserClaims.TenantId);

@@ -1,26 +1,31 @@
 ﻿@using Monappoly_ASP.Authentication.User
+@using MonappolyLibrary
+@inject UserInfo UserInfo
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
+        var name = UserInfo.DisplayName;
+        if(string.IsNullOrEmpty(name)) name = User.Identity?.Name;
+        
         <li class="nav-item mx-2">
-            <a class="btn btn-highlight text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+            <a class="nav-link border-bottom border-5 border-highlight rounded-pill text-dark px-4" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @name</a>
         </li>
         <li class="nav-item mx-2">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-                <button type="submit" class="btn btn-danger text-white">Logout</button>
+                <button type="submit" class="nav-link border-bottom border-5 border-danger rounded-pill text-dark px-4">Logout</button>
             </form>
         </li>
     }
     else
     {
         <li class="nav-item mx-2">
-            <a class="btn btn-highlight text-white" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a class="nav-link border-bottom border-5 border-highlight rounded-pill text-dark px-4" asp-area="Identity" asp-page="/Account/Register">Register</a>
         </li>
         <li class="nav-item mx-2">
-            <a class="btn btn-main text-white" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="nav-link border-bottom border-5 border-main rounded-pill text-dark px-4" asp-area="Identity" asp-page="/Account/Login">Login</a>
         </li>
     }
 </ul>
