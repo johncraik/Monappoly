@@ -9,6 +9,7 @@ using MonappolyLibrary;
 using MonappolyLibrary.Data;
 using MonappolyLibrary.FileManagement;
 using MonappolyLibrary.GameServices.Cards;
+using MonappolyLibrary.Services;
 using UserClaimsPrincipalFactory = Monappoly_ASP.Authentication.User.UserClaims.UserClaimsPrincipalFactory;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -165,4 +166,8 @@ async Task Defaults()
     {
         await userManager.AddToRoleAsync(adminUser, UserRoles.ServerAdmin);
     }
+    
+    //Monopoly Defaults:
+    var defaults = new DefaultsService(libDb);
+    await defaults.EnsureDefaults();
 }

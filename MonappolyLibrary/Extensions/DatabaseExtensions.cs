@@ -30,4 +30,10 @@ public static class DatabaseExtensions
     {
         return query.IgnoreQueryFilters().Where(e => e.IsDeleted == deleted);
     }
+    
+    public static IQueryable<T> MonopolyDefaults<T>(this IQueryable<T> query) 
+        where T : DataModel
+    {
+        return query.IgnoreQueryFilters().Where(e => e.TenantId < 0);
+    }
 }

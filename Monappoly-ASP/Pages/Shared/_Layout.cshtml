@@ -34,8 +34,8 @@
                             Games    
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="game-dropdown">
-                            <li><a class="dropdown-item" href="#">Game Helper</a></li>
-                            <li><a class="dropdown-item" href="#">Full Game</a></li>
+                            <li><a class="dropdown-item" asp-page="/Games/Helper">Game Helper</a></li>
+                            <li><a class="dropdown-item" asp-page="/Games/FullGame">Full Game</a></li>
                         </ul>
                     </li>
 
@@ -44,10 +44,15 @@
                             Game Objects
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="game-objs-dropdown">
-                            <li><a class="dropdown-item" href="#">Boards</a></li>
+                            <li><a class="dropdown-item" asp-page="/Objects/Dice">Dice</a></li>
+                            <li><a class="dropdown-item" asp-page="/Objects/PlayerPieces">Player Pieces</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Cards</a></li>
-                            <li><a class="dropdown-item" href="#">Card Types</a></li>
+                            <li><a class="dropdown-item" asp-page="/Objects/Boards">Boards & Properties</a></li>
+                            <li><a class="dropdown-item" asp-page="/Objects/Buildings">Buildings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" asp-page="/Objects/Cards">Cards</a></li>
+                            <li><a class="dropdown-item" asp-page="/Objects/Cards/Types">Card Types</a></li>
+                            <li><a class="dropdown-item" asp-page="/Objects/Cards/Decks">Card Decks</a></li>
                         </ul>
                     </li>
                     
@@ -56,10 +61,10 @@
                             Players
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="player-dropdown">
-                            <li><a class="dropdown-item" href="#">Player List</a></li>
-                            <li><a class="dropdown-item" href="#">New Player</a></li>
+                            <li><a class="dropdown-item" asp-page="/Players">Player List</a></li>
+                            <li><a class="dropdown-item" asp-page="/Players/Edit/0">New Player</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Player Statistics</a></li>
+                            <li><a class="dropdown-item" asp-page="/Players/Stats">Player Statistics</a></li>
                         </ul>
                     </li>
 
@@ -68,8 +73,8 @@
                             About
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="about-dropdown">
-                            <li><a class="dropdown-item" href="#">Game Types</a></li>
-                            <li><a class="dropdown-item" href="#">Version History</a></li>
+                            <li><a class="dropdown-item" asp-page="/About/Games">Game Types</a></li>
+                            <li><a class="dropdown-item" asp-page="/About/VersionHistory">Version History</a></li>
                         </ul>
                     </li>
                 </ul>

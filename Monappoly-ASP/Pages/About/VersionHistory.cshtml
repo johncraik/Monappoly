@@ -1,0 +1,326 @@
+@page
+@model Monappoly_ASP.Pages.About.VersionHistory
+
+@{
+    ViewData["Title"] = "Version History";
+}
+
+<h1 class="mb-4">@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-sm-4 mb-3">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                @Version.GetVersion() (Current Version)
+            </div>
+            <div class="card-body bg-light">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Complete front-end and back-end redesign.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4 mb-3">
+        <div class="card">
+            <div class="card-header bg-main-light text-white">
+                v1.3.7
+            </div>
+            <div class="card-body bg-light">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Added new card actions.
+                    </li>
+                    <li class="list-group-item">
+                        All cards have the choice to be kept and played based on a condition.
+                    </li>
+                    <li class="list-group-item">
+                        Possible play conditions are none (play anytime), paying rent, paying tax, visiting GO, visiting Jail, visiting Free Parking, rolling a double, or rolling a triple.
+                    </li>
+                    <li class="list-group-item">
+                        There are 7 possible action types, these are: move, pay, property, dice, reset, take card, and event.
+                    </li>
+                    <li class="list-group-item">
+                        Move actions can be setup for moving a player a number of spaces or advancing to a specific space. It can be setup for forwards or backwards, and for the current player or all players.
+                    </li>
+                    <li class="list-group-item">
+                        Pay actions involve paying or receiving money. This can involve the bank, free parking, or a player. If choosing a player, it can be a specific player, left, right, or all players. Payments/Receive can be based on a multiplier such as houses or hotels.
+                    </li>
+                    <li class="list-group-item">
+                        Property actions allow properties to be taken or handed back to the bank, free parking, or a player. It can either involve a full set or a single property, and can be a swap (two-way).
+                    </li>
+                    <li class="list-group-item">
+                        Dice actions allow a player's roll to be converted to a double or a triple.
+                    </li>
+                    <li class="list-group-item">
+                        Reset actions can reset a player's jail cost, triple bonus, or properties handed into free parking. It can also be setup for purging a number of properties or sets.
+                    </li>
+                    <li class="list-group-item">
+                        Take card actions will force the player to take a card from each defined card type.
+                    </li>
+                    <li class="list-group-item">
+                        Event actions cause an event to occur: extra turns, miss turns, mortgage properties, jail space, tax spaces, stations, utilities, free parking space, and the GO space.
+                        Every event has an end condition: number of turns, rolling a double, rolling a triple, going to jail. There is also a default end condition which occurs when the selected player lands on the space defined in the event.
+                    </li>
+                    <li class="list-group-item">
+                        Actions are split into groups (choices). Each group can have multiple actions of any defined above.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4 mb-3">
+        <div class="card">
+            <div class="card-header bg-main-light text-white">
+                v1.3.6
+            </div>
+            <div class="card-body bg-light">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Fixed authorisation on turn based game pages.
+                    </li>
+                    <li class="list-group-item">
+                        Fixed custom loan repayment amount and loan repayments on front-end.
+                    </li>
+                    <li class="list-group-item">
+                        Made dropdown panels in turn based games 90% view height.
+                    </li>
+                    <li class="list-group-item">
+                        Added all player's numbers to main screen regardless of who's turn it is.
+                    </li>
+                    <li class="list-group-item">
+                        Can switch to view other players mid-game to perform actions on that player, keeping the current player's turn saved.
+                    </li>
+                    <li class="list-group-item">
+                        Can declare draws in games. This will delete the game and not increase any player's win counts.
+                    </li>
+                    <li class="list-group-item">
+                        Removed card actions. A new implementation of these will be added in the future.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4 mb-3">
+        <div class="card">
+            <div class="card-header bg-main-light text-white">
+                v1.3.5
+            </div>
+            <div class="card-body bg-light">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Brand new turn based game
+                    </li>
+                    <li class="list-group-item">
+                        In turn based games, you can see who's turn it is and information relating to that player.
+                    </li>
+                    <li class="list-group-item">
+                        All functionality of the standard game (legacy game) can be done in a turn based game.
+                    </li>
+                    <li class="list-group-item">
+                        Turn based games now track mortgaged properties and calculate the fee a player must pay when passing GO.
+                    </li>
+                    <li class="list-group-item">
+                        Turn based games now track reserved properties and calculate the option fee to pay in order to unlock the reserved properties.
+                    </li>
+                    <li class="list-group-item">
+                        Cards are now in a turn based game.
+                    </li>
+                    <li class="list-group-item">
+                        Players can be created and selected for games.
+                    </li>
+                    <li class="list-group-item">
+                        The number of wins a player has is tracked.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4 mb-3">
+        <div class="card">
+            <div class="card-header bg-main-light text-white">
+                v1.2.5
+            </div>
+            <div class="card-body bg-light">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Card types now have a colour option.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4 mb-3">
+        <div class="card">
+            <div class="card-header bg-main-light text-white">
+                v1.2.4
+            </div>
+            <div class="card-body bg-light">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Changed the jail penalty increase to 50% instead of £20.
+                    </li>
+                    <li class="list-group-item">
+                        Can only have a maximum of 3 unpaid loans at one time.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4 mb-3">
+        <div class="card">
+            <div class="card-header bg-main-light text-white">
+                v1.2.3
+            </div>
+            <div class="card-body bg-light">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Major code base redesign. All core functionality has moved into a class library.
+                    </li>
+                    <li class="list-group-item">
+                        Changed how monopoly defaults are loaded into the game (default cards, chance, community chest, etc).
+                    </li>
+                    <li class="list-group-item">
+                        Added the 'Monopoly Deck' which includes all the default cards.
+                        The cards in this deck cannot be modified, but they can be copied into other decks.
+                    </li>
+                    <li class="list-group-item">
+                        Setup for full turned based game.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4 mb-3">
+        <div class="card">
+            <div class="card-header bg-main-light text-white">
+                v1.1.3
+            </div>
+            <div class="card-body bg-light">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Redesigned ASP.NET login page.
+                    </li>
+                    <li class="list-group-item">
+                        Tenant and User ID fixes.
+                    </li>
+                    <li class="list-group-item">
+                        Cards in a deck can now be moved or copied to a different deck.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4 mb-3">
+        <div class="card">
+            <div class="card-header bg-main-light text-white">
+                v1.1.2
+            </div>
+            <div class="card-body bg-light">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Added version history.
+                    </li>
+                    <li class="list-group-item">
+                        Index page is a generic home page with links to areas of the website.
+                    </li>
+                    <li class="list-group-item">
+                        Added cards into the game.
+                    </li>
+                    <li class="list-group-item">
+                        Can manage cards by uploading/adding new cards, modifying existing ones, or removing cards.
+                    </li>
+                    <li class="list-group-item">
+                        Can create, edit, and remove different card types.
+                    </li>
+                    <li class="list-group-item">
+                        Different card decks based on difficulty.
+                    </li>
+                    <li class="list-group-item">
+                        Can select a card deck and play the cards in that deck.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4 mb-3">
+        <div class="card">
+            <div class="card-header bg-main-light text-white">
+                v1.1.1
+            </div>
+            <div class="card-body bg-light">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Add users and tenants.
+                    </li>
+                    <li class="list-group-item">
+                        All pages, except ASP.NET identity pages, require authentication.
+                    </li>
+                    <li class="list-group-item">
+                        Games are now based on users.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4 mb-3">
+        <div class="card">
+            <div class="card-header bg-main-light text-white">
+                v1.0.1
+            </div>
+            <div class="card-body bg-light">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Can track player triples.
+                    </li>
+                    <li class="list-group-item">
+                        Added version in footer.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4 mb-3">
+        <div class="card">
+            <div class="card-header bg-main-light text-white">
+                v1.0.0
+            </div>
+            <div class="card-body bg-light">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Added standard game.
+                    </li>
+                    <li class="list-group-item">
+                        Add players to games.
+                    </li>
+                    <li class="list-group-item">
+                        Track player numbers and jail cost.
+                    </li>
+                    <li class="list-group-item">
+                        Track properties handed in to free parking.
+                    </li>
+                    <li class="list-group-item">
+                        Track player loans and the amount that is due.
+                    </li>
+                    <li class="list-group-item">
+                        Can open games that are not deleted.
+                    </li>
+                    <li class="list-group-item">
+                        Can remove games.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -613,4 +613,17 @@
       <EmbeddedResource Remove="node_modules\**" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Pages\Games\FullGame\" />
+      <Folder Include="Pages\Games\Helper\" />
+      <Folder Include="Pages\Objects\Boards\" />
+      <Folder Include="Pages\Objects\Buildings\" />
+      <Folder Include="Pages\Objects\Cards\Action\" />
+      <Folder Include="Pages\Objects\Cards\Decks\" />
+      <Folder Include="Pages\Objects\Cards\Types\" />
+      <Folder Include="Pages\Objects\Dice\" />
+      <Folder Include="Pages\Objects\PlayerPieces\" />
+      <Folder Include="Pages\Players\Stats\" />
+    </ItemGroup>
+
 </Project>

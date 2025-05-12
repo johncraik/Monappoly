@@ -1,0 +1,2 @@
+namespace MonappolyLibrary.Models.Defaults;
+

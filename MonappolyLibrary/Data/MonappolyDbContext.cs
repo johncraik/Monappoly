@@ -1,6 +1,8 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using MonappolyLibrary.GameModels.Boards;
+using MonappolyLibrary.GameModels.Boards.Spaces;
 using MonappolyLibrary.GameModels.Cards;
 using MonappolyLibrary.GameModels.Cards.CardActions;
 using MonappolyLibrary.Models;
@@ -45,5 +47,16 @@ public class MonappolyDbContext : DbContext
     public DbSet<CardDeck> CardDecks { get; set; }
     public DbSet<ActionGroup> CardActionGroups { get; set; }
 
+    #endregion
+    
+    
+    #region Boards
+    
+    public DbSet<Board> Boards { get; set; }
+    public DbSet<GenericBoardSpace> GenericBoardSpaces { get; set; }
+    public DbSet<TaxBoardSpace> TaxBoardSpaces { get; set; }
+    public DbSet<CardBoardSpace> CardBoardSpaces { get; set; }
+    public DbSet<PropertyBoardSpace> PropertyBoardSpaces { get; set; }
+    
     #endregion
 }
