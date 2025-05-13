@@ -7,6 +7,7 @@ using Monappoly_ASP.Data;
 using Monappoly_ASP.Middleware;
 using MonappolyLibrary;
 using MonappolyLibrary.Data;
+using MonappolyLibrary.Extensions;
 using MonappolyLibrary.FileManagement;
 using MonappolyLibrary.GameServices.Cards;
 using MonappolyLibrary.Services;
@@ -57,8 +58,8 @@ builder.Services.AddDbContext<MonappolyDbContext>((sp, options) =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddTransient<CardActionService>();
-builder.Services.AddTransient<FilePathProvider>();
+builder.Services.GetServices();
+builder.Services.GetGameService();
 
 builder.Services.AddControllers();
 builder.Services.AddRazorPages();

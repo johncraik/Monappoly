@@ -52,7 +52,7 @@ public class CardDefaultsService
 
     private async Task CreateType(string name, string desc, string col, CardTypeCondition con)
     {
-        var chance = new CardType
+        var type = new CardType
         {
             TenantId = DefaultsDictionary.MonopTenant,
             Name = name,
@@ -63,8 +63,8 @@ public class CardDefaultsService
             IsDeleted = false
         };
         
-        chance.FillCreated();
-        await _context.CardTypes.AddAsync(chance);
+        type.FillCreated();
+        await _context.CardTypes.AddAsync(type);
         await _context.SaveChangesAsync();
     }
 

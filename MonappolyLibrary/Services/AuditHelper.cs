@@ -21,10 +21,23 @@ public static class AuditHelper
             if (!typeof(DataModel).IsAssignableFrom(entityType))
                 continue;
 
-            var dbSet = dbSetProp.GetValue(dbContext);
-            if (dbSet is not IQueryable data) continue;
+            var method = typeof(EntityFrameworkQueryableExtensions)
+                .GetMethod(nameof(EntityFrameworkQueryableExtensions.IgnoreQueryFilters))
+                .MakeGenericMethod(entityType);
 
-            foreach (var item in data)
+            var dbSet = dbSetProp.GetValue(dbContext);
+            if (dbSet == null) continue;
+
+            var queryable = typeof(EntityFrameworkQueryableExtensions)
+                .GetMethod(nameof(EntityFrameworkQueryableExtensions.IgnoreQueryFilters))
+                ?.MakeGenericMethod(entityType)
+                .Invoke(null, new[] { dbSet }) as IQueryable;
+
+            if (queryable == null) continue;
+
+            var filteredQuery = method.Invoke(null, new object[] { queryable }) as IQueryable;
+
+            foreach (var item in filteredQuery)
             {
                 var model = item as DataModel;
                 if (model == null) continue;

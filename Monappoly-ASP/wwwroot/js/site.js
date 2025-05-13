@@ -1,4 +1,11 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿function FetchPartial(url, target){
+    fetch(url).then(data => {return data.text()}).then(body => {
+        target.innerHTML = body;
+        var scripts = target.querySelectorAll('script');
+        for (let i = 0; i < scripts.length; i++) {
+            if (scripts[i].type !== "text/x-template") {
+                eval(scripts[i].innerHTML);
+            }
+        }
+    });
+}

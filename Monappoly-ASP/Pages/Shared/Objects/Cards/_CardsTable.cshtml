@@ -1,0 +1,59 @@
+@using MonappolyLibrary.Helpers
+@model List<MonappolyLibrary.GameModels.Cards.ViewModels.CardViewModel>
+
+@if (Model.Count > 0)
+{
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+        <tr class="table-dark">
+            <th>Card Type</th>
+            <th>Card Text</th>
+            <th style="width: 165px">Card Action</th>
+            <th style="width: 90px"></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var card in Model)
+        {
+            <tr>
+                <td style="background: @(ColourHelper.HoverColour(card.CardType?.Colour ?? "#eeeeee")); color: @(ColourHelper.FontColour(card.CardType?.Colour ?? "#eeeeee"))">
+                    @(card.CardType?.Name ?? "Not Found")
+                </td>
+                <td>@card.Text</td>
+                <td>
+                    <div class="clearfix">
+                        <div class="mx-2 float-start">
+                            <span class="fa-solid fa-microchip text-@(card.HasActionSetup ? "success" : "danger")"></span>
+                        </div>
+                        <div class="mx-2 float-start">
+                            @{
+                                var actionTxt = $"{(card.HasActionSetup ? "View" : "Setup")} Action";
+                            }
+                            <button class="btn btn-sm btn-highlight rounded-3" title="@actionTxt"
+                                    onclick="SetupAction('@(card.Id)')">
+                                @actionTxt
+                            </button>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <button class="btn btn-sm btn-link" onclick="location.assign('/Objects/Cards/Edit/@(card.CardDeck?.Id)/@(card.Id)')"
+                            title="Edit Card">
+                        <span class="fa-solid fa-pen-to-square text-highlight"></span>
+                    </button>
+                    <button class="btn btn-sm btn-link" onclick="DeleteCard('@(card.Id)')"
+                            title="Delete Card">
+                        <span class="fa-solid fa-circle-xmark text-danger"></span>
+                    </button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>There are no cards in this deck.</p>
+}
+
+<script src="~/js/Cards/cards.js"></script>

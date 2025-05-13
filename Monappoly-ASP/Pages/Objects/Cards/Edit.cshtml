@@ -1,0 +1,40 @@
+@page "{deckId}/{id}"
+@model Monappoly_ASP.Pages.Objects.Cards.Edit
+
+@{
+    var title = Model.Adding ? "New Card" : "Edit Card";
+    ViewData["Title"] = title;
+}
+
+<div class="container-60">
+    <h1 class="page-title">@title</h1>
+
+    <div class="card">
+        <div class="card-body bg-light">
+            <form method="post">
+                <div class="mb-3">
+                    <label asp-for="Input.CardDeckId" class="form-label"></label>
+                    <select asp-for="Input.CardDeckId" asp-items="Model.CardDecks" class="form-select"></select>
+                    <span asp-validation-for="Input.CardDeckId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Input.CardTypeId" class="form-label"></label>
+                    <select asp-for="Input.CardTypeId" asp-items="Model.CardTypes" class="form-select"></select>
+                    <span asp-validation-for="Input.CardTypeId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Input.Text" class="form-label"></label>
+                    <textarea asp-for="Input.Text" rows="5" class="form-control"></textarea>
+                    <span asp-validation-for="Input.Text" class="text-danger"></span>
+                </div>
+                <div class="clearfix">
+                    <button class="btn btn-success mt-2 float-start" type="submit">@(Model.Adding ? "Create Card" : "Modify Card")</button>
+                    <button class="btn btn-danger mt-2 mx-3 float-start" type="button"
+                            title="Cancel and go back to the previous page" onclick="location.assign('/Objects/Cards/Index')">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -618,8 +618,6 @@
       <Folder Include="Pages\Games\Helper\" />
       <Folder Include="Pages\Objects\Boards\" />
       <Folder Include="Pages\Objects\Buildings\" />
-      <Folder Include="Pages\Objects\Cards\Action\" />
-      <Folder Include="Pages\Objects\Cards\Decks\" />
       <Folder Include="Pages\Objects\Cards\Types\" />
       <Folder Include="Pages\Objects\Dice\" />
       <Folder Include="Pages\Objects\PlayerPieces\" />

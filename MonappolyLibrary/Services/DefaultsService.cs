@@ -5,14 +5,12 @@ namespace MonappolyLibrary.Services;
 
 public class DefaultsService
 {
-    private readonly MonappolyDbContext _context;
     private readonly CardDefaultsService _cardDefaultsService;
     private readonly BoardDefaultsService _boardDefaultsService;
     public static string DefaultsPath { get; private set; } = "";
 
     public DefaultsService(MonappolyDbContext context)
     {
-        _context = context;
         _cardDefaultsService = new CardDefaultsService(context, new CsvReader<CardDefaultsService.CardUpload>());
         _boardDefaultsService = new BoardDefaultsService(context);
         DefaultsPath = $"{Environment.CurrentDirectory}/../MonappolyLibrary/Data/Defaults/";
