@@ -5,6 +5,7 @@ using MonappolyLibrary.GameModels.Boards;
 using MonappolyLibrary.GameModels.Boards.Spaces;
 using MonappolyLibrary.GameModels.Cards;
 using MonappolyLibrary.GameModels.Cards.CardActions;
+using MonappolyLibrary.GameModels.MiscGameObjs;
 using MonappolyLibrary.Models;
 
 namespace MonappolyLibrary.Data;
@@ -58,5 +59,14 @@ public class MonappolyDbContext : DbContext
     public DbSet<CardBoardSpace> CardBoardSpaces { get; set; }
     public DbSet<PropertyBoardSpace> PropertyBoardSpaces { get; set; }
     
+    #endregion
+
+    #region MiscGameObjs
+
+    public DbSet<DiceDataModel> DiceModels { get; set; }
+    public DbSet<PlayerPieceDataModel> PlayerPieces { get; set; }
+    public DbSet<BuildingGroup> BuildingGroups { get; set; }
+    public DbSet<BuildingDataModel> Buildings { get; set; }
+
     #endregion
 }

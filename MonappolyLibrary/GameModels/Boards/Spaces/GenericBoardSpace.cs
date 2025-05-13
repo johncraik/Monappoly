@@ -43,3 +43,8 @@ public enum GenericSpaceAction
     FreeParking,
     GoToJail
 }
+
+public class GenericSpaceUpload : BoardSpaceUpload
+{
+    public GenericSpaceAction Action { get; set; }
+}

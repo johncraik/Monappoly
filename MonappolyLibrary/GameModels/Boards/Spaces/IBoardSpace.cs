@@ -20,3 +20,10 @@ public enum BoardSpaceType
     Card,
     Property
 }
+
+public class BoardSpaceUpload
+{
+    public int Index { get; set; }
+    public string Name { get; set; }
+    public BoardSpaceType Type { get; set; }
+}

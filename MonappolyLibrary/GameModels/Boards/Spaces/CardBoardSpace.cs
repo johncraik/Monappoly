@@ -43,3 +43,7 @@ public class CardBoardSpace : DataModel, IBoardSpace
         }
     }
 }
+
+public class CardSpaceUpload : BoardSpaceUpload
+{
+}

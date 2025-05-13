@@ -4,6 +4,7 @@ public class DataModel
 {
     public int TenantId { get; set; }
     public bool IsDeleted { get; set; }
+    public bool IsModifiable() => TenantId > 0;
     public bool IsDeletable() => TenantId > 0;
     
     public string CreatedBy { get; set; }
@@ -13,7 +14,7 @@ public class DataModel
     public string? DeletedBy { get; set; }
     public DateTime? DeletedDate { get; set; }
 
-    public void FillCreated()
+    internal void FillCreated()
     {
         CreatedBy = "System";
         CreatedDate = DateTime.UtcNow;
@@ -24,18 +25,29 @@ public class DataModel
         CreatedDate = DateTime.UtcNow;
     }
     
-    public void FillModified()
+    internal bool FillModified()
+    {
+        if(!IsModifiable()) return false;
+        
+        ModifiedBy = "System";
+        ModifiedDate = DateTime.UtcNow;
+        return true;
+    }
+    internal void ForceModify()
     {
         ModifiedBy = "System";
         ModifiedDate = DateTime.UtcNow;
     }
-    public void FillModified(UserInfo userInfo)
+    public bool FillModified(UserInfo userInfo)
     {
+        if(!IsModifiable()) return false;
+
         ModifiedBy = userInfo.UserId;
         ModifiedDate = DateTime.UtcNow;
+        return true;
     }
     
-    public bool FillDeleted()
+    internal bool FillDeleted()
     {
         if(!IsDeletable()) return false;
         
@@ -45,7 +57,7 @@ public class DataModel
 
         return true;
     }
-    public void ForceDelete()
+    internal void ForceDelete()
     {
         DeletedBy = "System";
         DeletedDate = DateTime.UtcNow;

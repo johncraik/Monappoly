@@ -36,3 +36,8 @@ public class TaxBoardSpace : DataModel, IBoardSpace
         }
     }
 }
+
+public class TaxSpaceUpload : BoardSpaceUpload
+{
+    public uint Tax { get; set; }
+}

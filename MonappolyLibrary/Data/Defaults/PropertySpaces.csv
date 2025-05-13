@@ -1,0 +1,29 @@
+﻿Index,Name,Type,Cost,PropertyType,PropertySet
+1,Old Kent Road,3,60,0,0
+3,Whitechapel Road,3,60,0,0
+5,Kings Cross Station,3,200,1,-1
+6,The Angel Islington,3,100,0,1
+8,Euston Road,3,100,0,1
+9,Pentonville Road,3,120,0,1
+11,Pall Mall,3,140,0,2
+12,Electric Company,3,150,2,-1
+13,Whitehall,3,140,0,2
+14,Northumberland Avenue,3,160,0,2
+15,Marylebone Station,3,200,1,-1
+16,Bow Street,3,180,0,3
+18,Marlborough Street,3,180,0,3
+19,Vine Street,3,200,0,3
+21,The Strand,3,220,0,4
+23,Fleet Street,3,220,0,4
+24,Trafalgar Square,3,240,0,4
+25,Fenchurch Street Station,3,200,1,-1
+26,Leicester Square,3,260,0,5
+27,Coventry Street,3,260,0,5
+28,Water Works,3,150,2,-1
+29,Piccadilly,3,280,0,5
+31,Regent Street,3,300,0,6
+32,Oxford Street,3,300,0,6
+34,Bond Street,3,320,0,6
+35,Liverpool Street Station,3,200,1,-1
+37,Park Lane,3,350,0,7
+39,Mayfair,3,400,0,7

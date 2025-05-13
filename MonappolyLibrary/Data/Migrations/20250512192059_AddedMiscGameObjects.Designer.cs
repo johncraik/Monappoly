@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MonappolyLibrary.Data;
 
@@ -10,9 +11,11 @@ using MonappolyLibrary.Data;
 namespace MonappolyLibrary.Data.Migrations
 {
     [DbContext(typeof(MonappolyDbContext))]
-    partial class MonappolyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250512192059_AddedMiscGameObjects")]
+    partial class AddedMiscGameObjects
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
@@ -503,9 +506,6 @@ namespace MonappolyLibrary.Data.Migrations
                     b.Property<int>("BuildOnRule")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("BuildingGroupId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("BuildingRule")
                         .HasColumnType("INTEGER");
 
@@ -548,8 +548,6 @@ namespace MonappolyLibrary.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BuildingGroupId");
 
                     b.ToTable("Buildings");
                 });
@@ -775,17 +773,6 @@ namespace MonappolyLibrary.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Card");
-                });
-
-            modelBuilder.Entity("MonappolyLibrary.GameModels.MiscGameObjs.BuildingDataModel", b =>
-                {
-                    b.HasOne("MonappolyLibrary.GameModels.MiscGameObjs.BuildingGroup", "BuildingGroup")
-                        .WithMany()
-                        .HasForeignKey("BuildingGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BuildingGroup");
                 });
 #pragma warning restore 612, 618
         }

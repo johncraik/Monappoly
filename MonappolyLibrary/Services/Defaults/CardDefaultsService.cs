@@ -114,9 +114,8 @@ public class CardDefaultsService
                 card.ForceDelete();
             }
             await _context.SaveChangesAsync();
-
-            var path = Path.Combine("Data", "Defaults", $"{typeName}.csv");
-            var file = File.OpenRead($"{Environment.CurrentDirectory}/../MonappolyLibrary/{path}");
+            
+            var file = File.OpenRead($"{DefaultsService.DefaultsPath}{typeName}.csv");
             var records = _csvReader.UploadFile(file);
             if(records == null) throw new Exception("No records found in file");
             

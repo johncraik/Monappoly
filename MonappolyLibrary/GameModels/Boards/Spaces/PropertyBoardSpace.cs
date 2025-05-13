@@ -63,3 +63,10 @@ public enum PropertySet
     Green,
     DarkBlue
 }
+
+public class PropertySpaceUpload : BoardSpaceUpload
+{
+    public uint Cost { get; set; }
+    public PropertyType PropertyType { get; set; }
+    public PropertySet PropertySet { get; set; }
+}
