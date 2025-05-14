@@ -13,6 +13,65 @@ function CopyCards(){
     location.assign('/Objects/Cards/Copy/' + deckId);
 }
 
+function UploadCards() {
+    let deckId = document.getElementById('deck-id').innerText;
+    location.assign('/Objects/Cards/Upload/' + deckId);
+}
+
+function DeleteType(id) {
+    Swal.fire({
+        title: "Delete Card Type?",
+        icon: "question",
+        showDenyButton: true,
+        confirmButtonText: "Yes",
+        denyButtonText: "Cancel"
+    }).then((result) => {
+        if(result.isConfirmed){
+            $.ajax({
+                type: 'POST',
+                url: baseUrl + 'DeleteType?id=' + id,
+                success: function (res){
+                    if(res === true){
+                        Swal.fire("Card Type Deleted", "", "success").then((r) => {
+                            location.assign('/Objects/Cards/Types/Index');
+                        });
+                    }
+                    else{
+                        Swal.fire("Unable to Delete Card Type", "", "error");
+                    }
+                }
+            })
+        }
+    });
+}
+
+function DeleteDeck(id){
+    Swal.fire({
+        title: "Delete Card Deck?",
+        icon: "question",
+        showDenyButton: true,
+        confirmButtonText: "Yes",
+        denyButtonText: "Cancel"
+    }).then((result) => {
+        if(result.isConfirmed){
+            $.ajax({
+                type: 'POST',
+                url: baseUrl + 'DeleteDeck?id=' + id,
+                success: function (res){
+                    if(res === true){
+                        Swal.fire("Card Deck Deleted", "", "success").then((r) => {
+                            location.assign('/Objects/Cards/Index');
+                        });
+                    }
+                    else{
+                        Swal.fire("Unable to Delete Card Deck", "", "error");
+                    }
+                }
+            })
+        }
+    });
+}
+
 function DeleteCard(id){
     let deckId = document.getElementById('deck-id').innerText;
     Swal.fire({

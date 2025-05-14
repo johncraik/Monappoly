@@ -1,0 +1,56 @@
+@page
+@using MonappolyLibrary.Extensions
+@model Monappoly_ASP.Pages.Objects.Cards.Types.Index
+
+@{
+    ViewData["Title"] = "Card Types";
+}
+
+<div class="container-60">
+    <h1 class="page-title">@ViewData["Title"]</h1>
+    
+    <div class="card">
+        <div class="card-body bg-light">
+            <button class="btn btn-primary mb-2 float-end" title="Create a new type"
+                    onclick="location.assign('/Objects/Cards/Types/Edit/0')">
+                New Type
+            </button>
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr class="table-dark">
+                    <th style="width: 60px"></th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Play Condition</th>
+                    <th>Rule</th>
+                    <th style="width: 90px;"></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var type in Model.Types)
+                {
+                    <tr>
+                        <td style="background: @type.Colour"></td>
+                        <td>@type.Name</td>
+                        <td>@(type.Description ?? "None")</td>
+                        <td>@(type.PlayCondition.GetDisplayName())</td>
+                        <td>@type.TypeRule.GetDisplayName()</td>
+                        <td>
+                            <button class="btn btn-sm btn-link" title="Edit type"
+                                    onclick="location.assign('/Objects/Cards/Types/Edit/@(type.Id)')">
+                                <span class="fa-solid fa-pen-to-square text-highlight"></span>
+                            </button>
+                            <button class="btn btn-sm btn-link" onclick="DeleteType('@(type.Id)')"
+                                    title="Delete Card">
+                                <span class="fa-solid fa-circle-xmark text-danger"></span>
+                            </button>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/Cards/cards.js"></script>

@@ -9,15 +9,15 @@ public class CardType : DataModel
     public string? Description { get; set; }
     
     public string? Colour { get; set; }
-    public CardTypeCondition Condition { get; set; }
-    public CardTypeRule Rule { get; set; }
+    public CardTypeCondition PlayCondition { get; set; }
+    public CardTypeRule TypeRule { get; set; }
 }
 
 public enum CardTypeCondition
 {
     Default,
-    Chance,
-    CommunityChest,
+    WithChance,
+    WithCommunityChest,
     Double,
     Triple,
     Tax,

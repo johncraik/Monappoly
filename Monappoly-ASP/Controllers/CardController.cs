@@ -38,14 +38,11 @@ public class CardController : Controller
     }
 
     [HttpPost]
-    public async Task<bool> DeleteCard(int id)
-    {
-        var card = await _cardService.FindCard(id);
-        if(card == null) return false;
-        
-        if(!card.IsDeletable()) return false;
-        
-        await _cardService.DeleteCard(card);
-        return true;
-    }
+    public async Task<bool> DeleteCard(int id) => await _cardService.TryDeleteCard(id);
+
+    [HttpPost]
+    public async Task<bool> DeleteDeck(int id) => await _cardService.TryDeleteDeck(id);
+    
+    [HttpPost]
+    public async Task<bool> DeleteType(int id) => await _cardService.TryDeleteType(id);
 }

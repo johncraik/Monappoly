@@ -10,43 +10,49 @@
 
 <div class="row">
     <div class="col-sm-3">
-        <div class="card mb-3">
-            <div class="card-header bg-primary text-white">
-                <h5 class="card-title">Global Options</h5>
-            </div>
-            <div class="card-body">
-                <button class="btn btn-info mb-2 text-white" style="width: 100%;" title="Create a new card"
-                        onclick="NewCard()">
-                    New Card
-                </button>
-                <button class="btn btn-warning mb-2" style="width: 100%;" title="Move/copy all cards in this deck"
-                        onclick="CopyCards()">
-                    Move/Copy All Cards
-                </button>
-                <button class="btn btn-danger mb-2" style="width: 100%;" title="Delete all cards in this deck"
-                        onclick="DeleteCards()">
-                    Delete All Cards
-                </button>
-            </div>
-        </div>
-        
         <div class="card">
             <div class="card-header bg-main text-white">
                 <h5 class="card-title">Card Decks</h5>
             </div>
             <div class="card-body bg-light">
-                <button class="btn btn-info mb-2 text-white" title="Create a new deck" 
-                        onclick="location.assign('/Objects/Cards/Decks/0')">
-                    New Deck
-                </button>
+                <div>
+                    <button class="btn btn-highlight-light mb-2 mr text-white" title="Create a new deck"
+                            onclick="location.assign('/Objects/Cards/Decks/0')">
+                        New Deck
+                    </button>
+                </div>
+                <div class="clearfix my-2">
+                    <button class="btn btn-highlight mb-2 mr text-white float-start" title="Create a new card"
+                            onclick="NewCard()">
+                        Add Card
+                    </button>
+                    <button class="btn btn-dark-highlight mb-2 mr text-white float-start" title="Upload new cards"
+                            onclick="UploadCards()">
+                        Upload Cards
+                    </button>
+                    <button class="btn btn-warning mb-2 mr float-start" title="Move/copy all cards in this deck"
+                            onclick="CopyCards()">
+                        Move/Copy All Cards
+                    </button>
+                    <button class="btn btn-danger mb-2 float-end" title="Delete all cards in this deck"
+                            onclick="DeleteCards()">
+                        Delete All Cards
+                    </button>
+                </div>
                 @foreach (var deck in Model.Decks)
                 {
                     <div class="list-group">
                         <div class="clearfix">
-                            <div class="float-start mt-1" style="width: calc(100% - 40px)">
+                            <div class="float-start mt-1" style="width: calc(100% - 80px)">
                                 <button class="list-group-item list-group-item-action deck-nav @(Model.CurrentDeck == deck ? "active" : "")" title="View @deck.Name deck"
                                         onclick="GetCards('@(deck.Id)')" id="deck-@deck.Id">
                                     @deck.Name
+                                </button>
+                            </div>
+                            <div class="float-end mt-1" style="width: 40px">
+                                <button class="btn btn-sm btn-link mt-1" title="Delete deck"
+                                        onclick="DeleteDeck('@(deck.Id)')">
+                                    <span class="fa-solid fa-circle-xmark text-danger"></span>
                                 </button>
                             </div>
                             <div class="float-end mt-1" style="width: 40px">

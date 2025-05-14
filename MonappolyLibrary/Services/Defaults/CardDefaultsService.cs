@@ -45,8 +45,8 @@ public class CardDefaultsService
             }
             await _context.SaveChangesAsync();
             
-           await CreateType(CardDefaultsDictionary.Chance, "Monopoly Chance Cards", CardDefaultsDictionary.ChanceColour, CardTypeCondition.Chance);
-           await CreateType(CardDefaultsDictionary.ComChest, "Monopoly Community Chest Cards", CardDefaultsDictionary.ComChestColour, CardTypeCondition.CommunityChest);
+           await CreateType(CardDefaultsDictionary.Chance, "Monopoly Chance Cards", CardDefaultsDictionary.ChanceColour, CardTypeCondition.Default);
+           await CreateType(CardDefaultsDictionary.ComChest, "Monopoly Community Chest Cards", CardDefaultsDictionary.ComChestColour, CardTypeCondition.Default);
         }
     }
 
@@ -58,8 +58,8 @@ public class CardDefaultsService
             Name = name,
             Colour = col,
             Description = desc,
-            Rule = CardTypeRule.Default,
-            Condition = con,
+            TypeRule = CardTypeRule.Default,
+            PlayCondition = con,
             IsDeleted = false
         };
         

@@ -117,10 +117,15 @@ public class CardService
     }
     
     
-    public async Task DeleteCard(Card card)
+    public async Task<bool> TryDeleteCard(int id)
     {
+        var card = await FindCard(id);
+        if(card == null) return false;
+        if(!card.IsDeletable()) return false;
+        
         card.FillDeleted(_userInfo);
         await _context.SaveChangesAsync();
+        return true;
     }
     
     public async Task DeleteAllCards(int deckId)
@@ -188,18 +193,87 @@ public class CardService
         await _context.SaveChangesAsync();
         return true;
     }
+
+    public async Task<bool> TryDeleteDeck(int id)
+    {
+        var deck = await FindDeck(id);
+        if(deck == null) return false;
+        if (!deck.IsDeletable()) return false;
+
+        deck.FillDeleted(_userInfo);
+        await _context.SaveChangesAsync();
+        return true;
+    }
     
 
     #endregion
-    
 
-        
+
+    #region Card Types
+    
     public async Task<List<CardType>> GetTypes() => await _context.CardTypes
         .OrderByDescending(t => t.TenantId).ThenBy(t => t.Name)
         .ToListAsync();
     
-    
-    
     public async Task<CardType?> FindType(int id)
         => await _context.CardTypes.FirstOrDefaultAsync(t => t.Id == id);
+
+    private async Task<bool> ValidateType(CardType type, ModelStateDictionary modelState)
+    {
+        if (!type.IsModifiable())
+        {
+            modelState.AddModelError("Input.Name", "Type cannot be modified.");
+            return false;
+        }
+        
+        var existingType = await _context.CardTypes.AnyAsync(t => t.Name == type.Name 
+                                                                  && t.Id != type.Id);
+        if (existingType)
+        {
+            modelState.AddModelError("Input.Name", "Type already exists.");
+        }
+        var existingColour = await _context.CardTypes.AnyAsync(t => t.Colour == type.Colour 
+                                                                  && t.Id != type.Id);
+        if (existingColour)
+        {
+            modelState.AddModelError("Input.Colour", "This colour already exists.");
+        }
+        
+        return true;
+    }
+    
+    public async Task<bool> TryAddType(CardType type, ModelStateDictionary modelState)
+    {
+        var res = await ValidateType(type, modelState);
+        if(!res || !modelState.IsValid) return false;
+        
+        type.FillCreated(_userInfo);
+        await _context.CardTypes.AddAsync(type);
+        await _context.SaveChangesAsync();
+        return true;
+    }
+    
+    public async Task<bool> TryUpdateType(CardType type, ModelStateDictionary modelState)
+    {
+        var res = await ValidateType(type, modelState);
+        if(!res || !modelState.IsValid) return false;
+        
+        type.FillModified(_userInfo);
+        await _context.SaveChangesAsync();
+        return true;
+    }
+    
+    public async Task<bool> TryDeleteType(int id)
+    {
+        var type = await FindType(id);
+        if(type == null) return false;
+        if (!type.IsDeletable()) return false;
+
+        type.FillDeleted(_userInfo);
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
+    #endregion
+        
 }

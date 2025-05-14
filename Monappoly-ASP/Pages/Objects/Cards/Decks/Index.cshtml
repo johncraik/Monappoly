@@ -2,11 +2,11 @@
 @model Monappoly_ASP.Pages.Objects.Cards.Decks.Index
 
 @{
-    var title = Model.Adding ? "New Deck" : "Edit Deck";
+    var title = Model.Adding ? "New Card Deck" : "Edit Card Deck";
     ViewData["Title"] = title;
 }
 
-<div class="container-60">
+<div class="container-40">
     <h1 class="page-title">@title</h1>
 
     <div class="card">
@@ -28,7 +28,7 @@
                     <span asp-validation-for="Input.Difficulty" class="text-danger"></span>
                 </div>
                 <div class="clearfix">
-                    <button class="btn btn-success mt-2 float-start" type="submit">@(Model.Adding ? "Create Deck" : "Modify Deck")</button>
+                    <button class="btn btn-success mt-2 float-start" type="submit">@(Model.Adding ? "Create Card Deck" : "Modify Card Deck")</button>
                     <button class="btn btn-danger mt-2 mx-3 float-start" type="button"
                             title="Cancel and go back to the previous page" onclick="location.assign('/Objects/Cards/Index?deck=@(Model.Input.Id)')">
                         Cancel

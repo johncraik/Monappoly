@@ -27,7 +27,7 @@ public class Index : PageModel
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         
         [Required]
         public CardDeckDifficulty Difficulty { get; set; }
@@ -47,7 +47,7 @@ public class Index : PageModel
         public void Fill(CardDeck deck)
         {
             deck.Name = Name;
-            deck.Description = Description;
+            deck.Description = Description ?? "";
             deck.Difficulty = Difficulty;
         }
     }

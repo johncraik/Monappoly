@@ -1,0 +1,50 @@
+@page "{id}"
+@model Monappoly_ASP.Pages.Objects.Cards.Types.Edit
+
+@{
+    var title = Model.Adding ? "New Card Type" : "Edit Card Type";
+    ViewData["Title"] = title;
+}
+
+<div class="container-40">
+    <h1 class="page-title">@title</h1>
+
+    <div class="card">
+        <div class="card-body bg-light">
+            <form method="post">
+                <div class="mb-3">
+                    <label asp-for="Input.Name" class="form-label"></label>
+                    <input asp-for="Input.Name" class="form-control"/>
+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Input.Description" class="form-label"></label>
+                    <textarea asp-for="Input.Description" rows="5" class="form-control"></textarea>
+                    <span asp-validation-for="Input.Description" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Input.Colour" class="form-label"></label>
+                    <input asp-for="Input.Colour" class="d-block" type="color"/>
+                    <span asp-validation-for="Input.Colour" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Input.PlayCondition" class="form-label"></label>
+                    <select asp-for="Input.PlayCondition" asp-items="Model.PlayConditions" class="form-select"></select>
+                    <span asp-validation-for="Input.PlayCondition" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Input.TypeRule" class="form-label"></label>
+                    <select asp-for="Input.TypeRule" asp-items="Model.TypeRules" class="form-select"></select>
+                    <span asp-validation-for="Input.TypeRule" class="text-danger"></span>
+                </div>
+                <div class="clearfix">
+                    <button class="btn btn-success mt-2 float-start" type="submit">@(Model.Adding ? "Create Deck" : "Modify Deck")</button>
+                    <button class="btn btn-danger mt-2 mx-3 float-start" type="button"
+                            title="Cancel and go back to the previous page" onclick="location.assign('/Objects/Cards/Types/Index')">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

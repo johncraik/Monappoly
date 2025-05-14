@@ -84,7 +84,8 @@ public class Edit : PageModel
                 Text = d.Name,
                 Value = d.Id.ToString(),
                 Selected = d.Id == deckId
-            }).ToList();
+            }).OrderByDescending(d => d.Selected).ThenBy(d => d.Text)
+            .ToList();
         return null;
     }
     
