@@ -17,10 +17,10 @@ public class CardController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetCardsTable(int deck)
+    public async Task<IActionResult> GetCardsTable(int deck, bool showOptions)
     {
         var model = await _cardService.GetCards(deck);
-        return PartialView("Objects/Cards/_CardsTable", model);
+        return PartialView("Objects/Cards/_CardsTable", (model, showOptions));
     }
 
     [HttpPost]

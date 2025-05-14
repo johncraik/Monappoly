@@ -88,7 +88,7 @@ function DeleteCard(id){
                 success: function (res){
                     if(res === true){
                         Swal.fire("Card Deleted", "", "success").then((r) => {
-                            GetCards(deckId);
+                            GetCards(deckId, true);
                         });
                     }
                     else{
@@ -116,7 +116,7 @@ function DeleteCards(){
                 success: function (res){
                     if(res === true){
                         Swal.fire("Cards Deleted", "", "success").then((r) => {
-                            GetCards(deckId);
+                            GetCards(deckId, true);
                         });
                     }
                     else{
@@ -128,7 +128,7 @@ function DeleteCards(){
     })
 }
 
-function GetCards(deckId){
+function GetCards(deckId, options){
     let deck = document.getElementById('deck-id');
     deck.innerText = deckId;
     
@@ -139,7 +139,14 @@ function GetCards(deckId){
     let deckNav = document.getElementById('deck-' + deckId);
     deckNav.classList.add('active');
     
-    let url = baseUrl + 'GetCardsTable?deck=' + deckId;
+    let url = baseUrl + 'GetCardsTable?deck=' + deckId + '&showOptions=' + options;
     let table = document.getElementById('cards-table');
     FetchPartial(url, table);
+}
+
+function SetCopyInput(isCopy){
+    let inp = document.getElementById('is-copy');
+    inp.value = isCopy;
+    let frm = document.getElementById('copy-cards');
+    frm.submit();
 }

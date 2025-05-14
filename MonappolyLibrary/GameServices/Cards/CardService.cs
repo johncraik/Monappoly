@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using MonappolyLibrary.Data;
 using MonappolyLibrary.GameModels.Cards;
 using MonappolyLibrary.GameModels.Cards.ViewModels;
+using MonappolyLibrary.Services;
+using MonappolyLibrary.Services.Defaults;
 using SQLitePCL;
 
 namespace MonappolyLibrary.GameServices.Cards;
@@ -11,11 +14,18 @@ public class CardService
 {
     private readonly MonappolyDbContext _context;
     private readonly UserInfo _userInfo;
+    private readonly CsvReader<CardDefaultsService.CardUpload> _cardUpload;
+    private readonly ILogger<CardService> _logger;
 
-    public CardService(MonappolyDbContext context, UserInfo userInfo)
+    public CardService(MonappolyDbContext context, 
+        UserInfo userInfo,
+        CsvReader<CardDefaultsService.CardUpload> cardUpload,
+        ILogger<CardService> logger)
     {
         _context = context;
         _userInfo = userInfo;
+        _cardUpload = cardUpload;
+        _logger = logger;
     }
 
 
@@ -142,8 +152,106 @@ public class CardService
         await _context.SaveChangesAsync();
     }
 
+    public async Task<bool> CopyCards(CardDeck deck, int targetDeckId)
+    {
+        var targetDeck = await FindDeck(targetDeckId);
+        if (targetDeck == null || !targetDeck.IsModifiable()) return false;
+
+        var newCards = new List<Card>();
+        var cards = await GetBaseCards(deck.Id);
+        foreach (var card in cards)
+        {
+            var newCard = new Card
+            {
+                Text = card.Text,
+                CardTypeId = card.CardTypeId,
+                CardDeckId = targetDeckId,
+                TenantId = _userInfo.TenantId
+            };
+            newCard.FillCreated(_userInfo);
+            newCards.Add(newCard);
+        }
+        
+        await _context.Cards.AddRangeAsync(newCards);
+        await _context.SaveChangesAsync();
+        return true;
+    }
+    
+    public async Task<bool> MoveCards(CardDeck deck, int targetDeckId)
+    {
+        if (!deck.IsModifiable()) return false;
+        
+        var targetDeck = await FindDeck(targetDeckId);
+        if (targetDeck == null || !targetDeck.IsModifiable()) return false;
+        
+        var cards = await GetBaseCards(deck.Id);
+        foreach (var card in cards)
+        {
+            card.CardDeckId = targetDeckId;
+            card.FillModified(_userInfo);
+        }
+        
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<bool> TryUploadCards(CardUploadInputModel cardUim, ModelStateDictionary modelState)
+    {
+        var deck = await FindDeck(cardUim.CardDeckId);
+        if(deck == null || !deck.IsModifiable())
+        {
+            modelState.AddModelError("Input.CardDeckId", "Deck not found.");
+            return false;
+        }
+        var type = await FindType(cardUim.CardTypeId);
+        if(type == null)
+        {
+            modelState.AddModelError("Input.CardTypeId", "Type not found.");
+            return false;
+        }
+        
+        var file = cardUim.UploadFile;
+        var records = _cardUpload.UploadFile(file);
+        if (records == null)
+        {
+            modelState.AddModelError("Input.UploadFile", "File upload failed.");
+            return false;
+        }
+
+        try
+        {
+            foreach (var r in records)
+            {
+                var card = new Card
+                {
+                    TenantId = _userInfo.TenantId,
+                    Text = r.Text,
+                    CardDeckId = cardUim.CardDeckId,
+                    CardTypeId = cardUim.CardTypeId
+                };
+                card.FillCreated(_userInfo);
+                
+                var valid = await ValidateCard(card, modelState);
+                if(!valid) continue;
+
+                await _context.Cards.AddAsync(card);
+                await _context.SaveChangesAsync();
+            }
+
+            return true;
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            modelState.AddModelError("Input.UploadFile", "File upload failed.");
+            return false;
+        }
+    }
+
     #endregion
 
+    
+    
     #region Card Decks
 
     //Queries
@@ -199,6 +307,9 @@ public class CardService
         var deck = await FindDeck(id);
         if(deck == null) return false;
         if (!deck.IsDeletable()) return false;
+        
+        var hasCards = await _context.Cards.AnyAsync(c => c.CardDeckId == id);
+        if (hasCards) return false;
 
         deck.FillDeleted(_userInfo);
         await _context.SaveChangesAsync();
@@ -209,6 +320,7 @@ public class CardService
     #endregion
 
 
+    
     #region Card Types
     
     public async Task<List<CardType>> GetTypes() => await _context.CardTypes
@@ -268,6 +380,9 @@ public class CardService
         var type = await FindType(id);
         if(type == null) return false;
         if (!type.IsDeletable()) return false;
+        
+        var hasCards = await _context.Cards.AnyAsync(c => c.CardTypeId == id);
+        if (hasCards) return false;
 
         type.FillDeleted(_userInfo);
         await _context.SaveChangesAsync();

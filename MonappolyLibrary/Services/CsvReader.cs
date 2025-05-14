@@ -23,7 +23,7 @@ public class CsvReader<T>
             using var reader = new StreamReader(file.OpenReadStream());
             using var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
 
-            return csvReader.GetRecords<T>();
+            return csvReader.GetRecords<T>().ToList();
         }
         catch (Exception ex)
         {

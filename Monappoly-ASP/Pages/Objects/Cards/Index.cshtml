@@ -45,7 +45,7 @@
                         <div class="clearfix">
                             <div class="float-start mt-1" style="width: calc(100% - 80px)">
                                 <button class="list-group-item list-group-item-action deck-nav @(Model.CurrentDeck == deck ? "active" : "")" title="View @deck.Name deck"
-                                        onclick="GetCards('@(deck.Id)')" id="deck-@deck.Id">
+                                        onclick="GetCards('@(deck.Id)', '@(true)')" id="deck-@deck.Id">
                                     @deck.Name
                                 </button>
                             </div>
@@ -74,7 +74,7 @@
             </div>
             <div class="card-body bg-light">
                 <div id="cards-table">
-                    <partial name="Shared/Objects/Cards/_CardsTable" model="Model.Cards"/>
+                    <partial name="Shared/Objects/Cards/_CardsTable" model="@(Model.Cards, true)"/>
                 </div>
             </div>
         </div>

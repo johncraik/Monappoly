@@ -1,0 +1,43 @@
+@page "{id}"
+@model Monappoly_ASP.Pages.Objects.Cards.Copy
+
+@{
+    ViewData["Title"] = "Move or Copy Cards";
+}
+
+<div class="container-40">
+    <h1 class="page-title">@ViewData["Title"]</h1>
+
+    <div class="card mb-3">
+        <div class="card-header bg-main text-white">
+            <h5 class="card-title">Current Deck: @Model.Deck.Name</h5>
+            <small class="card-subtitle">@Model.Deck.Description</small>
+        </div>
+        <div class="card-body bg-light">
+            <form method="post" id="copy-cards">
+                <input type="hidden" asp-for="IsCopy" id="is-copy"/>
+                <div class="mb-3">
+                    <label asp-for="TargetDeckId" class="form-label"></label>
+                    <select asp-for="TargetDeckId" asp-items="Model.CardDecks" class="form-select"></select>
+                    <span asp-validation-for="TargetDeckId" class="text-danger"></span>
+                </div>
+                <button class="btn btn-warning mt-2" type="button" onclick="SetCopyInput('@(false)')">Move Cards</button>
+                <button class="btn btn-success mt-2 mx-3" type="button" onclick="SetCopyInput('@(true)')">Copy Cards</button>
+                <button class="btn btn-danger mt-2 mx-3" type="button" onclick="location.assign('/Objects/Cards/Index?deck=@(Model.Deck.Id)')">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-highlight text-white">
+            <h5 class="card-title">Cards in Move/Copy</h5>
+        </div>
+        <div class="card-body bg-light">
+            <div id="cards-table">
+                <partial name="Shared/Objects/Cards/_CardsTable" model="@(Model.Cards, false)"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/Cards/cards.js"></script>

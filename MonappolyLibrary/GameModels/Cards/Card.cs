@@ -15,4 +15,15 @@ public class Card : DataModel
     public int CardDeckId { get; set; }
     [ForeignKey(nameof(CardDeckId))]
     public virtual CardDeck CardDeck { get; set; }
+    
+    public Card CopyCard(int deckId)
+    {
+        var newCard = new Card
+        {
+            Text = Text,
+            CardTypeId = CardTypeId,
+            CardDeckId = deckId
+        };
+        return newCard;
+    }
 }
