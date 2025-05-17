@@ -11,9 +11,10 @@ public class ConvertDiceAction : ICardAction, IDiceAction
     
     public int Id { get; set; }
     public int GroupId { get; set; }
+    [DisplayName("Number of Turns")]
     public uint TurnLength { get; set; }
 
-    public byte DiceCount { get; set; }
+    public byte DiceCount { get; set; } = 3;
     [DisplayName("Convert a Double to a Triple?")]
     public bool ToTriple { get; set; } = true;
     

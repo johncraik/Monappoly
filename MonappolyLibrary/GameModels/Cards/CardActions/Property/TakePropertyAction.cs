@@ -13,14 +13,17 @@ public class TakePropertyAction : ICardAction, IPropertyAction
     
     public int Id { get; set; }
     public int GroupId { get; set; }
+    [DisplayName("Number of Turns")]
     public uint TurnLength { get; set; }
-
+    
+    [DisplayName("Number of Properties")]
     public uint PropertyCount { get; set; }
+    [DisplayName("Take a Set?")]
     public bool IsSet { get; set; }
     
     public ObjectPlayer Player { get; set; }
     public ObjectTarget Source { get; set; }
-    [DisplayName("Target Player")]
+    [DisplayName("Source Player")]
     public ObjectPlayer? SourcePlayer { get; set; }
     
     public void Validate(ModelStateDictionary modelState)

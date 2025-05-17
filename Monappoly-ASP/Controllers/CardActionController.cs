@@ -126,7 +126,7 @@ public class CardActionController : Controller
     
     
     
-    #region Dice Actions
+    #region Property Actions
 
     public IActionResult GetPropertyActionPartial(PropertyActionType type)
         => PartialView("Objects/Cards/PropertyAction/_BasePropertyActionPartial", type);

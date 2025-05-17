@@ -1,7 +1,49 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MonappolyLibrary.Extensions
+@using MonappolyLibrary.GameModels.Enums
 @model MonappolyLibrary.GameModels.Cards.CardActions.Player.DiceNumberPlayerAction
 
 <form method="post" asp-controller="CardAction" asp-action="DiceNumberPlayerAction" id="form">
     <input asp-for="GroupId" id="group-id" type="hidden"/>
-    
-    
+    <div class="mb-3">
+        <label asp-for="Player" class="form-label"></label>
+        <select asp-for="Player" asp-items="ObjectPlayer.All.GetSelectList()" class="form-select"></select>
+        <span asp-validation-for="Player" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.IsReset)
+        {
+            <input asp-for="IsReset" class="form-check-input" type="checkbox" id="is-reset" checked/>
+        }
+        else
+        {
+            <input asp-for="IsReset" class="form-check-input" type="checkbox" id="is-reset"/>
+        }
+        <label asp-for="IsReset" class="form-check-label" for="is-reset"></label>
+        <span asp-validation-for="IsReset" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.CallNumber)
+        {
+            <input asp-for="CallNumber" class="form-check-input" type="checkbox" id="is-call" checked/>
+        }
+        else
+        {
+            <input asp-for="CallNumber" class="form-check-input" type="checkbox" id="is-call"/>
+        }
+        <label asp-for="CallNumber" class="form-check-label" for="is-call"></label>
+        <span asp-validation-for="CallNumber" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.HasRolled)
+        {
+        <input asp-for="HasRolled" class="form-check-input" type="checkbox" id="is-rolled" checked/>
+        }
+        else
+        {
+        <input asp-for="HasRolled" class="form-check-input" type="checkbox" id="is-rolled"/>
+        }
+        <label asp-for="HasRolled" class="form-check-label" for="is-rolled"></label>
+        <span asp-validation-for="HasRolled" class="text-danger"></span>
+    </div>
 </form>

@@ -13,9 +13,12 @@ public class ReturnPropertyAction : ICardAction, IPropertyAction
     
     public int Id { get; set; }
     public int GroupId { get; set; }
+    [DisplayName("Number of Turns")]
     public uint TurnLength { get; set; }
 
+    [DisplayName("Number of Properties")]
     public uint PropertyCount { get; set; }
+    [DisplayName("Return a Set?")]
     public bool IsSet { get; set; }
     
     public ObjectPlayer Player { get; set; }

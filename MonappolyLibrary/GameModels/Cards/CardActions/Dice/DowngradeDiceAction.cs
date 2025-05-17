@@ -11,9 +11,10 @@ public class DowngradeDiceAction : ICardAction, IDiceAction
     
     public int Id { get; set; }
     public int GroupId { get; set; }
+    [DisplayName("Number of Turns")]
     public uint TurnLength { get; set; }
 
-    public byte DiceCount { get; set; }
+    public byte DiceCount { get; set; } = 3;
     [DisplayName("Downgrade a Triple to a Double?")]
     public bool ToDouble { get; set; } = true;
     

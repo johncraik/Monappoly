@@ -154,13 +154,13 @@ public class CardActionService
             var res = action.Type switch
             {
                 ActionType.Move => await SaveMoveAction(action as IMoveAction, group.CardId, group.Id, group.NextActionId),
-                // ActionType.Dice => await SaveDiceAction(action as IDiceAction, action.Id, action.GroupId, action.Id),
-                // ActionType.Turn => await SaveTurnAction(action as ITurnAction, action.Id, action.GroupId, action.Id),
-                // ActionType.Money => await SaveMoneyAction(action as IMoneyAction, action.Id, action.GroupId, action.Id),
-                // ActionType.Player => await SavePlayerAction(action as IPlayerAction, action.Id, action.GroupId, action.Id),
-                // ActionType.Property => await SavePropertyAction(action as IPropertyAction, action.Id, action.GroupId, action.Id),
-                // ActionType.BoardSpace => await SaveBoardSpaceAction(action as IBoardSpaceAction, action.Id, action.GroupId, action.Id),
-                // ActionType.TakeCard => await SaveTakeCardAction(action as ITakeCardAction, action.Id, action.GroupId, action.Id),
+                ActionType.Dice => await SaveDiceAction(action as IDiceAction, group.CardId, group.Id, group.NextActionId),
+                ActionType.Turn => await SaveTurnAction(action as ITurnAction, group.CardId, group.Id, group.NextActionId),
+                ActionType.Money => await SaveMoneyAction(action as IMoneyAction, group.CardId, group.Id, group.NextActionId),
+                ActionType.Player => await SavePlayerAction(action as IPlayerAction, group.CardId, group.Id, group.NextActionId),
+                ActionType.Property => await SavePropertyAction(action as IPropertyAction, group.CardId, group.Id, group.NextActionId),
+                ActionType.BoardSpace => await SaveBoardSpaceAction(action as IBoardSpaceAction, group.CardId, group.Id, group.NextActionId),
+                ActionType.TakeCard => await SaveTakeCardAction(action as ITakeCardAction, group.CardId, group.Id, group.NextActionId),
                 _ => false
             };
             if (res)
@@ -231,6 +231,22 @@ public class CardActionService
 
         return action;
     } 
+    
+    private async Task<bool> SaveDiceAction(IDiceAction? action, int cardId, int groupId, int actionId)
+    {
+        if(action == null) return false;
+        var file = action.DiceType switch
+        {
+            DiceActionType.Convert => JsonConvert.SerializeObject(action as ConvertDiceAction),
+            DiceActionType.Downgrade => JsonConvert.SerializeObject(action as DowngradeDiceAction),
+            DiceActionType.Reroll => JsonConvert.SerializeObject(action as RerollDiceAction),
+            _ => null
+        };
+        
+        if(file == null) return false;
+        await _cardActionFileService.SaveAction(cardId, groupId, actionId, (int)ActionType.Dice, file);
+        return true;
+    }
 
     #endregion
 
@@ -250,6 +266,21 @@ public class CardActionService
         
         return action;
     }
+    
+    private async Task<bool> SaveTurnAction(ITurnAction? action, int cardId, int groupId, int actionId)
+    {
+        if(action == null) return false;
+        var file = action.TurnType switch
+        {
+            TurnActionType.Extra => JsonConvert.SerializeObject(action as ExtraTurnAction),
+            TurnActionType.Miss => JsonConvert.SerializeObject(action as MissTurnAction),
+            _ => null
+        };
+        
+        if(file == null) return false;
+        await _cardActionFileService.SaveAction(cardId, groupId, actionId, (int)ActionType.Turn, file);
+        return true;
+    }
 
     #endregion
     
@@ -268,6 +299,21 @@ public class CardActionService
         };
 
         return action;
+    }
+    
+    private async Task<bool> SaveMoneyAction(IMoneyAction? action, int cardId, int groupId, int actionId)
+    {
+        if(action == null) return false;
+        var file = action.MoneyType switch
+        {
+            MoneyActionType.Pay => JsonConvert.SerializeObject(action as PayMoneyAction),
+            MoneyActionType.Receive => JsonConvert.SerializeObject(action as ReceiveMoneyAction),
+            _ => null
+        };
+        
+        if(file == null) return false;
+        await _cardActionFileService.SaveAction(cardId, groupId, actionId, (int)ActionType.Money, file);
+        return true;
     }
     
     #endregion
@@ -290,6 +336,22 @@ public class CardActionService
         return action;
     }
     
+    private async Task<bool> SavePlayerAction(IPlayerAction? action, int cardId, int groupId, int actionId)
+    {
+        if(action == null) return false;
+        var file = action.PlayerType switch
+        {
+            PlayerActionType.DiceNumber => JsonConvert.SerializeObject(action as DiceNumberPlayerAction),
+            PlayerActionType.JailCost => JsonConvert.SerializeObject(action as JailCostPlayerAction),
+            PlayerActionType.TripleBonus => JsonConvert.SerializeObject(action as TripleBonusPlayerAction),
+            _ => null
+        };
+        
+        if(file == null) return false;
+        await _cardActionFileService.SaveAction(cardId, groupId, actionId, (int)ActionType.Player, file);
+        return true;
+    }
+    
     #endregion
     
     
@@ -310,6 +372,24 @@ public class CardActionService
         };
 
         return action;
+    }
+    
+    private async Task<bool> SavePropertyAction(IPropertyAction? action, int cardId, int groupId, int actionId)
+    {
+        if(action == null) return false;
+        var file = action.PropertyType switch
+        {
+            PropertyActionType.Mortgage => JsonConvert.SerializeObject(action as MortgagePropertyAction),
+            PropertyActionType.Unmortgage => JsonConvert.SerializeObject(action as UnmortgagePropertyAction),
+            PropertyActionType.Purge => JsonConvert.SerializeObject(action as PurgePropertyAction),
+            PropertyActionType.Take => JsonConvert.SerializeObject(action as TakePropertyAction),
+            PropertyActionType.Return => JsonConvert.SerializeObject(action as ReturnPropertyAction),
+            _ => null
+        };
+        
+        if(file == null) return false;
+        await _cardActionFileService.SaveAction(cardId, groupId, actionId, (int)ActionType.Property, file);
+        return true;
     }
     
     #endregion
@@ -335,6 +415,25 @@ public class CardActionService
         return action;
     }
     
+    private async Task<bool> SaveBoardSpaceAction(IBoardSpaceAction? action, int cardId, int groupId, int actionId)
+    {
+        if(action == null) return false;
+        var file = action.BoardSpaceType switch
+        {
+            BoardSpaceActionType.Go => JsonConvert.SerializeObject(action as GoBoardSpaceAction),
+            BoardSpaceActionType.Jail => JsonConvert.SerializeObject(action as JailBoardSpaceAction),
+            BoardSpaceActionType.FreeParking => JsonConvert.SerializeObject(action as FreeParkingBoardSpaceAction),
+            BoardSpaceActionType.Tax => JsonConvert.SerializeObject(action as TaxBoardSpaceAction),
+            BoardSpaceActionType.Card => JsonConvert.SerializeObject(action as CardBoardSpaceAction),
+            BoardSpaceActionType.Property => JsonConvert.SerializeObject(action as PropertyBoardSpaceAction),
+            _ => null
+        };
+        
+        if(file == null) return false;
+        await _cardActionFileService.SaveAction(cardId, groupId, actionId, (int)ActionType.BoardSpace, file);
+        return true;
+    }
+    
     #endregion
     
     
@@ -351,6 +450,20 @@ public class CardActionService
         };
 
         return action;
+    }
+    
+    private async Task<bool> SaveTakeCardAction(ITakeCardAction? action, int cardId, int groupId, int actionId)
+    {
+        if(action == null) return false;
+        var file = action.TakeCardType switch
+        {
+            TakeCardActionType.SingleCard => JsonConvert.SerializeObject(action as SingleCardAction),
+            _ => null
+        };
+        
+        if(file == null) return false;
+        await _cardActionFileService.SaveAction(cardId, groupId, actionId, (int)ActionType.TakeCard, file);
+        return true;
     }
     
     #endregion

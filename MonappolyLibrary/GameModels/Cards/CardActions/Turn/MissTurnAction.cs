@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MonappolyLibrary.Extensions;
 using MonappolyLibrary.GameModels.Cards.CardActions.Player;
@@ -13,6 +14,7 @@ public class MissTurnAction : ICardAction, ITurnAction
 
     public int Id { get; set; }
     public int GroupId { get; set; }
+    [DisplayName("Number of Missed Turns")]
     public uint TurnLength { get; set; }
     
     public ObjectPlayer Player { get; set; }

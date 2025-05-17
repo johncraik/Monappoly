@@ -1,7 +1,30 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MonappolyLibrary.Extensions
+@using MonappolyLibrary.GameModels.Enums
 @model MonappolyLibrary.GameModels.Cards.CardActions.Turn.ExtraTurnAction
 
 <form method="post" asp-controller="CardAction" asp-action="ExtraTurnAction" id="form">
     <input asp-for="GroupId" id="group-id" type="hidden"/>
-    
-    
+    <div class="mb-3">
+        <label asp-for="TurnLength" class="form-label"></label>
+        <input asp-for="TurnLength" class="form-control"/>
+        <span asp-validation-for="TurnLength" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Player" class="form-label"></label>
+        <select asp-for="Player" asp-items="ObjectPlayer.All.GetSelectList()" class="form-select"></select>
+        <span asp-validation-for="Player" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.RollThirdDice)
+        {
+        <input asp-for="RollThirdDice" class="form-check-input" type="checkbox" id="is-roll-third" checked/>
+        }
+        else
+        {
+        <input asp-for="RollThirdDice" class="form-check-input" type="checkbox" id="is-roll-third"/>
+        }
+        <label asp-for="RollThirdDice" class="form-check-label" for="is-roll-third"></label>
+        <span asp-validation-for="RollThirdDice" class="text-danger"></span>
+    </div>
 </form>

@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MonappolyLibrary.Extensions;
 using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
@@ -12,10 +13,13 @@ public class PurgePropertyAction : ICardAction, IPropertyAction
     
     public int Id { get; set; }
     public int GroupId { get; set; }
+    [DisplayName("Number of Turns")]
     public uint TurnLength { get; set; }
 
     public ObjectPlayer Player { get; set; }
+    [DisplayName("Number of Properties")]
     public uint PropertyCount { get; set; }
+    [DisplayName("Purge a Set?")]
     public bool IsSet { get; set; }
 
     public void Validate(ModelStateDictionary modelState)

@@ -14,10 +14,13 @@ public class MortgagePropertyAction : ICardAction, IPropertyAction
     
     public int Id { get; set; }
     public int GroupId { get; set; }
+    [DisplayName("Number of Turns")]
     public uint TurnLength { get; set; }
 
     public ObjectPlayer Player { get; set; }
+    [DisplayName("Number of Properties")]
     public uint PropertyCount { get; set; }
+    [DisplayName("Mortgage a Set?")]
     public bool IsSet { get; set; }
     [DisplayName("Receive Mortgage Value?")]
     public bool IsReceiveValue { get; set; } = true;

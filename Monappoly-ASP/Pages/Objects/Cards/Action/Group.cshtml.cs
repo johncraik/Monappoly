@@ -42,8 +42,8 @@ public class Group : PageModel
         if(card == null) return new NotFoundResult();
 
         Players = ObjectPlayer.All.GetSelectList();
-        LengthTypes = ActionLengthType.Default.GetSelectList();
-        PlayConditions = ActionPlayCondition.Default.GetSelectList();
+        LengthTypes = ActionLengthType.Default.GetSelectList(true, "Default");
+        PlayConditions = ActionPlayCondition.Default.GetSelectList(true, "Default");
         
         Card = card;
         return null;

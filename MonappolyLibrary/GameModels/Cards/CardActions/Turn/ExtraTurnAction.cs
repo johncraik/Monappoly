@@ -13,6 +13,7 @@ public class ExtraTurnAction : ICardAction, ITurnAction
 
     public int Id { get; set; }
     public int GroupId { get; set; }
+    [DisplayName("Number of Extra Turns")]
     public uint TurnLength { get; set; }
     
     public ObjectPlayer Player { get; set; }

@@ -1,7 +1,50 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MonappolyLibrary.Extensions
+@using MonappolyLibrary.GameModels.Enums
 @model MonappolyLibrary.GameModels.Cards.CardActions.Money.PayMoneyAction
 
 <form method="post" asp-controller="CardAction" asp-action="PayMoneyAction" id="form">
     <input asp-for="GroupId" id="group-id" type="hidden"/>
-    
-    
+    <div class="mb-3">
+        <label asp-for="Value" class="form-label"></label>
+        <input asp-for="Value" class="form-control"/>
+        <span asp-validation-for="Value" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MoneyMultiplier" class="form-label"></label>
+        <select asp-for="MoneyMultiplier" asp-items="@(ObjectMultiplier.Fixed.GetSelectList(true, "Fixed"))" class="form-select"></select>
+        <span asp-validation-for="MoneyMultiplier" class="text-danger"></span>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="mb-3">
+                <label asp-for="Source" class="form-label"></label>
+                <select asp-for="Source" asp-items="ObjectTarget.Bank.GetSelectList()" class="form-select"></select>
+                <span asp-validation-for="Source" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="mb-3">
+                <label asp-for="SourcePlayer" class="form-label"></label>
+                <select asp-for="SourcePlayer" asp-items="@(ObjectPlayer.CurrentPlayer.GetSelectList(true, "Select a Player"))" class="form-select"></select>
+                <span asp-validation-for="SourcePlayer" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="mb-3">
+                <label asp-for="Target" class="form-label"></label>
+                <select asp-for="Target" asp-items="ObjectTarget.Bank.GetSelectList()" class="form-select"></select>
+                <span asp-validation-for="Target" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="mb-3">
+                <label asp-for="TargetPlayer" class="form-label"></label>
+                <select asp-for="TargetPlayer" asp-items="@(ObjectPlayer.CurrentPlayer.GetSelectList(true, "Select a Player"))" class="form-select"></select>
+                <span asp-validation-for="TargetPlayer" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
 </form>

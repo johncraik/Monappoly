@@ -11,7 +11,7 @@
 
 <div class="mb-3">
     <label class="form-label">Player Action Type</label>
-    <select asp-items="Model.Types" class="form-select" onchange="GetActionPartial(this, 'Move')"></select>
+    <select asp-items="Model.Types" class="form-select" onchange="GetActionPartial(this, 'Player')"></select>
 </div>
 <div id="move-action">
     <partial name="Objects/Cards/PlayerAction/_BasePlayerActionPartial" model="PlayerActionType.JailCost"/>

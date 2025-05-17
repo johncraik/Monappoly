@@ -2,6 +2,21 @@
 
 <form method="post" asp-controller="CardAction" asp-action="DowngradeDiceAction" id="form">
     <input asp-for="GroupId" id="group-id" type="hidden"/>
-
-    
+    <div class="mb-3">
+        <label asp-for="TurnLength" class="form-label"></label>
+        <input asp-for="TurnLength" class="form-control"/>
+        <span asp-validation-for="TurnLength" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.ToDouble)
+        {
+        <input asp-for="ToDouble" class="form-check-input" type="checkbox" id="is-triple" checked/>
+        }
+        else
+        {
+        <input asp-for="ToDouble" class="form-check-input" type="checkbox" id="is-triple"/>
+        }
+        <label asp-for="ToDouble" class="form-check-label" for="is-triple"></label>
+        <span asp-validation-for="ToDouble" class="text-danger"></span>
+    </div>    
 </form>

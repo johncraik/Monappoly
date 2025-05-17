@@ -1,7 +1,46 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MonappolyLibrary.Extensions
+@using MonappolyLibrary.GameModels.Enums
 @model MonappolyLibrary.GameModels.Cards.CardActions.Property.TakePropertyAction
 
 <form method="post" asp-controller="CardAction" asp-action="TakePropertyAction" id="form">
     <input asp-for="GroupId" id="group-id" type="hidden"/>
-    
-    
+    <div class="mb-3">
+        <label asp-for="Player" class="form-label"></label>
+        <select asp-for="Player" asp-items="ObjectPlayer.CurrentPlayer.GetSelectList()" class="form-select"></select>
+        <span asp-validation-for="Player" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="PropertyCount" class="form-label"></label>
+        <input asp-for="PropertyCount" class="form-control"/>
+        <span asp-validation-for="PropertyCount" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.IsSet)
+        {
+        <input asp-for="IsSet" class="form-check-input" type="checkbox" id="is-set" checked/>
+        }
+        else
+        {
+        <input asp-for="IsSet" class="form-check-input" type="checkbox" id="is-set"/>
+        }
+        <label asp-for="IsSet" class="form-check-label" for="is-set"></label>
+        <span asp-validation-for="IsSet" class="text-danger"></span>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="mb-3">
+                <label asp-for="Source" class="form-label"></label>
+                <select asp-for="Source" asp-items="ObjectTarget.Bank.GetSelectList()" class="form-select"></select>
+                <span asp-validation-for="Source" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="mb-3">
+                <label asp-for="SourcePlayer" class="form-label"></label>
+                <select asp-for="SourcePlayer" asp-items="@(ObjectPlayer.CurrentPlayer.GetSelectList(true, "Select a Player"))" class="form-select"></select>
+                <span asp-validation-for="SourcePlayer" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
 </form>

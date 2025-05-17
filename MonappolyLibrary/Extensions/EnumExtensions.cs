@@ -12,7 +12,7 @@ public static class EnumExtensions
     {
         var vals = Enum.GetValues(e.GetType()).Cast<Enum>();
         
-        var list = vals.OrderBy(val => val.GetHashCode())
+        var list = vals.Where(val => val.GetHashCode() >= 0).OrderBy(val => val.GetHashCode())
             .Select(val => new SelectListItem
             {
                 Text = val.GetDisplayName(), 
@@ -24,7 +24,7 @@ public static class EnumExtensions
         list.Insert(0, new SelectListItem
         {
             Text = selectText,
-            Value = "-2"
+            Value = "-1"
         });
         return list;
     }

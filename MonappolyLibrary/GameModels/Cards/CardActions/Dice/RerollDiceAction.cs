@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 
@@ -10,8 +11,10 @@ public class RerollDiceAction : ICardAction, IDiceAction
     
     public int Id { get; set; }
     public int GroupId { get; set; }
+    [DisplayName("Number of Turns")]
     public uint TurnLength { get; set; }
     
+    [DisplayName("Number of Dice to Reroll")]
     public byte DiceCount { get; set; }
     
     public void Validate(ModelStateDictionary modelState)

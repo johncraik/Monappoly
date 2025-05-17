@@ -13,10 +13,13 @@ public class UnmortgagePropertyAction : ICardAction, IPropertyAction
     
     public int Id { get; set; }
     public int GroupId { get; set; }
+    [DisplayName("Number of Turns")]
     public uint TurnLength { get; set; }
 
     public ObjectPlayer Player { get; set; }
+    [DisplayName("Number of Properties")]
     public uint PropertyCount { get; set; }
+    [DisplayName("Unmortgage a Set?")]
     public bool IsSet { get; set; }
     [DisplayName("Pay Unmortgage Cost?")]
     public bool IsPayValue { get; set; } = true;
