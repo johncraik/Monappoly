@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.Extensions;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 using MonappolyLibrary.GameModels.Enums;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.BoardSpace;
@@ -34,5 +36,18 @@ public class TaxBoardSpaceAction : ICardAction, IBoardSpaceAction
                 modelState.AddModelError(nameof(CustomMultiplier), "Custom multiplier must be greater than 0.");
                 break;
         }
+    }
+    
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("Tax Multiplier:", TaxMultiplier.GetDisplayName(), null),
+            ("Fixed Tax Amount:", FixedTax.ToString(), TaxMultiplier == ObjectMultiplier.Fixed),
+            ("Custom Multiplier Amount:", CustomMultiplier.ToString(), TaxMultiplier == ObjectMultiplier.Custom),
+            ("Target Player:", Player.GetDisplayName(), null)
+        };
+        
+        return new ActionViewModel(this, props);
     }
 }

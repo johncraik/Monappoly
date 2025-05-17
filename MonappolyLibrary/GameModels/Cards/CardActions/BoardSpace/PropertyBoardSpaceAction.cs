@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.Extensions;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 using MonappolyLibrary.GameModels.Enums;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.BoardSpace;
@@ -48,5 +50,20 @@ public class PropertyBoardSpaceAction : ICardAction, IBoardSpaceAction
                 modelState.AddModelError(nameof(MultiplierAmount), "Multiplier Amount must be set when RentMultiplier is Custom.");
                 break;
         }
+    }
+    
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("Property Ownership:", PropertyOwnership.GetDisplayName(), null),
+            ("Rent Multiplier:", RentMultiplier?.GetDisplayName() ?? "", PropertyOwnership != ObjectTarget.Bank),
+            ("Custom Rent Amount:", CustomRent.ToString(), PropertyOwnership != ObjectTarget.Bank),
+            ("Custom Multiplier Amount:", MultiplierAmount.ToString(), PropertyOwnership != ObjectTarget.Bank),
+            ("Affects a Set?", IsSet ? "Yes" : "No", PropertyOwnership == ObjectTarget.Bank),
+            ("Number of Free Houses:", SetHouseCount.ToString(), PropertyOwnership == ObjectTarget.Bank)
+        };
+        
+        return new ActionViewModel(this, props);
     }
 }

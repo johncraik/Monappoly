@@ -12,18 +12,19 @@ public static class EnumExtensions
     {
         var vals = Enum.GetValues(e.GetType()).Cast<Enum>();
         
-        var list = vals.Select(val => new SelectListItem
-        {
-            Text = val.GetDisplayName(), 
-            Value = val.GetHashCode().ToString()
-        }).ToList();
+        var list = vals.OrderBy(val => val.GetHashCode())
+            .Select(val => new SelectListItem
+            {
+                Text = val.GetDisplayName(), 
+                Value = val.GetHashCode().ToString()
+            }).ToList();
 
         if (!insertSelect) return list;
         
         list.Insert(0, new SelectListItem
         {
             Text = selectText,
-            Value = "-1"
+            Value = "-2"
         });
         return list;
     }

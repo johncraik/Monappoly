@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.Dice;
 
@@ -27,5 +28,16 @@ public class DowngradeDiceAction : ICardAction, IDiceAction
         {
             modelState.AddModelError(nameof(DiceCount), "Dice count must be 1, 2, or 3.");
         }
+    }
+
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("Dice Count:", DiceCount.ToString(), null),
+            ("Downgrade to Double:", ToDouble.ToString(), null)
+        };
+
+        return new ActionViewModel(this, props);
     }
 }

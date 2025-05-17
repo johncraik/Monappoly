@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.Extensions;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 using MonappolyLibrary.GameModels.Enums;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.Property;
@@ -37,5 +39,17 @@ public class PurgePropertyAction : ICardAction, IPropertyAction
         {
             modelState.AddModelError(nameof(PropertyCount), "Property count must be less than or equal to 10 when IsSet is true.");
         }
+    }
+    
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("Player:", Player.GetDisplayName(), null),
+            ("Property Count:", PropertyCount.ToString(), null),
+            ("Is Set:", IsSet ? "Yes" : "No", null)
+        };
+        
+        return new ActionViewModel(this, props);
     }
 }

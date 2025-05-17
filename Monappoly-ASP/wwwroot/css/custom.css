@@ -51,6 +51,12 @@
     border-radius: 3px;
 }
 
+.centred{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .mr{
     margin-right: 10px;
 }

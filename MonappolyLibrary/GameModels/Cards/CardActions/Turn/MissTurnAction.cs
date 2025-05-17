@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.Extensions;
 using MonappolyLibrary.GameModels.Cards.CardActions.Player;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 using MonappolyLibrary.GameModels.Enums;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.Turn;
@@ -31,5 +33,15 @@ public class MissTurnAction : ICardAction, ITurnAction
         {
             modelState.AddModelError(nameof(Player), "Player cannot be all when missing turns.");
         }
+    }
+    
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("Player:", Player.GetDisplayName(), null)
+        };
+
+        return new ActionViewModel(this, props);
     }
 }

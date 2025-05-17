@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.Extensions;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 using MonappolyLibrary.GameModels.Enums;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.Property;
@@ -47,5 +49,18 @@ public class ReturnPropertyAction : ICardAction, IPropertyAction
         {
             modelState.AddModelError(nameof(TargetPlayer), "Target player must be specified when target is a player.");
         }
+    }
+    
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("Property Count:", PropertyCount.ToString(), null),
+            ("Return a Set:", IsSet.ToString(), null),
+            ("Target:", Target.GetDisplayName(), null),
+            ("Target Player:", TargetPlayer?.GetDisplayName() ?? "", Target == ObjectTarget.Player)
+        };
+        
+        return new ActionViewModel(this, props);
     }
 }

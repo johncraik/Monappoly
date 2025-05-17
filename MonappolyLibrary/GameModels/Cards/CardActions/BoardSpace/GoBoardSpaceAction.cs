@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.Extensions;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 using MonappolyLibrary.GameModels.Enums;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.BoardSpace;
@@ -39,5 +41,18 @@ public class GoBoardSpaceAction : ICardAction, IBoardSpaceAction
         {
             modelState.AddModelError(nameof(MultiplierAmount), "MultiplierAmount is required when Multiplier is Custom.");
         }
+    }
+
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("GO Money Multiplied?", IsMultiplied ? "Yes" : "No", null),
+            ("Money Multiplier:", Multiplier?.GetDisplayName() ?? "", IsMultiplied),
+            ("Custom Multiplier Amount:", MultiplierAmount.ToString(), IsMultiplied),
+            ("Target Player for Money:", TargetPlayer?.GetDisplayName() ?? "", !IsMultiplied)
+        };
+        
+        return new ActionViewModel(this, props);
     }
 }

@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
+using MonappolyLibrary.GameModels.Enums;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.Move;
 
@@ -31,5 +33,17 @@ public class SimpleMoveAction : ICardAction, IMoveAction
         }
 
         TurnLength = 0;
+    }
+    
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("Spaces:", Value.ToString(), null),
+            ("Move Backwards:", IsBackwards.ToString(), null),
+            ("Advance to Space:", IsAdvance.ToString(), null)
+        };
+        
+        return new ActionViewModel(this, props);
     }
 }

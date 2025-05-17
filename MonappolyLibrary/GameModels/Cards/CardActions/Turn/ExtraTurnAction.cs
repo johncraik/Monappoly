@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.Extensions;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 using MonappolyLibrary.GameModels.Enums;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.Turn;
@@ -33,5 +35,16 @@ public class ExtraTurnAction : ICardAction, ITurnAction
         {
             modelState.AddModelError(nameof(Player), "Player cannot be all when having extra turns.");
         }
+    }
+
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("Player:", Player.GetDisplayName(), null),
+            ("Roll the Third Dice:", RollThirdDice.ToString(), null)
+        };
+
+        return new ActionViewModel(this, props);
     }
 }

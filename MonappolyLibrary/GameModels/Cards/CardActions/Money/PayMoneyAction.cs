@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.Extensions;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 using MonappolyLibrary.GameModels.Enums;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.Money;
@@ -45,5 +47,20 @@ public class PayMoneyAction : ICardAction, IMoneyAction
         {
             modelState.AddModelError("MoneyMultiplier", "Custom multiplier is not supported.");
         }
+    }
+    
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("Payment Amount:", Value.ToString(), null),
+            ("Source:", Source.GetDisplayName(), null),
+            ("Source Player:", SourcePlayer?.GetDisplayName() ?? "", Source == ObjectTarget.Player),
+            ("Target:", Target.GetDisplayName(), null),
+            ("Target Player:", TargetPlayer?.GetDisplayName() ?? "", Target == ObjectTarget.Player),
+            ("Payment Multiplier:", MoneyMultiplier.GetDisplayName(), null)
+        };
+        
+        return new ActionViewModel(this, props);
     }
 }

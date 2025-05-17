@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
+using MonappolyLibrary.GameModels.Enums;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.TakeCard;
 
@@ -14,6 +16,7 @@ public class SingleCardAction : ICardAction, ITakeCardAction
 
     [DisplayName("Card Type")]
     public int CardTypeId { get; set; }
+    public string? CardTypeName { get; set; }
     
     public void Validate(ModelStateDictionary modelState)
     {
@@ -28,5 +31,15 @@ public class SingleCardAction : ICardAction, ITakeCardAction
         }
 
         TurnLength = 0;
+    }
+    
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("Card Type:", CardTypeName ?? "Unknown", null)
+        };
+        
+        return new ActionViewModel(this, props);
     }
 }

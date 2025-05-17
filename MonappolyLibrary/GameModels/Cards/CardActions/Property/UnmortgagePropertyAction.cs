@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.Extensions;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 using MonappolyLibrary.GameModels.Enums;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.Property;
@@ -45,5 +47,18 @@ public class UnmortgagePropertyAction : ICardAction, IPropertyAction
         {
             modelState.AddModelError(nameof(TurnLength), "Turn length must be greater than 0.");
         }
+    }
+    
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("Player:", Player.GetDisplayName(), null),
+            ("Number of Properties:", PropertyCount.ToString(), null),
+            ("Mortgage a Set?", IsSet.ToString(), null),
+            ("Pay Unmortgage Cost?", IsPayValue.ToString(), null)
+        };
+        
+        return new ActionViewModel(this, props);
     }
 }

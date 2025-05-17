@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.Extensions;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 using MonappolyLibrary.GameModels.Enums;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.Player;
@@ -52,5 +54,20 @@ public class TripleBonusPlayerAction : ICardAction, IPlayerAction
         }
 
         TurnLength = 0;
+    }
+    
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("Player:", Player.GetDisplayName(), null),
+            ("Reset Triple Bonus?", IsReset ? "Yes" : "No", null),
+            ("Triple Bonus Increased?", IsIncreased ? "Yes" : "No", !IsReset),
+            ("Bonus Multiplier:", CostMultiplier?.GetDisplayName() ?? "", !IsReset),
+            ("Fixed Bonus Increase/Decrease:", FixedCost.ToString(), !IsReset && CostMultiplier == ObjectMultiplier.Fixed),
+            ("Custom Bonus Multiplier:", CustomMultiplier.ToString(), !IsReset && CostMultiplier == ObjectMultiplier.Custom)
+        };
+        
+        return new ActionViewModel(this, props);
     }
 }

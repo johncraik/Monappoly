@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.Extensions;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 using MonappolyLibrary.GameModels.Enums;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.Move;
@@ -40,5 +42,18 @@ public class SwapMoveAction : ICardAction, IMoveAction
         }
 
         TurnLength = 0;
+    }
+    
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("Source Player:", SourcePlayer.GetDisplayName(), null),
+            ("Target Player:", TargetPlayer.GetDisplayName(), null),
+            ("Do Space Action when Swapped?", IsDoSpaceAction.ToString(), null),
+            ("Move Backwards?", IsBackwards.ToString(), null)
+        };
+        
+        return new ActionViewModel(this, props);
     }
 }

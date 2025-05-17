@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.Extensions;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 using MonappolyLibrary.GameModels.Enums;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.Player;
@@ -40,5 +42,18 @@ public class DiceNumberPlayerAction : ICardAction, IPlayerAction
         }
         
         TurnLength = 0;
+    }
+    
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("Player:", Player.GetDisplayName(), null),
+            ("Reset Dice Number?", IsReset.ToString(), null),
+            ("Have Player's Number Rolled?", CallNumber.ToString(), null),
+            ("Has Player Rolled the Number?", HasRolled.ToString(), null)
+        };
+        
+        return new ActionViewModel(this, props);
     }
 }

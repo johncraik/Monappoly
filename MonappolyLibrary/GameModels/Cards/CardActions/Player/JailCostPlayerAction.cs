@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.Extensions;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 using MonappolyLibrary.GameModels.Enums;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.Player;
@@ -52,5 +54,20 @@ public class JailCostPlayerAction : ICardAction, IPlayerAction
         }
 
         TurnLength = 0;
+    }
+    
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("Player:", Player.GetDisplayName(), null),
+            ("Reset Jail Cost?", IsReset ? "Yes" : "No", null),
+            ("Increase Jail Cost?", IsIncreased ? "Yes" : "No", !IsReset),
+            ("Jail Cost Multiplier:", CostMultiplier?.GetDisplayName() ?? "", !IsReset),
+            ("Fixed Jail Cost:", FixedCost.ToString(), !IsReset && CostMultiplier == ObjectMultiplier.Fixed),
+            ("Custom Jail Cost Multiplier:", CustomMultiplier.ToString(), !IsReset && CostMultiplier == ObjectMultiplier.Custom)
+        };
+        
+        return new ActionViewModel(this, props);
     }
 }

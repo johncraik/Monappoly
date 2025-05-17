@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions;
 
@@ -10,6 +11,7 @@ public interface ICardAction
     uint TurnLength { get; set; }
 
     void Validate(ModelStateDictionary modelState);
+    ActionViewModel ToViewModel();
 }
 
 public enum ActionType

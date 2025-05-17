@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.Extensions;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 using MonappolyLibrary.GameModels.Enums;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.BoardSpace;
@@ -86,6 +88,23 @@ public class FreeParkingBoardSpaceAction : ICardAction, IBoardSpaceAction
             //This property refers to handing in when taking:
             HandInPropertyCount = 0;
         }
+    }
+    
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("Free Parking Money:", IsTakeMoney ? "Take Money" : "Pay in Money", null),
+            ("Money Amount/Cap:", PayInAmount.ToString(), null),
+            ("Free Parking Properties:", IsTakeProperty ? "Take Properties" : "Hand In Properties", null),
+            ("Hand In Properties:", HandInPropertyCount.ToString(), !IsTakeProperty),
+            ("Hand In Restrictions:", HandInRestrictions ? "Yes" : "No", !IsTakeProperty),
+            ("Fixed Property Multiplier:", PropertyMultiplier.ToString(), FreeParkingTypes.Contains(FreeParkingActionType.MoneyMultiplied) && !FreeParkingTypes.Contains(FreeParkingActionType.Default)),
+            ("Money Multiplier:", MoneyMultiplier.GetDisplayName(), FreeParkingTypes.Contains(FreeParkingActionType.MultipleProperties) && !FreeParkingTypes.Contains(FreeParkingActionType.Default)),
+            ("Multiplier Amount:", MultiplierAmount.ToString(), FreeParkingTypes.Contains(FreeParkingActionType.MultipleProperties) && !FreeParkingTypes.Contains(FreeParkingActionType.Default))
+        };
+        
+        return new ActionViewModel(this, props);
     }
 }
 

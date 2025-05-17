@@ -20,6 +20,7 @@ public static class ServicesExtensions
     public static IServiceCollection GetServices(this IServiceCollection services)
     {
         services.AddTransient<FilePathProvider>();
+        services.AddTransient<CardActionFileService>();
         services.AddTransient<CsvReader<CardDefaultsService.CardUpload>>();
 
         return services;

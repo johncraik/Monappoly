@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MonappolyLibrary.Extensions;
+using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
 using MonappolyLibrary.GameModels.Enums;
 
 namespace MonappolyLibrary.GameModels.Cards.CardActions.BoardSpace;
@@ -40,5 +42,18 @@ public class JailBoardSpaceAction : ICardAction, IBoardSpaceAction
                 TurnLength = 0;
                 break;
         }
+    }
+    
+    public ActionViewModel ToViewModel()
+    {
+        var props = new (string Key, string Value, bool? Condition)[]
+        {
+            ("Can Receive Rent?", CanReceiveRent ? "Yes" : "No", null),
+            ("Must Stay in Jail?", MustStay ? "Yes" : "No", null),
+            ("Get out of Jail Free?", LeaveJail ? "Yes" : "No", null),
+            ("Target Player:", TargetPlayer.GetDisplayName(), null)
+        };
+        
+        return new ActionViewModel(this, props);
     }
 }

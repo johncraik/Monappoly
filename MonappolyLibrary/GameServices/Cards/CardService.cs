@@ -16,16 +16,19 @@ public class CardService
     private readonly UserInfo _userInfo;
     private readonly CsvReader<CardDefaultsService.CardUpload> _cardUpload;
     private readonly ILogger<CardService> _logger;
+    private readonly CardActionFileService _cardActionFileService;
 
     public CardService(MonappolyDbContext context, 
         UserInfo userInfo,
         CsvReader<CardDefaultsService.CardUpload> cardUpload,
-        ILogger<CardService> logger)
+        ILogger<CardService> logger,
+        CardActionFileService cardActionFileService)
     {
         _context = context;
         _userInfo = userInfo;
         _cardUpload = cardUpload;
         _logger = logger;
+        _cardActionFileService = cardActionFileService;
     }
 
 
@@ -44,8 +47,15 @@ public class CardService
         var vms = new List<CardViewModel>();
         foreach (var card in cards)
         {
-            var hasAction = await _context.CardActionGroups.AnyAsync(ac => ac.CardId == card.Id);
-            var vm = new CardViewModel(card, hasAction);
+            var actionGroup = await _context.CardActionGroups.FirstOrDefaultAsync(ac => ac.CardId == card.Id);
+            if (actionGroup == null)
+            {
+                vms.Add(new CardViewModel(card, false));
+                continue;
+            }
+            
+            var groupHasActions = _cardActionFileService.GroupHasActions(card.Id, actionGroup.Id);
+            var vm = new CardViewModel(card, groupHasActions);
             vms.Add(vm);
         }
 
@@ -209,6 +219,8 @@ public class CardService
             modelState.AddModelError("Input.CardTypeId", "Type not found.");
             return false;
         }
+
+        if (cardUim.UploadFile.ContentType != "text/csv") return false;
         
         var file = cardUim.UploadFile;
         var records = _cardUpload.UploadFile(file);

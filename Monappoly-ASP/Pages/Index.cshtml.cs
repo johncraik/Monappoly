@@ -17,7 +17,7 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnGet()
     {
-        var test = await _cardActionService.GetAllCardActions(1);
+        //var test = await _cardActionService.GetAllCardActions(1);
         return Page();
     }
 }
