@@ -19,6 +19,7 @@ public class SpecialMoveAction : ICardAction, IMoveAction
     public SpecialMoveActionType SpecialMoveType {get; set;}
     [DisplayName("Is Owned by a Player?")]
     public bool OwnedSpace { get; set; } = false;
+    [DisplayName("Move Backwards?")]
     public bool IsBackwards { get; set; } = false;
 
     public void Validate(ModelStateDictionary modelState)
@@ -51,5 +52,6 @@ public enum SpecialMoveActionType
     Utility,
     Tax,
     Chance,
-    CommunityChest
+    CommunityChest,
+    Any
 }

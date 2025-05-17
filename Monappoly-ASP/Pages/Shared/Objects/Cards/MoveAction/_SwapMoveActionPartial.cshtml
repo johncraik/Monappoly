@@ -1,0 +1,42 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MonappolyLibrary.Extensions
+@using MonappolyLibrary.GameModels.Enums
+@model MonappolyLibrary.GameModels.Cards.CardActions.Move.SwapMoveAction
+
+<form method="post" asp-controller="CardAction" asp-action="SwapMoveAction" id="form">
+    <input asp-for="GroupId" id="group-id" type="hidden"/>
+    <div class="mb-3">
+        <label asp-for="SourcePlayer" class="form-label"></label>
+        <select asp-for="SourcePlayer" asp-items="ObjectPlayer.All.GetSelectList()" class="form-select"></select>
+        <span asp-validation-for="SourcePlayer" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="TargetPlayer" class="form-label"></label>
+        <select asp-for="TargetPlayer" asp-items="ObjectPlayer.All.GetSelectList()" class="form-select"></select>
+        <span asp-validation-for="TargetPlayer" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.IsDoSpaceAction)
+        {
+            <input asp-for="IsDoSpaceAction" class="form-check-input" type="checkbox" id="is-advance" checked/>
+        }
+        else
+        {
+            <input asp-for="IsDoSpaceAction" class="form-check-input" type="checkbox" id="is-advance"/>
+        }
+        <label asp-for="IsDoSpaceAction" class="form-check-label" for="is-advance"></label>
+        <span asp-validation-for="IsDoSpaceAction" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.IsBackwards)
+        {
+            <input asp-for="IsBackwards" class="form-check-input" type="checkbox" id="is-backwards" checked/>
+        }
+        else
+        {
+            <input asp-for="IsBackwards" class="form-check-input" type="checkbox" id="is-backwards"/>
+        }
+        <label asp-for="IsBackwards" class="form-check-label" for="is-backwards"></label>
+        <span asp-validation-for="IsBackwards" class="text-danger"></span>
+    </div>
+</form>

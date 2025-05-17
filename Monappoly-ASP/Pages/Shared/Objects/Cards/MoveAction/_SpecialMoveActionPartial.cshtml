@@ -1,0 +1,36 @@
+@using MonappolyLibrary.Extensions
+@using MonappolyLibrary.GameModels.Cards.CardActions.Move
+@model MonappolyLibrary.GameModels.Cards.CardActions.Move.SpecialMoveAction
+
+<form method="post" asp-controller="CardAction" asp-action="SpecialMoveAction" id="form">
+    <input asp-for="GroupId" id="group-id" type="hidden"/>
+    <div class="mb-3">
+        <label asp-for="SpecialMoveType" class="form-label"></label>
+        <select asp-for="SpecialMoveType" asp-items="SpecialMoveActionType.Any.GetSelectList()" class="form-select"></select>
+        <span asp-validation-for="SpecialMoveType" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.OwnedSpace)
+        {
+            <input asp-for="OwnedSpace" class="form-check-input" type="checkbox" id="is-advance" checked/>
+        }
+        else
+        {
+            <input asp-for="OwnedSpace" class="form-check-input" type="checkbox" id="is-advance"/>
+        }
+        <label asp-for="OwnedSpace" class="form-check-label" for="is-advance"></label>
+        <span asp-validation-for="OwnedSpace" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.IsBackwards)
+        {
+            <input asp-for="IsBackwards" class="form-check-input" type="checkbox" id="is-backwards" checked/>
+        }
+        else
+        {
+            <input asp-for="IsBackwards" class="form-check-input" type="checkbox" id="is-backwards"/>
+        }
+        <label asp-for="IsBackwards" class="form-check-label" for="is-backwards"></label>
+        <span asp-validation-for="IsBackwards" class="text-danger"></span>
+    </div>
+</form>

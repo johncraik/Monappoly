@@ -52,6 +52,11 @@ public class CardActionService
         => await _context.CardActionGroups.Where(cag => cag.CardId == cardId)
             .Include(cag => cag.Card)
             .ThenInclude(c => c.CardType).FirstOrDefaultAsync();
+    
+    public async Task<ActionGroup?> FindActionGroup(int groupId)
+        => await _context.CardActionGroups.Where(cag => cag.Id == groupId)
+            .Include(cag => cag.Card)
+            .ThenInclude(c => c.CardType).FirstOrDefaultAsync();
 
     private async Task ValidateActionGroup(ActionGroupViewModel groupViewModel, ModelStateDictionary modelState)
     {
@@ -137,6 +142,40 @@ public class CardActionService
         return actions;
     }
 
+    public async Task<(bool Result, int CardId)> CreateAction(ICardAction action, ModelStateDictionary modelState)
+    {
+        action.Validate(modelState);
+        if(!modelState.IsValid) return (false, 0);
+        
+        var group = await _context.CardActionGroups.FirstOrDefaultAsync(cag => cag.Id == action.GroupId);
+        if (group != null)
+        {
+            action.Id = group.NextActionId;
+            var res = action.Type switch
+            {
+                ActionType.Move => await SaveMoveAction(action as IMoveAction, group.CardId, group.Id, group.NextActionId),
+                // ActionType.Dice => await SaveDiceAction(action as IDiceAction, action.Id, action.GroupId, action.Id),
+                // ActionType.Turn => await SaveTurnAction(action as ITurnAction, action.Id, action.GroupId, action.Id),
+                // ActionType.Money => await SaveMoneyAction(action as IMoneyAction, action.Id, action.GroupId, action.Id),
+                // ActionType.Player => await SavePlayerAction(action as IPlayerAction, action.Id, action.GroupId, action.Id),
+                // ActionType.Property => await SavePropertyAction(action as IPropertyAction, action.Id, action.GroupId, action.Id),
+                // ActionType.BoardSpace => await SaveBoardSpaceAction(action as IBoardSpaceAction, action.Id, action.GroupId, action.Id),
+                // ActionType.TakeCard => await SaveTakeCardAction(action as ITakeCardAction, action.Id, action.GroupId, action.Id),
+                _ => false
+            };
+            if (res)
+            {
+                group.NextActionId++;
+                group.FillModified(_userInfo);
+                await _context.SaveChangesAsync();
+                return (true, group.CardId);
+            }
+        }
+        
+        modelState.AddModelError("", "Unknown error has occurred. Either the group could not be found or the action could not be saved.");
+        return (false, 0);
+    }
+
     #endregion
 
     
@@ -156,6 +195,22 @@ public class CardActionService
 
         return action;
     }    
+    
+    private async Task<bool> SaveMoveAction(IMoveAction? action, int cardId, int groupId, int actionId)
+    {
+        if(action == null) return false;
+        var file = action.MoveType switch
+        {
+            MoveActionType.Simple => JsonConvert.SerializeObject(action as SimpleMoveAction),
+            MoveActionType.Special => JsonConvert.SerializeObject(action as SpecialMoveAction),
+            MoveActionType.Swap => JsonConvert.SerializeObject(action as SwapMoveAction),
+            _ => null
+        };
+        
+        if(file == null) return false;
+        await _cardActionFileService.SaveAction(cardId, groupId, actionId, (int)ActionType.Move, file);
+        return true;
+    }
 
     #endregion
 

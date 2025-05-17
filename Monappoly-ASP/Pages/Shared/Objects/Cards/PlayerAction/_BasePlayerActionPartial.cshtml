@@ -1,0 +1,17 @@
+@using MonappolyLibrary.GameModels.Cards.CardActions.Player
+@model MonappolyLibrary.GameModels.Cards.CardActions.Player.PlayerActionType
+
+@switch (Model)
+{
+    case PlayerActionType.JailCost:
+        <partial name="Objects/Cards/PlayerAction/_JailCostPlayerActionPartial" model="new JailCostPlayerAction()"/>
+        break;
+    case PlayerActionType.TripleBonus:
+        <partial name="Objects/Cards/PlayerAction/_TripleBonusPlayerActionPartial" model="new TripleBonusPlayerAction()"/>
+        break;
+    case PlayerActionType.DiceNumber:
+        <partial name="Objects/Cards/PlayerAction/_DiceNumberPlayerActionPartial" model="new DiceNumberPlayerAction()"/>
+        break;
+    default:
+        throw new ArgumentOutOfRangeException();
+}

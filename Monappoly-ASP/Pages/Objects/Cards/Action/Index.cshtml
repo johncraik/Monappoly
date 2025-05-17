@@ -231,8 +231,8 @@
                                 <table class="table table-borderless">
                                     <thead class="table-dark">
                                     <tr>
-                                        <th>Action Type</th>
-                                        <th>Turn Length</th>
+                                        <th style="width: 160px">Action Type</th>
+                                        <th style="width: 160px">Turn Length</th>
                                         <th>Action Description</th>
                                         <th style="width: 90px"></th>
                                     </tr>
@@ -272,14 +272,14 @@
                                     Add Action to Group @(gi + 1)
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="add-action-@(gi)">
-                                    <li><a class="dropdown-item" asp-page="/Objects/Cards/Action/Edit/Move/@(cas.Group.Id)">New Move Action</a></li>
-                                    <li><a class="dropdown-item" asp-page="/Objects/Cards/Action/Edit/Dice/@(cas.Group.Id)">New Dice Action</a></li>
-                                    <li><a class="dropdown-item" asp-page="/Objects/Cards/Action/Edit/Turn/@(cas.Group.Id)">New Turn Action</a></li>
-                                    <li><a class="dropdown-item" asp-page="/Objects/Cards/Action/Edit/Money/@(cas.Group.Id)">New Money Action</a></li>
-                                    <li><a class="dropdown-item" asp-page="/Objects/Cards/Action/Edit/Player/@(cas.Group.Id)">New Player Action</a></li>
-                                    <li><a class="dropdown-item" asp-page="/Objects/Cards/Action/Edit/Property/@(cas.Group.Id)">New Property Action</a></li>
-                                    <li><a class="dropdown-item" asp-page="/Objects/Cards/Action/Edit/BoardSpace/@(cas.Group.Id)">New Board Space Action</a></li>
-                                    <li><a class="dropdown-item" asp-page="/Objects/Cards/Action/Edit/TakeCard/@(cas.Group.Id)">New Take Card Action</a></li>
+                                    <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/MoveAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Move Action</a></li>
+                                    <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/DiceAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Dice Action</a></li>
+                                    <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/TurnAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Turn Action</a></li>
+                                    <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/MoneyAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Money Action</a></li>
+                                    <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/PlayerAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Player Action</a></li>
+                                    <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/PropertyAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Property Action</a></li>
+                                    <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/BoardSpaceAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Board Space Action</a></li>
+                                    <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/TakeCardAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Take Card Action</a></li>
                                 </ul>
                             </div>
                         }

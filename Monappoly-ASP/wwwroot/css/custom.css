@@ -57,6 +57,10 @@
     align-items: center;
 }
 
+.hand{
+    cursor: pointer;
+}
+
 .mr{
     margin-right: 10px;
 }

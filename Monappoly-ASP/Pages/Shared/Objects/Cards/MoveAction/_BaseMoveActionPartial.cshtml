@@ -1,0 +1,19 @@
+@using MonappolyLibrary.GameModels.Cards.CardActions.Move
+@model MonappolyLibrary.GameModels.Cards.CardActions.Move.MoveActionType
+
+
+@switch (Model)
+{
+    case MoveActionType.Simple:
+        <partial name="Objects/Cards/MoveAction/_SimpleMoveActionPartial" model="new SimpleMoveAction()"/>
+        break;
+    case MoveActionType.Special:
+        <partial name="Objects/Cards/MoveAction/_SpecialMoveActionPartial" model="new SpecialMoveAction()"/>
+        break;
+    case MoveActionType.Swap:
+        <partial name="Objects/Cards/MoveAction/_SwapMoveActionPartial" model="new SwapMoveAction()"/>
+        break;
+    default:
+        throw new ArgumentOutOfRangeException();
+}
+

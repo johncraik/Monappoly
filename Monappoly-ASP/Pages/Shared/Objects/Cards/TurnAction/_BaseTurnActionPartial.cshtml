@@ -1,0 +1,14 @@
+@using MonappolyLibrary.GameModels.Cards.CardActions.Turn
+@model MonappolyLibrary.GameModels.Cards.CardActions.Turn.TurnActionType
+
+@switch (Model)
+{
+    case TurnActionType.Miss:
+        <partial name="Objects/Cards/TurnAction/_MissTurnActionPartial" model="new MissTurnAction()"/>
+        break;
+    case TurnActionType.Extra:
+        <partial name="Objects/Cards/TurnAction/_ExtraTurnActionPartial" model="new ExtraTurnAction()"/>
+        break;
+    default:
+        throw new ArgumentOutOfRangeException();
+}

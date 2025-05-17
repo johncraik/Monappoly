@@ -1,0 +1,23 @@
+@using MonappolyLibrary.GameModels.Cards.CardActions.Property
+@model MonappolyLibrary.GameModels.Cards.CardActions.Property.PropertyActionType
+
+@switch (Model)
+{
+    case PropertyActionType.Take:
+        <partial name="Objects/Cards/PropertyAction/_TakePropertyActionPartial" model="new TakePropertyAction()"/>
+        break;
+    case PropertyActionType.Return:
+        <partial name="Objects/Cards/PropertyAction/_ReturnPropertyActionPartial" model="new ReturnPropertyAction()"/>
+        break;
+    case PropertyActionType.Mortgage:
+        <partial name="Objects/Cards/PropertyAction/_MortgagePropertyActionPartial" model="new MortgagePropertyAction()"/>
+        break;
+    case PropertyActionType.Unmortgage:
+        <partial name="Objects/Cards/PropertyAction/_UnmortgagePropertyActionPartial" model="new UnmortgagePropertyAction()"/>
+        break;
+    case PropertyActionType.Purge:
+        <partial name="Objects/Cards/PropertyAction/_PurgePropertyActionPartial" model="new PurgePropertyAction()"/>
+        break;
+    default:
+        throw new ArgumentOutOfRangeException();
+}

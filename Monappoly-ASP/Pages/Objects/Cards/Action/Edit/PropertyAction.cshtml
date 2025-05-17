@@ -1,0 +1,18 @@
+@page "{cardId}/{groupId}"
+@using MonappolyLibrary.GameModels.Cards.CardActions.Property
+@model Monappoly_ASP.Pages.Objects.Cards.Action.Edit.PropertyAction
+
+@{
+    Layout = "Shared/_ActionLayout";
+    ViewData["Title"] = "Property Action";
+    ViewData["CardId"] = Model.Card.Id;
+    ViewData["GroupId"] = Model.GroupId;
+}
+
+<div class="mb-3">
+    <label class="form-label">Property Action Type</label>
+    <select asp-items="Model.Types" class="form-select" onchange="GetActionPartial(this, 'Property')"></select>
+</div>
+<div id="move-action">
+    <partial name="Objects/Cards/PropertyAction/_BasePropertyActionPartial" model="PropertyActionType.Take"/>
+</div>

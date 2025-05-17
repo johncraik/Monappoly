@@ -1,0 +1,14 @@
+@using MonappolyLibrary.GameModels.Cards.CardActions.Money
+@model MonappolyLibrary.GameModels.Cards.CardActions.Money.MoneyActionType
+
+@switch (Model)
+{
+    case MoneyActionType.Pay:
+        <partial name="Objects/Cards/MoneyAction/_PayMoneyActionPartial" model="new PayMoneyAction()"/>
+        break;
+    case MoneyActionType.Receive:
+        <partial name="Objects/Cards/MoneyAction/_ReceiveMoneyActionPartial" model="new ReceiveMoneyAction()"/>
+        break;
+    default:
+        throw new ArgumentOutOfRangeException();
+}

@@ -1,0 +1,18 @@
+@page "{cardId}/{groupId}"
+@using MonappolyLibrary.GameModels.Cards.CardActions.BoardSpace
+@model Monappoly_ASP.Pages.Objects.Cards.Action.Edit.BoardSpaceAction
+
+@{
+    Layout = "Shared/_ActionLayout";
+    ViewData["Title"] = "Board Space Action";
+    ViewData["CardId"] = Model.Card.Id;
+    ViewData["GroupId"] = Model.GroupId;
+}
+
+<div class="mb-3">
+    <label class="form-label">Move Action Type</label>
+    <select asp-items="Model.Types" class="form-select" onchange="GetActionPartial(this, 'BoardSpace')"></select>
+</div>
+<div id="move-action">
+    <partial name="Objects/Cards/BoardSpaceAction/_BaseBoardSpaceActionPartial" model="BoardSpaceActionType.Go"/>
+</div>

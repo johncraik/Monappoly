@@ -1,0 +1,26 @@
+@using MonappolyLibrary.GameModels.Cards.CardActions.BoardSpace
+@model MonappolyLibrary.GameModels.Cards.CardActions.BoardSpace.BoardSpaceActionType
+
+@switch (Model)
+{
+    case BoardSpaceActionType.Go:
+        <partial name="Objects/Cards/BoardSpaceAction/_GoBoardSpaceActionPartial" model="new GoBoardSpaceAction()"/>
+        break;
+    case BoardSpaceActionType.Jail:
+        <partial name="Objects/Cards/BoardSpaceAction/_JailBoardSpaceActionPartial" model="new JailBoardSpaceAction()"/>
+        break;
+    case BoardSpaceActionType.FreeParking:
+        <partial name="Objects/Cards/BoardSpaceAction/_FreeParkingBoardSpaceActionPartial" model="new FreeParkingBoardSpaceAction()"/>
+        break;
+    case BoardSpaceActionType.Tax:
+        <partial name="Objects/Cards/BoardSpaceAction/_TaxBoardSpaceActionPartial" model="new TaxBoardSpaceAction()"/>
+        break;
+    case BoardSpaceActionType.Card:
+        <partial name="Objects/Cards/BoardSpaceAction/_CardBoardSpaceActionPartial" model="new CardBoardSpaceAction()"/>
+        break;
+    case BoardSpaceActionType.Property:
+        <partial name="Objects/Cards/BoardSpaceAction/_PropertyBoardSpaceActionPartial" model="new PropertyBoardSpaceAction()"/>
+        break;
+    default:
+        throw new ArgumentOutOfRangeException();
+}

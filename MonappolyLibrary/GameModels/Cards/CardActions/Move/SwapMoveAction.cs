@@ -22,6 +22,7 @@ public class SwapMoveAction : ICardAction, IMoveAction
     
     [DisplayName("Do Space Action when Swapped?")]
     public bool IsDoSpaceAction { get; set; } = true;
+    [DisplayName("Move Backwards?")]
     public bool IsBackwards { get; set; }
     
     public void Validate(ModelStateDictionary modelState)

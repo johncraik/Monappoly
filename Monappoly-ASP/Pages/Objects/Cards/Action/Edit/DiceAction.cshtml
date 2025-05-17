@@ -1,0 +1,18 @@
+@page "{cardId}/{groupId}"
+@using MonappolyLibrary.GameModels.Cards.CardActions.Dice
+@model Monappoly_ASP.Pages.Objects.Cards.Action.Edit.DiceAction
+
+@{
+    Layout = "Shared/_ActionLayout";
+    ViewData["Title"] = "Dice Action";
+    ViewData["CardId"] = Model.Card.Id;
+    ViewData["GroupId"] = Model.GroupId;
+}
+
+<div class="mb-3">
+    <label class="form-label">Dice Action Type</label>
+    <select asp-items="Model.Types" class="form-select" onchange="GetActionPartial(this, 'Dice')"></select>
+</div>
+<div id="move-action">
+    <partial name="Objects/Cards/DiceAction/_BaseDiceActionPartial" model="DiceActionType.Convert"/>
+</div>

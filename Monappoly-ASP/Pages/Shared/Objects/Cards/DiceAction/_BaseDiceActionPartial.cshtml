@@ -1,0 +1,17 @@
+@using MonappolyLibrary.GameModels.Cards.CardActions.Dice
+@model MonappolyLibrary.GameModels.Cards.CardActions.Dice.DiceActionType
+
+@switch (Model)
+{
+    case DiceActionType.Convert:
+        <partial name="Objects/Cards/DiceAction/_ConvertDiceActionPartial" model="new ConvertDiceAction()"/>
+        break;
+    case DiceActionType.Downgrade:
+        <partial name="Objects/Cards/DiceAction/_DowngradeDiceActionPartial" model="new DowngradeDiceAction()"/>
+        break;
+    case DiceActionType.Reroll:
+        <partial name="Objects/Cards/DiceAction/_RerollDiceActionPartial" model="new RerollDiceAction()"/>
+        break;
+    default:
+        throw new ArgumentOutOfRangeException();
+}

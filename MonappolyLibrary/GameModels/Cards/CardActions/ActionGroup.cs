@@ -9,6 +9,7 @@ public class ActionGroup : DataModel
     private const string PlayConditionDelimiter = "/¬/";
     
     public int Id { get; set; }
+    public int NextActionId { get; set; }
     
     public int CardId {get; set;}
     [ForeignKey(nameof(CardId))]

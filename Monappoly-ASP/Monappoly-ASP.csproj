@@ -618,10 +618,10 @@
       <Folder Include="Pages\Games\Helper\" />
       <Folder Include="Pages\Objects\Boards\" />
       <Folder Include="Pages\Objects\Buildings\" />
-      <Folder Include="Pages\Objects\Cards\Action\Edit\" />
       <Folder Include="Pages\Objects\Dice\" />
       <Folder Include="Pages\Objects\PlayerPieces\" />
       <Folder Include="Pages\Players\Stats\" />
+      <Folder Include="Pages\Shared\Objects\Cards\TakeCardAction\" />
     </ItemGroup>
 
 </Project>

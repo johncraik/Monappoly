@@ -1,0 +1,34 @@
+@model MonappolyLibrary.GameModels.Cards.CardActions.Move.SimpleMoveAction
+
+<form method="post" asp-controller="CardAction" asp-action="SimpleMoveAction" id="form">
+    <input asp-for="GroupId" id="group-id" type="hidden"/>
+    <div class="mb-3">
+        <label asp-for="Value" class="form-label"></label>
+        <input asp-for="Value" class="form-control"/>
+        <span asp-validation-for="Value" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.IsAdvance)
+        {
+            <input asp-for="IsAdvance" class="form-check-input" type="checkbox" id="is-advance" checked/>
+        }
+        else
+        {
+            <input asp-for="IsAdvance" class="form-check-input" type="checkbox" id="is-advance"/>
+        }
+        <label asp-for="IsAdvance" class="form-check-label" for="is-advance"></label>
+        <span asp-validation-for="IsAdvance" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.IsBackwards)
+        {
+            <input asp-for="IsBackwards" class="form-check-input" type="checkbox" id="is-backwards" checked/>
+        }
+        else
+        {
+            <input asp-for="IsBackwards" class="form-check-input" type="checkbox" id="is-backwards"/>
+        }
+        <label asp-for="IsBackwards" class="form-check-label" for="is-backwards"></label>
+        <span asp-validation-for="IsBackwards" class="text-danger"></span>
+    </div>
+</form>

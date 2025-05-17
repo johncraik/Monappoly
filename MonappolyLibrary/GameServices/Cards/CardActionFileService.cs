@@ -83,10 +83,10 @@ public class CardActionFileService
     public string GetAction(string path) => _filePathProvider.GetFile(path);
 
 
-    public async Task SaveAction(int cardId, int groupId, int actionType, int actionSubType, string serialisedAction)
+    public async Task SaveAction(int cardId, int groupId, int actionId, int actionType, string serialisedAction)
     {
         var path = GetGroupPath(cardId, groupId);
-        path = Path.Combine(path, $"{actionType}_{actionSubType}.txt");
+        path = Path.Combine(path, $"{actionType}_{actionId}.txt");
         
         await using var ws = new StreamWriter(path);
         await ws.WriteLineAsync(serialisedAction);
