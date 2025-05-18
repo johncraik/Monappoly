@@ -22,9 +22,9 @@ public class PropertyBoardSpace : DataModel, IBoardSpace
     
     public void Validate(ModelStateDictionary modelState)
     {
-        if (SpaceType != BoardSpaceType.Tax)
+        if (SpaceType != BoardSpaceType.Property)
         {
-            throw new InvalidOperationException("SpaceType must be Tax for TaxBoardSpace.");
+            throw new InvalidOperationException("SpaceType must be Property for PropertyBoardSpace.");
         }
 
         if (string.IsNullOrEmpty(Name))
@@ -37,7 +37,7 @@ public class PropertyBoardSpace : DataModel, IBoardSpace
             modelState.AddModelError("BoardId", "You must select a board.");
         }
 
-        if (PropertyType != PropertyType.SetProperty && PropertySet == PropertySet.None)
+        if (PropertyType != PropertyType.SetProperty && PropertySet != PropertySet.None)
         {
             modelState.AddModelError("PropertySet", "You must select a property set.");
         }

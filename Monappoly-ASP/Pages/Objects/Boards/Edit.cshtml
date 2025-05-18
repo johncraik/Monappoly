@@ -1,0 +1,38 @@
+@page "{id}"
+@model Monappoly_ASP.Pages.Objects.Boards.Edit
+
+@{
+    var title = Model.Adding ? "New Board" : "Edit Board";
+    ViewData["Title"] = title;
+}
+
+<div class="container-40">
+    <h1 class="page-title">@title</h1>
+
+    <div class="card">
+        <div class="card-body bg-light">
+            <form method="post">
+                <div class="mb-3">
+                    <label asp-for="Input.Name" class="form-label"></label>
+                    <input asp-for="Input.Name" class="form-control"/>
+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Input.Description" class="form-label"></label>
+                    <textarea asp-for="Input.Description" rows="5" class="form-control"></textarea>
+                    <span asp-validation-for="Input.Description" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Input.BuildingGroupId" class="form-label"></label>
+                    <select asp-for="Input.BuildingGroupId" asp-items="Model.BuildingGroups" class="form-select"></select>
+                    <span asp-validation-for="Input.BuildingGroupId" class="text-danger"></span>
+                </div>
+                <button class="btn btn-success mt-2" type="submit">@(Model.Adding ? "Create Board" : "Modify Board")</button>
+                <button class="btn btn-danger mt-2 mx-3" type="button"
+                        title="Cancel and go back to the previous page" onclick="location.assign('/Objects/Boards/Index')">
+                    Cancel
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

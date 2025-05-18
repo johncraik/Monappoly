@@ -1,0 +1,34 @@
+@page "{boardId}/{id}/{index}/{replace}"
+@model Monappoly_ASP.Pages.Objects.Boards.Spaces.Tax.Edit
+
+@{
+    var title = Model.Adding ? "New Tax Space" : Model.Replacing ? "Replace with Tax Space" : "Edit Tax Space";
+    ViewData["Title"] = title;
+}
+
+<div class="container-40">
+    <h1 class="page-title">@ViewData["Title"]</h1>
+    
+    <div class="card">
+        <div class="card-body bg-light">
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="mb3">
+                    <label asp-for="Input.Name" class="form-label"></label>
+                    <input asp-for="Input.Name" class="form-control"/>
+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                </div>
+                <div class="mb3">
+                    <label asp-for="Input.TaxAmount" class="form-label"></label>
+                    <input asp-for="Input.TaxAmount" class="form-control"/>
+                    <span asp-validation-for="Input.TaxAmount" class="text-danger"></span>
+                </div>
+                <button class="btn btn-success mt-2" type="submit">@(Model.Adding || Model.Replacing ? "Create Tax Space" : "Modify Tax Space")</button>
+                <button class="btn btn-danger mt-2 mx-3" type="button"
+                        title="Cancel and go back to the previous page" onclick="location.assign('/Objects/Boards/Index')">
+                    Cancel
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

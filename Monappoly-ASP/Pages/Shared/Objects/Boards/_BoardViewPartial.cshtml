@@ -1,0 +1,16 @@
+@model MonappolyLibrary.GameModels.Boards.ViewModels.BoardViewModel?
+
+@if (Model != null)
+{
+    <div class="card">
+        <div class="card-header bg-success text-white">
+            <h5 class="card-title">@Model.Board.Name</h5>
+            <p class="card-subtitle">@Model.Board.Description</p>
+        </div>
+        <div class="card-body bg-light">
+            <div style="overflow: scroll">
+                <partial name="Objects/Boards/_BoardSpacesPartial" model="(Model.Spaces, Model.Board.Id)"/>
+            </div>
+        </div>
+    </div>
+}

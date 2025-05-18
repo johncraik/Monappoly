@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using MonappolyLibrary.FileManagement;
 using MonappolyLibrary.GameModels.Cards;
+using MonappolyLibrary.GameServices.Boards;
 using MonappolyLibrary.GameServices.Cards;
 using MonappolyLibrary.Services;
 using MonappolyLibrary.Services.Defaults;
@@ -13,6 +14,9 @@ public static class ServicesExtensions
     {
         services.AddTransient<CardService>();
         services.AddTransient<CardActionService>();
+        services.AddTransient<BoardService>();
+        services.AddTransient<BoardSpaceService>();
+        services.AddTransient<BuildingGroupService>();
 
         return services;
     }

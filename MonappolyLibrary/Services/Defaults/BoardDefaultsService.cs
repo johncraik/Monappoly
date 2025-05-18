@@ -158,7 +158,7 @@ public class BoardDefaultsService
         }
         
         var cardSpaces = await _context.CardBoardSpaces.MonopolyDefaults().ToListAsync();
-        if (cardSpaces.Count != 5)
+        if (cardSpaces.Count != 6)
         {
             foreach (var c in cardSpaces)
             {

@@ -1,0 +1,128 @@
+@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MonappolyLibrary.Data.Defaults.Dictionaries
+@model Monappoly_ASP.Pages.Objects.Boards.Index
+
+@{
+    ViewData["Title"] = "Boards";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-header bg-main text-white">
+                <h5 class="card-title">@ViewData["Title"]</h5>
+            </div>
+            <div class="card-body bg-light">
+                <button class="btn btn-highlight-light mb-2 mr text-white" title="Create a new board"
+                        onclick="location.assign('/Objects/Boards/Edit/0')">
+                    New Board
+                </button>
+                @foreach (var board in Model.Boards)
+                {
+                    <div class="list-group">
+                        <div class="clearfix">
+                            <div class="float-start mt-1" style="width: calc(100% - 80px)">
+                                <button class="list-group-item list-group-item-action board-nav @(Model.CurrentBoard?.Board == board ? "active" : "")" title="View @board.Name"
+                                        onclick="GetBoards('@(board.Id)')" id="board-@board.Id">
+                                    @board.Name
+                                </button>
+                            </div>
+                            <div class="float-end mt-1" style="width: 40px">
+                                <button class="btn btn-sm btn-link mt-1" title="Delete board"
+                                        onclick="DeleteBoard('@(board.Id)')">
+                                    <span class="fa-solid fa-circle-xmark text-danger"></span>
+                                </button>
+                            </div>
+                            <div class="float-end mt-1" style="width: 40px">
+                                <button class="btn btn-sm btn-link mt-1" title="Edit board"
+                                        onclick="location.assign('/Objects/Boards/Edit/@(board.Id)')">
+                                    <span class="fa-solid fa-pen-to-square text-highlight"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-highlight text-white">
+                <h5 class="card-title">Board Space Key</h5>
+            </div>
+            <div class="card-body bg-light">
+                <table class="table table-striped table-bordered">
+                    <tbody>
+                    <tr>
+                        <td style="width: 50px" class="bg-highlight"></td>
+                        <td>Empty Space</td>
+                    </tr>
+                    <tr>
+                        <td style="background: @(CardDefaultsDictionary.ChanceColour);width: 50px"></td>
+                        <td>Chance Card</td>
+                    </tr>
+                    <tr>
+                        <td style="background: @(CardDefaultsDictionary.ComChestColour);width: 50px"></td>
+                        <td>Community Chest Card</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-main" style="width: 50px"></td>
+                        <td>Tax Space</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-brown" style="width: 50px"></td>
+                        <td>Brown Property Set</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-light-blue" style="width: 50px"></td>
+                        <td>Light Blue Property Set</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-pink" style="width: 50px"></td>
+                        <td>Pink Property Set</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-orange" style="width: 50px"></td>
+                        <td>Orange Property Set</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-red" style="width: 50px"></td>
+                        <td>Red Property Set</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-yellow" style="width: 50px"></td>
+                        <td>Yellow Property Set</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-green" style="width: 50px"></td>
+                        <td>Green Property Set</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-dark-blue" style="width: 50px"></td>
+                        <td>Dark Blue Property Set</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-station" style="width: 50px"></td>
+                        <td>Station Properties</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-utility" style="width: 50px"></td>
+                        <td>Utility Properties</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div id="board-view">
+            <partial name="Objects/Boards/_BoardViewPartial" model="Model.CurrentBoard"/>
+        </div>
+    </div>
+</div>
+
+<span hidden="@true" id="board-id">@Model.CurrentBoard.Board.Id</span>
+<script src="~/js/Boards/boards.js"></script>

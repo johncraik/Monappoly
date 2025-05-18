@@ -1,0 +1,276 @@
+@using MonappolyLibrary.Extensions
+@using MonappolyLibrary.GameModels.Boards.Spaces
+@model (List<MonappolyLibrary.GameModels.Boards.Spaces.IBoardSpace> Spaces, int BoardId)
+
+@{
+    var validBoard = true;
+    var propSpaces = Model.Spaces.Where(s => s.SpaceType == BoardSpaceType.Property).Select(s => s as PropertyBoardSpace).Where(p => p != null).ToList();
+    var genericSpaces = Model.Spaces.Where(s => s.SpaceType == BoardSpaceType.Generic).Select(s => s as GenericBoardSpace).Where(g => g != null).ToList();
+    if (PropertySet.None.GetSelectList().Count(ps => !propSpaces.Select(p => p?.PropertySet.GetDisplayName()).Contains(ps.Text)) > 0)
+    {
+        validBoard = false;
+    }
+    
+    if (PropertyType.SetProperty.GetSelectList().Count(ps => !propSpaces.Select(p => p?.PropertyType.GetDisplayName()).Contains(ps.Text)) > 0)
+    {
+        validBoard = false;
+    }
+
+    if (genericSpaces.Count(g => g?.Action == GenericSpaceAction.Jail) > 1 || 
+        genericSpaces.Count(g => g?.Action == GenericSpaceAction.Jail) == 0)
+    {
+        validBoard = false;
+    }
+    
+    if(genericSpaces.Count(g => g?.Action == GenericSpaceAction.Go) == 0)
+    {
+        validBoard = false;
+    }
+    
+    if(genericSpaces.Count(g => g?.Action == GenericSpaceAction.FreeParking) == 0)
+    {
+        validBoard = false;
+    }
+    
+    if(Model.Spaces.Count != 40)
+    {
+        validBoard = false;
+    }
+}
+
+<div class="mb-2">
+    <h6 class="text-@(validBoard ? "success" : "danger")"><b>@(validBoard ? "VALID" : "INVALID") Board</b></h6>
+    <span>
+        Use the interactive board below to add/replace board spaces.<br/>
+        <b>Note: </b> A valid board must have the following:
+    </span>
+    <ul>
+        <li>At least one property from each type (set, station, utility) and set (brown, blue, etc).</li>
+        <li>Exactly one Jail.</li>
+        <li>At least one GO space and Free Parking space.</li>
+    </ul>
+</div>
+<div style="width: 1030px; height: 1045px;">
+    @{
+        var index = 20;
+        for (var i = 0; i < 40; i++)
+        {
+            var colourClass = "bg-highlight";
+            var cardColour = "";
+            var space = Model.Spaces.FirstOrDefault(s => s.BoardIndex == index);
+            var newSpace = space == null;
+            
+            if (!newSpace)
+            {
+                if (space!.GetType() == typeof(PropertyBoardSpace))
+                {
+                    var p = space as PropertyBoardSpace;
+                    colourClass = p?.PropertyType switch
+                    {
+                        PropertyType.Station => "bg-station",
+                        PropertyType.Utility => "bg-utility",
+                        PropertyType.SetProperty => $"bg-{p.PropertySet.GetDisplayName().Replace(' ', '-').ToLower()}",
+                        _ => "bg-secondary"
+                    };
+                }
+                else if (space.GetType() == typeof(CardBoardSpace))
+                {
+                    var cardSpace = space as CardBoardSpace;
+                    cardColour = cardSpace?.CardType.Colour ?? "#eeeeee";
+                    colourClass = "";
+                }
+                else if (space.GetType() == typeof(TaxBoardSpace))
+                {
+                    colourClass = "bg-main";
+                }
+                else
+                {
+                    colourClass = "bg-sub";
+                }
+            }
+            
+            if (index % 10 == 0)
+            {
+                <div class="space corner @colourClass" style="background: @(cardColour)" type="button" data-bs-toggle="modal" data-bs-target="#space-@index">
+                    <div class="space-txt float-start txt-corner @(newSpace ? "text-white" : "")">
+                        @(space?.Name ?? "EMPTY")
+                    </div>
+                </div>
+            }
+            else if (Math.Floor(index / 10d) % 2 == 0)
+            {
+                var top = index > 20;
+                <div class="space space-horizontal bg-sub" type="button" data-bs-toggle="modal" data-bs-target="#space-@index">
+                    @if (top)
+                    {
+                        <div class="space-txt float-start txt-horizontal">
+                            @(space?.Name ?? "EMPTY")
+                        </div>
+                        <div class="banner-horizontal @(top ? "banner-top" : "banner-bottom") @colourClass" style="background: @(cardColour)"></div>
+                    }
+                    else
+                    {
+                        <div class="banner-horizontal @(top ? "banner-top" : "banner-bottom") @colourClass" style="background: @(cardColour)"></div>
+                        <div class="space-txt float-start txt-horizontal">
+                            @(space?.Name ?? "EMPTY")
+                        </div>
+                    }
+                    
+                </div>
+            }
+            else
+            {
+                var right = index > 30;
+                <div class="space space-vertical @(right ? "space-right" : "") bg-sub" type="button" data-bs-toggle="modal" data-bs-target="#space-@index">
+                    <div class="banner-vertical @(right ? "banner-right" : "banner-left") @colourClass" style="background: @(cardColour)"></div>
+                    <div class="space-txt float-@(right ? "end" : "start") txt-vertical">
+                        @(space?.Name ?? "EMPTY")
+                    </div>
+                </div>
+            }
+            
+            <div class="modal fade" tabindex="-1" id="space-@index" aria-labelledby="edit-space-@index" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="space-@index-header">
+                                @if (newSpace)
+                                {
+                                    <span>New Space</span>
+                                }
+                                else
+                                {
+                                    <span>@space?.Name</span>
+                                }
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            @if (!newSpace)
+                            {
+                                <div class="list-group">
+                                    <div class="list-group-item clearfix">
+                                        <span class="float-start"><b>Board Index: </b></span>
+                                        <span class="float-end">@space?.BoardIndex</span>
+                                    </div>
+
+                                    @if (space?.GetType() == typeof(PropertyBoardSpace))
+                                    {
+                                          var p = space as PropertyBoardSpace;
+                                          <div class="list-group-item clearfix">
+                                                    <span class="float-start"><b>Cost: </b></span>
+                                                    <span class="float-end">@p?.Cost</span>
+                                                </div>
+                                          <div class="list-group-item clearfix">
+                                                    <span class="float-start"><b>Property Type: </b></span>
+                                                    <span class="float-end">@p?.PropertyType.GetDisplayName()</span>
+                                                </div>
+                                          if (p?.PropertyType == PropertyType.SetProperty)
+                                          {
+                                              <div class="list-group-item clearfix">
+                                                        <span class="float-start"><b>Set Colour: </b></span>
+                                                        <span class="float-end">@p.PropertySet.GetDisplayName()</span>
+                                                    </div>
+                                          }
+                                    }
+                                      else if (space?.GetType() == typeof(TaxBoardSpace))
+                                      {
+                                          var t = space as TaxBoardSpace;
+                                          <div class="list-group-item clearfix">
+                                                    <span class="float-start"><b>Tax Amount: </b></span>
+                                                    <span class="float-end">@t?.TaxAmount</span>
+                                                </div>
+                                      }
+                                      else if (space?.GetType() == typeof(CardBoardSpace))
+                                      {
+                                          var c = space as CardBoardSpace;
+                                          <div class="list-group-item clearfix">
+                                                    <span class="float-start"><b>Card Type: </b></span>
+                                                    <span class="float-end">@c?.CardType.Name<br/>@c?.CardType.Description</span>
+                                                </div>
+                                      }
+                                      else
+                                      {
+                                          var g = space as GenericBoardSpace;
+                                          <div class="list-group-item clearfix">
+                                                    <span class="float-start"><b>Space Action: </b></span>
+                                                    <span class="float-end">@g?.Action.GetDisplayName()</span>
+                                                </div>
+                                      }
+                                </div>
+                              }
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger mx-3" data-bs-dismiss="modal">Close</button>
+                            @if (!newSpace)
+                            {
+                                <button type="button" class="btn btn-warning mx-1" title="Edit this @(space?.SpaceType.GetDisplayName()) space"
+                                        onclick="location.assign('/Objects/Boards/Spaces/@(space?.SpaceType.GetDisplayName())/Edit/@(Model.BoardId)/@(space?.Id)/@(index)/@(false)')">
+                                    Edit Space
+                                </button>
+                            }
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-success mx-1" title="Replace this @(space?.SpaceType.GetDisplayName()) space"
+                                        data-bs-toggle="dropdown" aria-expanded="false" id="replace-space">
+                                    @(newSpace ? "Add Space" : "Replace Space")
+                                </button>
+                                @{
+                                    var url = $"Edit/{Model.BoardId}/{space?.Id}/{index}/{true}";
+                                    if (newSpace)
+                                    {
+                                        url = $"Edit/{Model.BoardId}/0/{index}/{false}";
+                                    }
+                                }
+                                <ul class="dropdown-menu" aria-labelledby="replace-space">
+                                    @if (space?.SpaceType != BoardSpaceType.Generic)
+                                    {
+                                        <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Boards/Spaces/Generic/@(url)')">Generic Space</a></li>
+                                    }
+                                    @if(space?.SpaceType != BoardSpaceType.Tax)
+                                    {
+                                        <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Boards/Spaces/Tax/@(url)')">Tax Space</a></li>
+                                    }
+                                    @if(space?.SpaceType != BoardSpaceType.Card)
+                                    {
+                                        <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Boards/Spaces/Card/@(url)')">Card Space</a></li>
+                                    }
+                                    @if(space?.SpaceType != BoardSpaceType.Property)
+                                    {
+                                        <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Boards/Spaces/Property/@(url)')">Property Space</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            switch (index)
+            {
+                case 30:
+                    index = 19;
+                    <br/>
+                    break;
+                case > 10 when Math.Floor(index / 10d) == 1d:
+                {
+                    var offset = 20 - index;
+                    index = 30 + offset;
+                    break;
+                }
+                case > 30 when Math.Floor(index / 10d) == 3:
+                {
+                    var offset = index - 30;
+                    index = (20 - offset) - 1;
+                    <br/>
+                    break;
+                }
+                case <= 10:
+                    index--;
+                    break;
+                default:
+                    index++;
+                    break;
+            }
+        }
+    }
+</div>

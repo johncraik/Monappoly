@@ -1,0 +1,98 @@
+.space{
+    display: inline-block;
+    margin: 0;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.corner{
+    width: 120px;
+    height: 120px;
+    aspect-ratio: 1/1;
+}
+
+.space-horizontal{
+    width: 80px;
+    height: 120px;
+    aspect-ratio: 2/3;
+}
+
+.space-vertical{
+    width: 120px;
+    height: 80px;
+    aspect-ratio: 3/2;
+}
+
+.centre{
+    height: 720px;
+    width: 720px;
+    aspect-ratio: 1/1;
+    position: relative;
+    top: 120px;
+    left: 120px;
+}
+
+.space-right{
+    position: relative;
+    left: 760px;
+}
+
+.banner-horizontal{
+    display: flex;
+    position: relative;
+    height: 20px;
+    width: 100%;
+}
+
+.banner-vertical{
+    display: inline-flex;
+    position: relative;
+    height: 100%;
+    width: 20px;
+}
+
+.banner-top{
+    border-top: 1px solid black;
+}
+
+.banner-bottom{
+    border-bottom: 1px solid black;
+}
+
+.banner-left{
+    border-left: 1px solid black;
+}
+
+.banner-right{
+    border-right: 1px solid black;
+}
+
+.space-txt{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 5px;
+    text-align: center;
+    position: relative;
+    z-index: 100;
+    word-break: break-word;
+    word-wrap: anywhere;
+    text-wrap: wrap;
+}
+
+.txt-horizontal{
+    width: 80px;
+    height: 98px;
+}
+
+.txt-vertical{
+    width: 98px;
+    height: 80px;
+}
+
+.txt-corner {
+    width: 118px;
+    height: 118px;
+}
