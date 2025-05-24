@@ -1,5 +1,6 @@
 @page "{cardId}"
 @using MonappolyLibrary.Extensions
+@using MonappolyLibrary.GameModels.Cards.CardActions
 @model Monappoly_ASP.Pages.Objects.Cards.Action.Index
 
 @{
@@ -9,304 +10,304 @@
 <h1 class="page-title">Card Actions</h1>
 
 <div class="row">
-    <div class="col-sm-4">
-        <div class="card">
-            <div class="card-header bg-main text-white">
-                <h5 class="card-title">Available Card Actions</h5>
-            </div>
-            <div class="card-body bg-light">
-                <ul class="list-group mb-3">
-                    <li class="list-group-item active">
-                        Move Actions
-                    </li>
-                    <li class="list-group-item">
-                        <b>Simple Move Action</b><br/>
-                        Move a specified number of spaces on the board or advance to a specific space.
-                    </li>
-                    <li class="list-group-item">
-                        <b>Special Move Action</b><br/>
-                        Advance to the nearest type of board space (e.g., Property, Card, Tax, etc), either owned or not.
-                    </li>
-                    <li class="list-group-item">
-                        <b>Swap Move Action</b><br/>
-                        Swap places with another player on the board.
-                    </li>
-                </ul>
+<div class="col-sm-4">
+    <div class="card">
+        <div class="card-header bg-main text-white">
+            <h5 class="card-title">Available Card Actions</h5>
+        </div>
+        <div class="card-body bg-light">
+            <ul class="list-group mb-3">
+                <li class="list-group-item active">
+                    Move Actions
+                </li>
+                <li class="list-group-item">
+                    <b>Simple Move Action</b><br/>
+                    Move a specified number of spaces on the board or advance to a specific space.
+                </li>
+                <li class="list-group-item">
+                    <b>Special Move Action</b><br/>
+                    Advance to the nearest type of board space (e.g., Property, Card, Tax, etc), either owned or not.
+                </li>
+                <li class="list-group-item">
+                    <b>Swap Move Action</b><br/>
+                    Swap places with another player on the board.
+                </li>
+            </ul>
 
-                <ul class="list-group mb-3">
-                    <li class="list-group-item active">
-                        Dice Actions
-                    </li>
-                    <li class="list-group-item">
-                        <b>Convert Dice Action</b><br/>
-                        Convert your roll to a double or triple.
-                    </li>
-                    <li class="list-group-item">
-                        <b>Downgrade Dice Action</b><br/>
-                        Downgrade your roll to a single or double.
-                    </li>
-                    <li class="list-group-item">
-                        <b>Reroll Dice Action</b><br/>
-                        Reroll your dice.
-                    </li>
-                </ul>
+            <ul class="list-group mb-3">
+                <li class="list-group-item active">
+                    Dice Actions
+                </li>
+                <li class="list-group-item">
+                    <b>Convert Dice Action</b><br/>
+                    Convert your roll to a double or triple.
+                </li>
+                <li class="list-group-item">
+                    <b>Downgrade Dice Action</b><br/>
+                    Downgrade your roll to a single or double.
+                </li>
+                <li class="list-group-item">
+                    <b>Reroll Dice Action</b><br/>
+                    Reroll your dice.
+                </li>
+            </ul>
 
-                <ul class="list-group mb-3">
-                    <li class="list-group-item active">
-                        Turn Actions
-                    </li>
-                    <li class="list-group-item">
-                        <b>Extra Turn Action</b><br/>
-                        Give a player a specific number of extra turns.
-                    </li>
-                    <li class="list-group-item">
-                        <b>Miss Turn Action</b><br/>
-                        Force a player to miss a specific number of turns.
-                    </li>
-                </ul>
+            <ul class="list-group mb-3">
+                <li class="list-group-item active">
+                    Turn Actions
+                </li>
+                <li class="list-group-item">
+                    <b>Extra Turn Action</b><br/>
+                    Give a player a specific number of extra turns.
+                </li>
+                <li class="list-group-item">
+                    <b>Miss Turn Action</b><br/>
+                    Force a player to miss a specific number of turns.
+                </li>
+            </ul>
 
-                <ul class="list-group mb-3">
-                    <li class="list-group-item active">
-                        Money Actions
-                    </li>
-                    <li class="list-group-item">
-                        <b>Pay Money Action</b><br/>
-                        Pay money to a specified target. Amount paid can be multiplied by game object (e.g., houses, dice roll, properties, etc).
-                    </li>
-                    <li class="list-group-item">
-                        <b>Receive Money Action</b><br/>
-                        Receive money from a specified target. Amount received can be multiplied by game object (e.g., houses, dice roll, properties, etc).
-                    </li>
-                </ul>
+            <ul class="list-group mb-3">
+                <li class="list-group-item active">
+                    Money Actions
+                </li>
+                <li class="list-group-item">
+                    <b>Pay Money Action</b><br/>
+                    Pay money to a specified target. Amount paid can be multiplied by game object (e.g., houses, dice roll, properties, etc).
+                </li>
+                <li class="list-group-item">
+                    <b>Receive Money Action</b><br/>
+                    Receive money from a specified target. Amount received can be multiplied by game object (e.g., houses, dice roll, properties, etc).
+                </li>
+            </ul>
 
-                <ul class="list-group mb-3">
-                    <li class="list-group-item active">
-                        Player Actions
-                    </li>
-                    <li class="list-group-item">
-                        <b>Dice Number Player Action</b><br/>
-                        Reset a player's dice number, or have their number artificially rolled.
-                    </li>
-                    <li class="list-group-item">
-                        <b>Jail Cost Player Action</b><br/>
-                        Reset a player's jail cost, or have their cost increased or decreased.
-                    </li>
-                    <li class="list-group-item">
-                        <b>Triple Bonus Player Action</b><br/>
-                        Reset a player's triple bonus, or have their bonus increased or decreased.
-                    </li>
-                </ul>
+            <ul class="list-group mb-3">
+                <li class="list-group-item active">
+                    Player Actions
+                </li>
+                <li class="list-group-item">
+                    <b>Dice Number Player Action</b><br/>
+                    Reset a player's dice number, or have their number artificially rolled.
+                </li>
+                <li class="list-group-item">
+                    <b>Jail Cost Player Action</b><br/>
+                    Reset a player's jail cost, or have their cost increased or decreased.
+                </li>
+                <li class="list-group-item">
+                    <b>Triple Bonus Player Action</b><br/>
+                    Reset a player's triple bonus, or have their bonus increased or decreased.
+                </li>
+            </ul>
 
-                <ul class="list-group mb-3">
-                    <li class="list-group-item active">
-                        Property Actions
-                    </li>
-                    <li class="list-group-item">
-                        <b>Mortgage Property Action</b><br/>
-                        Force a specified player to mortgage a specified number of properties or sets.
-                    </li>
-                    <li class="list-group-item">
-                        <b>Unmortgage Property Action</b><br/>
-                        Force a specified player to unmortgage a specified number of properties or sets.
-                    </li>
-                    <li class="list-group-item">
-                        <b>Purge Property Action</b><br/>
-                        Force a specified player to purge a specified number of properties or sets.
-                    </li>
-                    <li class="list-group-item">
-                        <b>Take Property Action</b><br/>
-                        Take a specified number of properties or sets from a specified source.
-                    </li>
-                    <li class="list-group-item">
-                        <b>Return Property Action</b><br/>
-                        Return a specified number of properties or sets to a specified target.
-                    </li>
-                </ul>
+            <ul class="list-group mb-3">
+                <li class="list-group-item active">
+                    Property Actions
+                </li>
+                <li class="list-group-item">
+                    <b>Mortgage Property Action</b><br/>
+                    Force a specified player to mortgage a specified number of properties or sets.
+                </li>
+                <li class="list-group-item">
+                    <b>Unmortgage Property Action</b><br/>
+                    Force a specified player to unmortgage a specified number of properties or sets.
+                </li>
+                <li class="list-group-item">
+                    <b>Purge Property Action</b><br/>
+                    Force a specified player to purge a specified number of properties or sets.
+                </li>
+                <li class="list-group-item">
+                    <b>Take Property Action</b><br/>
+                    Take a specified number of properties or sets from a specified source.
+                </li>
+                <li class="list-group-item">
+                    <b>Return Property Action</b><br/>
+                    Return a specified number of properties or sets to a specified target.
+                </li>
+            </ul>
 
-                <ul class="list-group mb-3">
-                    <li class="list-group-item active">
-                        Board Space Actions
-                    </li>
-                    <li class="list-group-item">
-                        <b>GO Board Space Action</b><br/>
-                        Actions related to when a specified player lands on GO.
-                    </li>
-                    <li class="list-group-item">
-                        <b>Jail Board Space Action</b><br/>
-                        Actions related to when a specified player is in Jail.
-                    </li>
-                    <li class="list-group-item">
-                        <b>Free Parking Board Space Action</b><br/>
-                        Actions related to when a specified player lands on Free Parking.
-                    </li>
-                    <li class="list-group-item">
-                        <b>Tax Board Space Action</b><br/>
-                        Actions related to when a specified player lands on Tax space.
-                    </li>
-                    <li class="list-group-item">
-                        <b>Card Board Space Action</b><br/>
-                        Actions related to when a specified player lands on a Card space.
-                    </li>
-                    <li class="list-group-item">
-                        <b>Property Board Space Action</b><br/>
-                        Actions related to when a specified player lands on a Property space.
-                    </li>
-                </ul>
-            </div>
+            <ul class="list-group mb-3">
+                <li class="list-group-item active">
+                    Board Space Actions
+                </li>
+                <li class="list-group-item">
+                    <b>GO Board Space Action</b><br/>
+                    Actions related to when a specified player lands on GO.
+                </li>
+                <li class="list-group-item">
+                    <b>Jail Board Space Action</b><br/>
+                    Actions related to when a specified player is in Jail.
+                </li>
+                <li class="list-group-item">
+                    <b>Free Parking Board Space Action</b><br/>
+                    Actions related to when a specified player lands on Free Parking.
+                </li>
+                <li class="list-group-item">
+                    <b>Tax Board Space Action</b><br/>
+                    Actions related to when a specified player lands on Tax space.
+                </li>
+                <li class="list-group-item">
+                    <b>Card Board Space Action</b><br/>
+                    Actions related to when a specified player lands on a Card space.
+                </li>
+                <li class="list-group-item">
+                    <b>Property Board Space Action</b><br/>
+                    Actions related to when a specified player lands on a Property space.
+                </li>
+            </ul>
         </div>
     </div>
-    <div class="col-sm-8">
-        <div class="card mb-3">
-            <div class="card-header bg-highlight-light text-white">
-                <h5 class="card-title">Card Information</h5>
-            </div>
-            <div class="card-body bg-light">
-                <p>
-                    <b>Card Deck: </b>@Model.Card.CardDeck.Name<br/>
-                    @Model.Card.CardDeck.Description
-                </p>
-                <p>
-                    <b>Card Type: </b>@Model.Card.CardType.Name<br/>
-                    @Model.Card.CardType.Description
-                </p>
-                <p><b>Text:</b><br/>@Model.Card.Text</p>
-            </div>
+</div>
+<div class="col-sm-8">
+    <div class="card mb-3">
+        <div class="card-header bg-highlight-light text-white">
+            <h5 class="card-title">Card Information</h5>
         </div>
+        <div class="card-body bg-light">
+            <p>
+                <b>Card Deck: </b>@Model.Card.CardDeck.Name<br/>
+                @Model.Card.CardDeck.Description
+            </p>
+            <p>
+                <b>Card Type: </b>@Model.Card.CardType.Name<br/>
+                @Model.Card.CardType.Description
+            </p>
+            <p><b>Text:</b><br/>@Model.Card.Text</p>
+        </div>
+    </div>
         
-        @if (Model.CardActions.Count > 0)
+    @if (Model.CardActions.Count > 0)
+    {
+        var gi = 0;
+        foreach (var cas in Model.CardActions)
         {
-            var gi = 0;
-            foreach (var cas in Model.CardActions)
-            {
-                <div class="card mb-2">
-                    <div class="card-header bg-danger">
-                        <h5 class="card-title text-center text-white">Group @(gi +1)</h5>
-                    </div>
-                    <div class="card-body bg-light">
-                        <div class="clearfix mb-3">
-                            <button class="float-end btn btn-warning" title="Edit group @(gi+1)"
-                                    onclick="location.assign('/Objects/Cards/Action/Group/@(Model.Card.Id)/@(cas.Group.Id)')">
-                                <span class="fa-solid fa-pencil text-highlight"></span> Edit Group
-                            </button>
-                            <div class="mb-1">
-                                <label class="mr"><b>Keep Card?</b></label>
-                                <label>@(cas.Group.IsKeep ? "Yes" : "No")</label>
-                            </div>
-                            <div class="mb-1">
-                                <label class="mr"><b>Play Condition:</b></label>
-                                <label>
-                                    @{
-                                        var pci = 0;
-                                        foreach (var pc in cas.Group.PlayCondition)
-                                        {
-                                            <span>@pc.GetDisplayName()</span>
-                                            if(pci < cas.Group.PlayCondition.Count - 1)
-                                            {
-                                                <span>, </span>
-                                            }
-
-                                            pci++;
-                                        }
-                                    }
-                                </label>
-                            </div>
-                            <div class="mb-1">
-                                <label class="mr"><b>Forced to Play?</b></label>
-                                <label>@(cas.Group.IsForced ? "Yes" : "No")</label>
-                            </div>
-                            <div class="mb-1">
-                                <label class="mr"><b>Group Length:</b></label>
-                                <label>@cas.Group.GroupLengthType.GetDisplayName()</label>
-                            </div>
-                            <div class="mb-1">
-                                <label class="mr"><b>Affected Player:</b></label>
-                                <label>@cas.Group.Player.GetDisplayName()</label>
-                            </div>
-                        </div>
-
-                        @{
-                            var ai = 0;
-                            foreach (var action in cas.Actions)
-                            {
-                                <table class="table table-borderless">
-                                    <thead class="table-dark">
-                                    <tr>
-                                        <th style="width: 160px">Action Type</th>
-                                        <th style="width: 160px">Turn Length</th>
-                                        <th>Action Description</th>
-                                        <th style="width: 90px"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>@action.Type.GetDisplayName()</td>
-                                        <td>@action.TurnLength Turns</td>
-                                        <td>@Html.Raw(action.ActionDescription)</td>
-                                        <td>
-                                            <button class="btn btn-sm btn-link" title="Edit action"
-                                                    onclick="">
-                                                <span class="fa-solid fa-pen-to-square text-highlight"></span>
-                                            </button>
-                                            <button class="btn btn-sm btn-link" title="Delete action"
-                                                    onclick="">
-                                                <span class="fa-solid fa-circle-xmark text-danger"></span>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                
-                                if (ai < cas.Actions.Count - 1)
+            <div class="card mb-2">
+                <div class="card-header bg-danger">
+                    <h5 class="card-title text-center text-white">Group @(gi +1)</h5>
+                </div>
+                <div class="card-body bg-light">
+                    <div class="clearfix mb-3">
+                        <button class="float-end btn btn-success" title="Add keep condition to group @(gi + 1)"
+                                onclick="location.assign('/Objects/Cards/Action/KeepCondition/@(Model.Card.Id)/@(cas.Group.Id)/0')">
+                            <span class="fa-solid fa-plus text-highlight-light"></span> Create Keep Condition
+                        </button>
+                        @foreach (var condition in cas.Group.KeepActionConditions)
+                        {
+                            <div class="border-bottom border-3 mb-2">
+                                <h6 class="page-title"><b>Keep Condition</b></h6>
+                                @if (condition.GroupLengthType == ActionGroupLengthType.None)
                                 {
-                                    <div class="mb-3 centred">
-                                        <span class="text-highlight text-center"><b>AND</b></span>
+                                    <div class="mb-1">
+                                        <label class="mr">Play Until Needed?</label>
+                                        <label>@(condition.IsUntilNeeded ? "Yes" : "No")</label>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="mr">Play Condition:</label>
+                                        <label>@condition.PlayCondition.GetDisplayName()</label>
                                     </div>
                                 }
-
-                                ai++;
-                            }
-                            
-                            <div class="centred dropdown">
-                                <button class="btn btn-highlight dropdown-toggle" type="button" id="add-action-@(gi)"
-                                        title="Add an action to this group" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Add Action to Group @(gi + 1)
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="add-action-@(gi)">
-                                    <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/MoveAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Move Action</a></li>
-                                    <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/DiceAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Dice Action</a></li>
-                                    <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/TurnAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Turn Action</a></li>
-                                    <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/MoneyAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Money Action</a></li>
-                                    <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/PlayerAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Player Action</a></li>
-                                    <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/PropertyAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Property Action</a></li>
-                                    <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/BoardSpaceAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Board Space Action</a></li>
-                                    <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/TakeCardAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Take Card Action</a></li>
-                                </ul>
+                                else
+                                {
+                                    <div class="mb-1">
+                                        <label class="mr">In-play Length Type:</label>
+                                        <label>@condition.GroupLengthType.GetDisplayName()</label>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="mr">In-play Length Value:</label>
+                                        <label>@(condition.LengthValue == null ? "First Occurrence" : condition.LengthValue) Turns/Occurrences</label>
+                                    </div>
+                                }
+                                <div class="mb-1">
+                                    <label class="mr">Player Condition:</label>
+                                    <label>@condition.PlayerCondition.GetDisplayName()</label>
+                                </div>
                             </div>
                         }
-
-
                     </div>
+
+                    @{
+                        var ai = 0;
+                        foreach (var action in cas.Actions)
+                        {
+                            <table class="table table-borderless">
+                                <thead class="table-dark">
+                                <tr>
+                                    <th style="width: 160px">Action Type</th>
+                                    <th style="width: 160px">Turn Length</th>
+                                    <th>Action Description</th>
+                                    <th style="width: 90px"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>@action.Type.GetDisplayName()</td>
+                                    <td>@action.TurnLength Turns</td>
+                                    <td>@Html.Raw(action.ActionDescription)</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-link" title="Edit action"
+                                                onclick="">
+                                            <span class="fa-solid fa-pen-to-square text-highlight"></span>
+                                        </button>
+                                        <button class="btn btn-sm btn-link" title="Delete action"
+                                                onclick="">
+                                            <span class="fa-solid fa-circle-xmark text-danger"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            if (ai < cas.Actions.Count - 1)
+                            {
+                                <div class="mb-3 centred">
+                                    <span class="text-highlight text-center"><b>AND</b></span>
+                                </div>
+                            }
+
+                            ai++;
+                        }
+
+                        <div class="centred dropdown">
+                            <button class="btn btn-highlight dropdown-toggle" type="button" id="add-action-@(gi)"
+                                    title="Add an action to this group" data-bs-toggle="dropdown" aria-expanded="false">
+                                Add Action to Group @(gi + 1)
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="add-action-@(gi)">
+                                <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/MoveAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Move Action</a></li>
+                                <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/DiceAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Dice Action</a></li>
+                                <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/TurnAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Turn Action</a></li>
+                                <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/MoneyAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Money Action</a></li>
+                                <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/PlayerAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Player Action</a></li>
+                                <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/PropertyAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Property Action</a></li>
+                                <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/BoardSpaceAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Board Space Action</a></li>
+                                <li><a class="dropdown-item hand" onclick="location.assign('/Objects/Cards/Action/Edit/TakeCardAction/@(Model.Card.Id)/@(cas.Group.Id)')">New Take Card Action</a></li>
+                            </ul>
+                        </div>
+                    }
+
+
                 </div>
-                if(gi < Model.CardActions.Count - 1)
-                {
-                    <div class="mb-3">
-                        <span class="text-highlight centred"><b>OR</b></span>
-                    </div>
-                }
+            </div>
+            if(gi < Model.CardActions.Count - 1)
+            {
+                <div class="mb-3">
+                    <span class="text-highlight centred"><b>OR</b></span>
+                </div>
+            }
 
-                gi++;
-            }   
-        }
+            gi++;
+        }   
+    }
         
-        <div class="card">
-            <div class="card-body bg-light">
-                <div class="centred">
-                    <button class="btn btn-success" type="button" title="Create a new action group" 
-                            onclick="location.assign('/Objects/Cards/Action/Group/@(Model.Card.Id)/0')">
-                        @(Model.CardActions.Count > 0 ? "New" : "Create an") Action Group
-                    </button>
-                </div>
+    <div class="card">
+        <div class="card-body bg-light">
+            <div class="centred">
+                <button class="btn btn-success" type="button" title="Create a new action group" 
+                        onclick="CreateActionGroup('@(Model.Card.Id)')">
+                    @(Model.CardActions.Count > 0 ? "New" : "Create an") Action Group
+                </button>
             </div>
         </div>
     </div>
 </div>
+</div>
+
+<script src="~/js/Cards/actions.js"></script>

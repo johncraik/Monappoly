@@ -8,16 +8,7 @@ public class ActionGroupViewModel
 {
     public int Id { get; set; }
     public int CardId { get; set; }
-    
-    [DisplayName("Player Keeps Card?")]
-    public bool IsKeep { get; set; }
-    [DisplayName("Play Conditions")]
-    public List<ActionPlayCondition> PlayCondition { get; set; }
-    [DisplayName("Group Length Condition")]
-    public ActionLengthType GroupLengthType { get; set; }
-    public ObjectPlayer Player { get; set; }
-    [DisplayName("Player is Forced to Play Group when Conditions Met?")]
-    public bool IsForced { get; set; }
+    public List<KeepActionCondition> KeepActionConditions { get; set; } = [];
 
     public ActionGroupViewModel()
     {
@@ -28,31 +19,10 @@ public class ActionGroupViewModel
         CardId = cardId;
     }
 
-    public ActionGroupViewModel(ActionGroup group)
+    public ActionGroupViewModel(ActionGroup group, List<KeepActionCondition> keepActionConditions)
     {
         Id = group.Id;
         CardId = group.CardId;
-        IsKeep = group.IsKeep;
-        
-        group.UnwrapPlayConditions();
-        PlayCondition = group.PlayCondition;
-        
-        GroupLengthType = group.GroupLengthType;
-        Player = group.Player;
-        IsForced = group.IsForced;
-    }
-    
-    public void Fill(ActionGroup group)
-    {
-        group.Id = Id;
-        group.IsKeep = IsKeep;
-        group.CardId = CardId;
-        
-        group.PlayCondition = PlayCondition;
-        group.WrapPlayConditions();
-        
-        group.GroupLengthType = GroupLengthType;
-        group.Player = Player;
-        group.IsForced = IsForced;
+        KeepActionConditions = keepActionConditions;
     }
 }

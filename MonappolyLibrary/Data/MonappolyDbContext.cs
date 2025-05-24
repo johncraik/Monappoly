@@ -47,6 +47,7 @@ public class MonappolyDbContext : DbContext
     public DbSet<CardType> CardTypes { get; set; }
     public DbSet<CardDeck> CardDecks { get; set; }
     public DbSet<ActionGroup> CardActionGroups { get; set; }
+    public DbSet<KeepActionCondition> KeepActionConditions { get; set; }
 
     #endregion
     

@@ -61,6 +61,12 @@
     cursor: pointer;
 }
 
+.divider-horizontal {
+    border: 3px solid var(--bs-highlight-light);
+    border-radius: 6px;
+    margin: 20px 0;
+}
+
 .mr{
     margin-right: 10px;
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MonappolyLibrary.Data;
 
@@ -10,9 +11,11 @@ using MonappolyLibrary.Data;
 namespace MonappolyLibrary.Data.Migrations
 {
     [DbContext(typeof(MonappolyDbContext))]
-    partial class MonappolyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250524102606_UpdatedCardActionGroups")]
+    partial class UpdatedCardActionGroups
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
@@ -395,23 +398,7 @@ namespace MonappolyLibrary.Data.Migrations
                     b.Property<int>("ActionGroupId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("GroupLengthType")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsUntilNeeded")
@@ -420,19 +407,10 @@ namespace MonappolyLibrary.Data.Migrations
                     b.Property<uint?>("LengthValue")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("PlayCondition")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("PlayerCondition")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TenantId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

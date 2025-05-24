@@ -28,6 +28,13 @@ public class CardActionController : Controller
             ? RedirectToPage($"/Objects/Cards/Action/{nameof(Index)}", new { cardId, groupId = model.GroupId })
             : BadRequest(ModelState);
     }
+
+    [HttpPost]
+    public async Task<bool> CreateActionGroup(int cardId)
+    {
+        await _cardActionService.CreateActionGroup(cardId);
+        return true;
+    }
     
     #region Move Actions
 

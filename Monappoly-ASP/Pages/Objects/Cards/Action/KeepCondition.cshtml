@@ -1,0 +1,77 @@
+@page "{cardId}/{groupId}/{conditionId}"
+@using MonappolyLibrary.GameModels.Cards.CardActions
+@model Monappoly_ASP.Pages.Objects.Cards.KeepCondition
+
+@{
+    ViewData["Title"] = $"{(Model.Adding ? "Add" : "Edit")} Group Keep Condition";
+}
+
+<div class="container-40">
+    <h1 class="page-title">@ViewData["Title"]</h1>
+
+    <div class="card mb-3">
+        <div class="card-header bg-highlight-light text-white">
+            <h5 class="card-title">Card Information</h5>
+        </div>
+        <div class="card-body bg-light">
+            <p>
+                <b>Card Deck: </b>@Model.Card.CardDeck.Name<br/>
+                @Model.Card.CardDeck.Description
+            </p>
+            <p>
+                <b>Card Type: </b>@Model.Card.CardType.Name<br/>
+                @Model.Card.CardType.Description
+            </p>
+            <p><b>Text:</b><br/>@Model.Card.Text</p>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header bg-warning">
+            <h5 class="card-title">Group Keep Action</h5>
+        </div>
+        <div class="card-body bg-light">
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div id="keep-able-card">
+                    <div class="mb-3 form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="is-keep" asp-for="Input.IsUntilNeeded"/>
+                        <label class="form-check-label" for="is-keep" asp-for="Input.IsUntilNeeded"></label>
+                        <span asp-validation-for="Input.IsUntilNeeded" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Input.PlayCondition" class="form-label"></label>
+                        <select asp-for="Input.PlayCondition" asp-items="Model.PlayConditions" class="form-select"></select>
+                        <span asp-validation-for="Input.PlayCondition" class="text-danger"></span>
+                    </div>
+                </div>
+                <p><b>OR</b></p>
+                <div id="length-card">
+                    <div class="mb-3">
+                        <label asp-for="Input.GroupLengthType" class="form-label"></label>
+                        <select asp-for="Input.GroupLengthType" asp-items="Model.LengthTypes" class="form-select"></select>
+                        <span asp-validation-for="Input.GroupLengthType" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Input.LengthValue" class="form-label"></label>
+                        <input asp-for="Input.LengthValue" class="form-control"/>
+                        <span asp-validation-for="Input.LengthValue" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="divider-horizontal"></div>
+                <div class="mb-3">
+                    <label asp-for="Input.PlayerCondition" class="form-label"></label>
+                    <select asp-for="Input.PlayerCondition" asp-items="Model.PlayerConditions" class="form-select"></select>
+                    <span asp-validation-for="Input.PlayerCondition" class="text-danger"></span>
+                </div>
+                <button class="btn btn-success mt-2" type="submit">@(Model.Adding ? "Create Group Keep Action" : "Modify Group Keep Action")</button>
+                <button class="btn btn-danger mt-2 mx-3" type="button" title="Cancel and go back to the previous page"
+                        onclick="location.assign('/Objects/Cards/Action/@(Model.Card.Id)')">
+                    Cancel
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/Cards/actions.js"></script>

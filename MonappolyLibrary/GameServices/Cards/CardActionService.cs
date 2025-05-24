@@ -39,77 +39,99 @@ public class CardActionService
         var groups = await GetCardActionGroups(cardId);
         return (from g in groups 
             let actions = GetGroupCardActions(g.Id, g.CardId) 
-            let actionVms = actions.Select(a => a.ToViewModel()).ToList() 
-            select (new ActionGroupViewModel(g), actionVms)).ToList();
+            let actionVms = actions.Select(a => a.ToViewModel()).ToList()
+            let keepConditions = GetKeepActionConditions(g.Id).Result
+            select (new ActionGroupViewModel(g, keepConditions), actionVms)).ToList();
     }
     
     public async Task<List<ActionGroup>> GetCardActionGroups(int cardId)
         => await _context.CardActionGroups.Where(cag => cag.CardId == cardId)
             .Include(cag => cag.Card)
             .ThenInclude(c => c.CardType).ToListAsync();
+    
+    public async Task<List<KeepActionCondition>> GetKeepActionConditions(int groupId)
+        => await _context.KeepActionConditions.Where(kac => kac.ActionGroupId == groupId)
+            .ToListAsync();
 
     public async Task<ActionGroup?> FindCardActionGroup(int cardId)
         => await _context.CardActionGroups.Where(cag => cag.CardId == cardId)
             .Include(cag => cag.Card)
             .ThenInclude(c => c.CardType).FirstOrDefaultAsync();
     
-    public async Task<ActionGroup?> FindActionGroup(int groupId)
-        => await _context.CardActionGroups.Where(cag => cag.Id == groupId)
-            .Include(cag => cag.Card)
-            .ThenInclude(c => c.CardType).FirstOrDefaultAsync();
+    public async Task<KeepActionCondition?> FindKeepActionCondition(int groupId, int id)
+        => await _context.KeepActionConditions.Where(kac => kac.ActionGroupId == groupId && kac.Id == id)
+            .Include(kac => kac.ActionGroup)
+            .FirstOrDefaultAsync();
 
-    private async Task ValidateActionGroup(ActionGroupViewModel groupViewModel, ModelStateDictionary modelState)
+
+    public async Task CreateActionGroup(int cardId)
     {
-        if (!groupViewModel.IsKeep)
+        var group = new ActionGroup
         {
-            groupViewModel.PlayCondition = [ActionPlayCondition.Default];
-        }
-        
-        var validCard = await _context.Cards.AnyAsync(c => c.Id == groupViewModel.CardId);
-        if (!validCard)
-        {
-            modelState.AddModelError("Input", "Card not found");
-        }
-    }
-    
-    public async Task<bool> AddCardActionGroup(ActionGroupViewModel groupViewModel, ModelStateDictionary modelState)
-    {
-        await ValidateActionGroup(groupViewModel, modelState);
-        if(!modelState.IsValid) return false;
-        
-        var group = new ActionGroup();
-        groupViewModel.Fill(group);
-        group.TenantId = _userInfo.TenantId;
-        
+            CardId = cardId,
+            TenantId = _userInfo.TenantId,
+            NextActionId = 0
+        };
         group.FillCreated(_userInfo);
         await _context.CardActionGroups.AddAsync(group);
         await _context.SaveChangesAsync();
-        return true;
     }
-
-    public async Task<bool> UpdateCardActionGroup(ActionGroupViewModel groupViewModel, ModelStateDictionary modelState)
+    
+    
+    private async Task ValidateKeepActionCondition(KeepActionCondition condition, ModelStateDictionary modelState)
     {
-        await ValidateActionGroup(groupViewModel, modelState);
+        var validGroup = await _context.CardActionGroups.AnyAsync(cag => cag.Id == condition.ActionGroupId);
+        if (!validGroup)
+        {
+            modelState.AddModelError("Input", "Action group not found");
+        }
+
+        if (condition is { PlayCondition: CardPlayCondition.None, GroupLengthType: ActionGroupLengthType.None })
+        {
+            modelState.AddModelError($"Input.{nameof(condition.PlayCondition)}", "Play condition must be set");
+            modelState.AddModelError($"Input.{nameof(condition.GroupLengthType)}", "Group length type must be set");
+        }
+        
+        if(condition is { GroupLengthType: ActionGroupLengthType.Turns, LengthValue: null or 0 })
+        {
+            modelState.AddModelError($"Input.{nameof(condition.LengthValue)}", "Length value must be set for turns");
+        }
+
+        if (condition.PlayCondition != CardPlayCondition.None)
+        {
+            condition.GroupLengthType = ActionGroupLengthType.None;
+            condition.LengthValue = null;
+        }
+        else if(condition.GroupLengthType != ActionGroupLengthType.None)
+        {
+            condition.PlayCondition = CardPlayCondition.None;
+            condition.IsUntilNeeded = false;
+        }
+    }
+    
+    public async Task<bool> AddKeepActionCondition(KeepActionCondition condition, ModelStateDictionary modelState)
+    {
+        await ValidateKeepActionCondition(condition, modelState);
         if(!modelState.IsValid) return false;
         
-        var group = await _context.CardActionGroups.FirstOrDefaultAsync(cag => cag.Id == groupViewModel.Id);
-        if(group == null) return false;
-        
-        groupViewModel.Fill(group);
-        group.FillModified(_userInfo);
+        condition.FillCreated(_userInfo);
+        await _context.KeepActionConditions.AddAsync(condition);
         await _context.SaveChangesAsync();
         return true;
     }
     
-    public async Task<bool> DeleteCardActionGroup(int groupId)
+    public async Task<bool> UpdateKeepActionCondition(KeepActionCondition condition, ModelStateDictionary modelState)
     {
-        var group = await _context.CardActionGroups.FirstOrDefaultAsync(cag => cag.Id == groupId);
-        if(group == null) return false;
+        await ValidateKeepActionCondition(condition, modelState);
+        if(!modelState.IsValid) return false;
         
-        group.FillDeleted(_userInfo);
+        condition.FillModified(_userInfo);
         await _context.SaveChangesAsync();
         return true;
     }
+    
+    
+    
 
     #region Actions
 

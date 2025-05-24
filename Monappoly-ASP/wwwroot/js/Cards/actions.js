@@ -13,3 +13,16 @@ function GetActionPartial(list, action){
     let target = document.getElementById('move-action');
     FetchPartial(url, target);
 }
+
+function CreateActionGroup(cardId){
+    $.ajax({
+        url: baseUrl + 'CreateActionGroup?cardId=' + cardId,
+        method: 'POST',
+        success: function (r) {
+            location.reload();
+        },
+        error: function (xhr, status, error) {
+            console.error('Error creating action group:', error);
+        }
+    })
+}
