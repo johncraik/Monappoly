@@ -66,6 +66,7 @@ public class MonappolyDbContext : DbContext
     public DbSet<DiceDataModel> DiceModels { get; set; }
     public DbSet<PlayerPieceDataModel> PlayerPieces { get; set; }
     public DbSet<BuildingGroup> BuildingGroups { get; set; }
+    public DbSet<BuildingPool> BuildingPools { get; set; }
     public DbSet<BuildingDataModel> Buildings { get; set; }
 
     #endregion

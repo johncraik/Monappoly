@@ -1,3 +1,5 @@
+@using MonappolyLibrary.Extensions
+@using MonappolyLibrary.GameModels.MiscGameObjs
 @model MonappolyLibrary.GameModels.Boards.ViewModels.BoardViewModel?
 
 @if (Model != null)
@@ -8,8 +10,58 @@
             <p class="card-subtitle">@Model.Board.Description</p>
         </div>
         <div class="card-body bg-light">
-            <div style="overflow: scroll">
-                <partial name="Objects/Boards/_BoardSpacesPartial" model="(Model.Spaces, Model.Board.Id)"/>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div style="overflow: scroll">
+                        <partial name="Objects/Boards/_BoardSpacesPartial" model="(Model.Spaces, Model.Board.Id, Model.Board.IsValid)"/>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h4><b>Available Buildings</b></h4>
+                    <ul class="list-group">
+                        @foreach (var vms in Model.Buildings)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <h6 class="page-title">@vms.Pool.Name</h6>
+                                    @foreach (var building in vms.Buildings)
+                                    {
+                                        <div class="mb-2">
+                                            <span><b>Building: </b>@building.Name</span>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item ml-2">
+                                                    <span><b>Building Rule: </b>@building.BuildingRule.GetDisplayName()</span>
+                                                </li>
+                                                <li class="list-group-item ml-2">
+                                                    <span><b>Build on Rule: </b>@building.BuildOnRule.GetDisplayName()</span>
+                                                </li>
+                                                <li class="list-group-item ml-2">
+                                                    <span><b>Build Cap Type: </b>@building.CapType.GetDisplayName()</span>
+                                                </li>
+                                                @if (building.CapType != BuildingCap.None)
+                                                {
+                                                    <li class="list-group-item ml-2">
+                                                        <span><b>Capped Amount: </b>@building.BuildingCap</span>
+                                                    </li>
+                                                }
+                                                <li class="list-group-item ml-2">
+                                                    <span><b>Build Cost Multiplier: </b>@building.BuildingCostMultiplier</span>
+                                                </li>
+                                                <li class="list-group-item ml-2">
+                                                    <span><b>Rent Rule: </b>@building.RentRule.GetDisplayName()</span>
+                                                </li>
+                                                <li class="list-group-item ml-2">
+                                                    <span><b>Rent Multiplier: </b>@building.RentMultiplier</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    }
+                                </div>
+                                <span class="badge bg-primary rounded-pill">@vms.Pool.Count</span>
+                            </li>
+                        }
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

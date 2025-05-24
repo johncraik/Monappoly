@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using MonappolyLibrary.Data;
+using MonappolyLibrary.Extensions;
+using MonappolyLibrary.GameModels.Boards;
 using MonappolyLibrary.GameModels.Boards.Spaces;
 
 namespace MonappolyLibrary.GameServices.Boards;
@@ -150,6 +152,51 @@ public class BoardSpaceService
         return await _context.PropertyBoardSpaces
             .FirstOrDefaultAsync(s => s.BoardId == boardId && s.BoardIndex == index);
     }
+
+    public async Task ValidateBoard(Board board, List<IBoardSpace> spaces)
+    {
+        var validBoard = true;
+        var propSpaces = spaces.Where(s => s.SpaceType == BoardSpaceType.Property)
+            .Select(s => s as PropertyBoardSpace).Where(p => p != null).ToList();
+        var genericSpaces = spaces.Where(s => s.SpaceType == BoardSpaceType.Generic)
+            .Select(s => s as GenericBoardSpace).Where(g => g != null).ToList();
+        
+        if (PropertySet.None.GetSelectList().Any(ps =>
+                !propSpaces.Select(p => p?.PropertySet.GetDisplayName()).Contains(ps.Text)))
+        {
+            validBoard = false;
+        }
+    
+        if (PropertyType.SetProperty.GetSelectList().Any(ps =>
+                !propSpaces.Select(p => p?.PropertyType.GetDisplayName()).Contains(ps.Text)))
+        {
+            validBoard = false;
+        }
+
+        if (genericSpaces.Count(g => g?.Action == GenericSpaceAction.Jail) > 1 
+            || genericSpaces.All(g => g?.Action != GenericSpaceAction.Jail))
+        {
+            validBoard = false;
+        }
+    
+        if(genericSpaces.All(g => g?.Action != GenericSpaceAction.Go))
+        {
+            validBoard = false;
+        }
+    
+        if(genericSpaces.All(g => g?.Action != GenericSpaceAction.FreeParking))
+        {
+            validBoard = false;
+        }
+    
+        if(spaces.Count != 40)
+        {
+            validBoard = false;
+        }
+
+        board.IsValid = validBoard;
+        await _context.SaveChangesAsync();
+    }
     
     
     #region Generic Spaces
@@ -184,7 +231,7 @@ public class BoardSpaceService
     {
         await ValidateGenericSpace(space, modelState);
         if (!modelState.IsValid) return false;
-
+        
         space.FillCreated();
         _context.GenericBoardSpaces.Add(space);
         await _context.SaveChangesAsync();

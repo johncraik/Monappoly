@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MonappolyLibrary.Data.Defaults.Dictionaries;
 using MonappolyLibrary.Models;
 
 namespace MonappolyLibrary.Extensions;
@@ -34,6 +35,6 @@ public static class DatabaseExtensions
     public static IQueryable<T> MonopolyDefaults<T>(this IQueryable<T> query) 
         where T : DataModel
     {
-        return query.IgnoreQueryFilters().Where(e => e.TenantId < 0);
+        return query.IgnoreQueryFilters().Where(e => e.TenantId == DefaultsDictionary.MonopTenant);
     }
 }

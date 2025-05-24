@@ -63,6 +63,49 @@ public class BoardDefaultsService
         {
             groupId = group.FirstOrDefault()?.Id ?? throw new Exception("Building group not found");
         }
+        
+        var pools = await _context.BuildingPools.MonopolyDefaults().ToListAsync();
+        var housePoolId = 0;
+        var hotelPoolId = 0;
+        if (pools.Count != 2)
+        {
+            foreach (var pool in pools)
+            {
+                pool.ForceDelete();
+            }
+            await _context.SaveChangesAsync();
+
+            var housePool = new BuildingPool
+            {
+                TenantId = DefaultsDictionary.MonopTenant,
+                Name = BoardDefaultsDictionary.HouseBuildingPoolName,
+                BuildingGroupId = groupId,
+                Count = 32
+            };
+            housePool.FillCreated();
+            await _context.BuildingPools.AddAsync(housePool);
+            
+            var hotelPool = new BuildingPool
+            {
+                TenantId = DefaultsDictionary.MonopTenant,
+                Name = BoardDefaultsDictionary.HotelBuildingPoolName,
+                BuildingGroupId = groupId,
+                Count = 12
+            };
+            hotelPool.FillCreated();
+            await _context.BuildingPools.AddAsync(hotelPool);
+            
+            await _context.SaveChangesAsync();
+            housePoolId = housePool.Id;
+            hotelPoolId = hotelPool.Id;
+        }
+        else
+        {
+            housePoolId = pools.FirstOrDefault(p => p.Name == BoardDefaultsDictionary.HouseBuildingPoolName)?.Id
+                ?? throw new Exception("House building pool not found");
+            hotelPoolId = pools.FirstOrDefault(p => p.Name == BoardDefaultsDictionary.HotelBuildingPoolName)?.Id
+                ?? throw new Exception("Hotel building pool not found");
+        }
 
         var buildings = await _context.Buildings.MonopolyDefaults().ToListAsync();
         if (buildings.Count != 2)
@@ -73,24 +116,26 @@ public class BoardDefaultsService
             }
             await _context.SaveChangesAsync();
 
-            await CreateBuilding(true, groupId);
-            await CreateBuilding(false, groupId);
+            await CreateBuilding(true, housePoolId);
+            await CreateBuilding(false, hotelPoolId);
         }
 
         return groupId;
     }
-
-    private async Task CreateBuilding(bool isHouse, int groupId)
+    
+    private async Task CreateBuilding(bool isHouse, int poolId)
     {
         var building = new BuildingDataModel
         {
+            TenantId = DefaultsDictionary.MonopTenant,
             Name = isHouse ? "House" : "Hotel",
-            Count = (uint)(isHouse ? 32 : 12),
             BuildingRule = BuildingRule.Standard,
             BuildOnRule = BuildOnRule.Standard,
             RentRule = RentRule.Standard,
             RentMultiplier = 0,
-            BuildingGroupId = groupId,
+            BuildingPoolId = poolId,
+            BuildingCostMultiplier = 1,
+            CapType = BuildingCap.None,
         };
         building.FillCreated();
         await _context.Buildings.AddAsync(building);

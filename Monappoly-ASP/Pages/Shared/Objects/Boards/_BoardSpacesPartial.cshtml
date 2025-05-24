@@ -1,45 +1,9 @@
 @using MonappolyLibrary.Extensions
 @using MonappolyLibrary.GameModels.Boards.Spaces
-@model (List<MonappolyLibrary.GameModels.Boards.Spaces.IBoardSpace> Spaces, int BoardId)
-
-@{
-    var validBoard = true;
-    var propSpaces = Model.Spaces.Where(s => s.SpaceType == BoardSpaceType.Property).Select(s => s as PropertyBoardSpace).Where(p => p != null).ToList();
-    var genericSpaces = Model.Spaces.Where(s => s.SpaceType == BoardSpaceType.Generic).Select(s => s as GenericBoardSpace).Where(g => g != null).ToList();
-    if (PropertySet.None.GetSelectList().Count(ps => !propSpaces.Select(p => p?.PropertySet.GetDisplayName()).Contains(ps.Text)) > 0)
-    {
-        validBoard = false;
-    }
-    
-    if (PropertyType.SetProperty.GetSelectList().Count(ps => !propSpaces.Select(p => p?.PropertyType.GetDisplayName()).Contains(ps.Text)) > 0)
-    {
-        validBoard = false;
-    }
-
-    if (genericSpaces.Count(g => g?.Action == GenericSpaceAction.Jail) > 1 || 
-        genericSpaces.Count(g => g?.Action == GenericSpaceAction.Jail) == 0)
-    {
-        validBoard = false;
-    }
-    
-    if(genericSpaces.Count(g => g?.Action == GenericSpaceAction.Go) == 0)
-    {
-        validBoard = false;
-    }
-    
-    if(genericSpaces.Count(g => g?.Action == GenericSpaceAction.FreeParking) == 0)
-    {
-        validBoard = false;
-    }
-    
-    if(Model.Spaces.Count != 40)
-    {
-        validBoard = false;
-    }
-}
+@model (List<MonappolyLibrary.GameModels.Boards.Spaces.IBoardSpace> Spaces, int BoardId, bool ValidBoard)
 
 <div class="mb-2">
-    <h6 class="text-@(validBoard ? "success" : "danger")"><b>@(validBoard ? "VALID" : "INVALID") Board</b></h6>
+    <h6 class="text-@(Model.ValidBoard ? "success" : "danger")"><b>@(Model.ValidBoard ? "VALID" : "INVALID") Board</b></h6>
     <span>
         Use the interactive board below to add/replace board spaces.<br/>
         <b>Note: </b> A valid board must have the following:
@@ -93,7 +57,7 @@
             {
                 <div class="space corner @colourClass" style="background: @(cardColour)" type="button" data-bs-toggle="modal" data-bs-target="#space-@index">
                     <div class="space-txt float-start txt-corner @(newSpace ? "text-white" : "")">
-                        @(space?.Name ?? "EMPTY")
+                        <span>@(space?.Name ?? "EMPTY")<br/>(@index)</span>
                     </div>
                 </div>
             }
@@ -104,7 +68,7 @@
                     @if (top)
                     {
                         <div class="space-txt float-start txt-horizontal">
-                            @(space?.Name ?? "EMPTY")
+                            <span>@(space?.Name ?? "EMPTY")<br/>(@index)</span>
                         </div>
                         <div class="banner-horizontal @(top ? "banner-top" : "banner-bottom") @colourClass" style="background: @(cardColour)"></div>
                     }
@@ -112,7 +76,7 @@
                     {
                         <div class="banner-horizontal @(top ? "banner-top" : "banner-bottom") @colourClass" style="background: @(cardColour)"></div>
                         <div class="space-txt float-start txt-horizontal">
-                            @(space?.Name ?? "EMPTY")
+                            <span>@(space?.Name ?? "EMPTY")<br/>(@index)</span>
                         </div>
                     }
                     
@@ -124,7 +88,7 @@
                 <div class="space space-vertical @(right ? "space-right" : "") bg-sub" type="button" data-bs-toggle="modal" data-bs-target="#space-@index">
                     <div class="banner-vertical @(right ? "banner-right" : "banner-left") @colourClass" style="background: @(cardColour)"></div>
                     <div class="space-txt float-@(right ? "end" : "start") txt-vertical">
-                        @(space?.Name ?? "EMPTY")
+                        <span>@(space?.Name ?? "EMPTY")<br/>(@index)</span>
                     </div>
                 </div>
             }

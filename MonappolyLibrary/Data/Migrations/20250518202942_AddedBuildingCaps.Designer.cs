@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MonappolyLibrary.Data;
 
@@ -10,9 +11,11 @@ using MonappolyLibrary.Data;
 namespace MonappolyLibrary.Data.Migrations
 {
     [DbContext(typeof(MonappolyDbContext))]
-    partial class MonappolyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250518202942_AddedBuildingCaps")]
+    partial class AddedBuildingCaps
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
@@ -43,9 +46,6 @@ namespace MonappolyLibrary.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsValid")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ModifiedBy")

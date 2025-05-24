@@ -12,14 +12,17 @@ public class BoardService
     private readonly MonappolyDbContext _context;
     private readonly UserInfo _userInfo;
     private readonly BoardSpaceService _boardSpaceService;
+    private readonly BuildingGroupService _buildingGroupService;
 
     public BoardService(MonappolyDbContext context,
         UserInfo userInfo,
-        BoardSpaceService boardSpaceService)
+        BoardSpaceService boardSpaceService,
+        BuildingGroupService buildingGroupService)
     {
         _context = context;
         _userInfo = userInfo;
         _boardSpaceService = boardSpaceService;
+        _buildingGroupService = buildingGroupService;
     }
 
     public async Task<List<Board>> GetBoards() => 
@@ -101,6 +104,7 @@ public class BoardService
         spaces.AddRange(taxSpaces);
         spaces.AddRange(cardSpaces);
         spaces.AddRange(propertySpaces);
+        
         return spaces.OrderBy(s => s.BoardIndex).ToList();
     }
 
@@ -110,10 +114,14 @@ public class BoardService
         var board = await FindBoard(boardId);
         if(board == null) return null;
 
+        var buildings = await _buildingGroupService.GetBuildings(board.BuildingGroupId);
         var spaces = await GetBoardSpaces(boardId);
+        await _boardSpaceService.ValidateBoard(board, spaces);
+        
         return new BoardViewModel
         {
             Board = board,
+            Buildings = buildings,
             Spaces = spaces
         };
     }

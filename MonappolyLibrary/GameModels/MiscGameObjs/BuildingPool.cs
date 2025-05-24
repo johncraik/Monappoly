@@ -1,15 +1,13 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using MonappolyLibrary.GameModels.MiscGameObjs;
 using MonappolyLibrary.Models;
 
-namespace MonappolyLibrary.GameModels.Boards;
+namespace MonappolyLibrary.GameModels.MiscGameObjs;
 
-public class Board : DataModel
+public class BuildingPool : DataModel
 {
     public int Id { get; set; }
-    public required string Name { get; set; }
-    public string? Description { get; set; }
-    public bool IsValid { get; set; }
+    public string Name { get; set; }
+    public uint Count { get; set; }
     
     public int BuildingGroupId { get; set; }
     [ForeignKey(nameof(BuildingGroupId))]
