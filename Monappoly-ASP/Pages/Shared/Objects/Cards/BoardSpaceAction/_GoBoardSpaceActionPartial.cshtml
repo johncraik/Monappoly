@@ -1,7 +1,35 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MonappolyLibrary.Extensions
+@using MonappolyLibrary.GameModels.Enums
 @model MonappolyLibrary.GameModels.Cards.CardActions.BoardSpace.GoBoardSpaceAction
 
 <form method="post" asp-controller="CardAction" asp-action="GoBoardSpaceAction" id="form">
     <input asp-for="GroupId" id="group-id" type="hidden"/>
-    
-    
+    <div class="mb-3">
+        <label asp-for="TargetPlayer" class="form-label"></label>
+        <select asp-for="TargetPlayer" asp-items="ObjectPlayer.None.GetSelectList()" class="form-select"></select>
+        <span asp-validation-for="TargetPlayer" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.IsMultiplied)
+        {
+        <input asp-for="IsMultiplied" class="form-check-input" type="checkbox" id="is-multi" checked/>
+        }
+        else
+        {
+        <input asp-for="IsMultiplied" class="form-check-input" type="checkbox" id="is-multi"/>
+        }
+        <label asp-for="IsMultiplied" class="form-check-label" for="is-multi"></label>
+        <span asp-validation-for="IsMultiplied" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Multiplier" class="form-label"></label>
+        <select asp-for="Multiplier" asp-items="ObjectMultiplier.Fixed.GetSelectList()" class="form-select"></select>
+        <span asp-validation-for="Multiplier" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MultiplierAmount" class="form-label"></label>
+        <input asp-for="MultiplierAmount" class="form-control"/>
+        <span asp-validation-for="MultiplierAmount" class="text-danger"></span>
+    </div>
 </form>

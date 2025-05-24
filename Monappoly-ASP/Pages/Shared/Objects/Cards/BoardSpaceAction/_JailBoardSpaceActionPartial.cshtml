@@ -1,7 +1,55 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MonappolyLibrary.Extensions
+@using MonappolyLibrary.GameModels.Enums
 @model MonappolyLibrary.GameModels.Cards.CardActions.BoardSpace.JailBoardSpaceAction
 
 <form method="post" asp-controller="CardAction" asp-action="JailBoardSpaceAction" id="form">
     <input asp-for="GroupId" id="group-id" type="hidden"/>
+    <div class="mb-3">
+        <label asp-for="TargetPlayer" class="form-label"></label>
+        <select asp-for="TargetPlayer" asp-items="ObjectPlayer.None.GetSelectList()" class="form-select"></select>
+        <span asp-validation-for="TargetPlayer" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.LeaveJail)
+        {
+        <input asp-for="LeaveJail" class="form-check-input" type="checkbox" id="is-leave" checked/>
+        }
+        else
+        {
+        <input asp-for="LeaveJail" class="form-check-input" type="checkbox" id="is-leave"/>
+        }
+        <label asp-for="LeaveJail" class="form-check-label" for="is-leave"></label>
+        <span asp-validation-for="LeaveJail" class="text-danger"></span>
+    </div>
     
-    
+    <div class="mb-3 form-check form-switch">
+        @if (Model.CanReceiveRent)
+        {
+            <input asp-for="CanReceiveRent" class="form-check-input" type="checkbox" id="is-rent" checked/>
+        }
+        else
+        {
+            <input asp-for="CanReceiveRent" class="form-check-input" type="checkbox" id="is-stay"/>
+        }
+        <label asp-for="CanReceiveRent" class="form-check-label" for="is-rent"></label>
+        <span asp-validation-for="CanReceiveRent" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.MustStay)
+        {
+            <input asp-for="MustStay" class="form-check-input" type="checkbox" id="is-stay" checked/>
+        }
+        else
+        {
+            <input asp-for="MustStay" class="form-check-input" type="checkbox" id="is-stay"/>
+        }
+        <label asp-for="MustStay" class="form-check-label" for="is-stay"></label>
+        <span asp-validation-for="MustStay" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="TurnLength" class="form-label"></label>
+        <input asp-for="TurnLength" class="form-control"/>
+        <span asp-validation-for="TurnLength" class="text-danger"></span>
+    </div>
 </form>

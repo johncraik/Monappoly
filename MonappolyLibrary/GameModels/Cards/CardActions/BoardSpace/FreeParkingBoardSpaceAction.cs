@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MonappolyLibrary.Extensions;
 using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
@@ -15,24 +16,33 @@ public class FreeParkingBoardSpaceAction : ICardAction, IBoardSpaceAction
     public uint TurnLength { get; set; }
     
     //Take the money from free parking OR pay into free parking:
+    [DisplayName("Take the Money from Free Parking? (Unchecked to Pay into Free Parking)")]
     public bool IsTakeMoney { get; set; } = true;
     //Fixed amount to pay in/take out:
+    [DisplayName("Fixed Amount to Pay In/Take Out")]
     public uint PayInAmount { get; set; } = 0;
     
     //Take properties from free parking OR hand in properties:
+    [DisplayName("Take Properties from Free Parking? (Unchecked to Hand In Properties)")]
     public bool IsTakeProperty { get; set; } = true;
     //Hand in from taking properties out of free parking:
+    [DisplayName("Hand In/Take Out Properties Count")]
     public uint HandInPropertyCount { get; set; } = 0;
     //Do hand in restrictions apply?
+    [DisplayName("Hand In Restrictions Apply? (Only applies if not taking properties)")]
     public bool HandInRestrictions{ get; set; } = true;
     
     //Action types (default, OR multiple properties, OR money multiplied, OR both multiple properties and money multiplied):
+    [DisplayName("Free Parking Action Types")]
     public FreeParkingActionType[] FreeParkingTypes { get; set; } = [FreeParkingActionType.Default];
     //How many properties to hand in/take:
+    [DisplayName("Fixed Property Multiplier to Hand In/Take Out (1-28)")]
     public uint PropertyMultiplier { get; set; }
     //Amount of money taken/paid in multiplied by:
+    [DisplayName("Money Multiplier Type")]
     public ObjectMultiplier MoneyMultiplier { get; set; }
     //Money multiplier amount if custom multiplier:
+    [DisplayName("Money Multiplier Amount (if Custom Multiplier)")]
     public uint MultiplierAmount { get; set; }
     
     public void Validate(ModelStateDictionary modelState)

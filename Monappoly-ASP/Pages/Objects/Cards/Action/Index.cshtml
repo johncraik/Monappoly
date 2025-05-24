@@ -4,13 +4,17 @@
 @model Monappoly_ASP.Pages.Objects.Cards.Action.Index
 
 @{
-    ViewData["Title"] = "Card Actions";
+    ViewData["Title"] = "Card Action";
 }
 
-<h1 class="page-title">Card Actions</h1>
+<h1 class="page-title">Card Action</h1>
 
 <div class="row">
 <div class="col-sm-4">
+    <button class="btn btn-primary mb-3 mt-1 rounded-pill" style="width: 100%;" title="Go back to the card list" 
+            onclick="location.assign('/Objects/Cards/Index?currentDeckId=@(Model.Card.CardDeckId)')">
+        Go Back
+    </button>
     <div class="card">
         <div class="card-header bg-main text-white">
             <h5 class="card-title">Available Card Actions</h5>
@@ -181,18 +185,31 @@
         {
             <div class="card mb-2">
                 <div class="card-header bg-danger">
-                    <h5 class="card-title text-center text-white">Group @(gi +1)</h5>
-                </div>
-                <div class="card-body bg-light">
-                    <div class="clearfix mb-3">
-                        <button class="float-end btn btn-success" title="Add keep condition to group @(gi + 1)"
+                    <div>
+                        <h5 class="card-title text-center text-white">Group @(gi + 1)</h5>
+                        <button class="btn btn-sm btn-dark-highlight" style="position: absolute; top: 8px; right: 8px;" 
+                                title="Add keep condition to group @(gi + 1)"
                                 onclick="location.assign('/Objects/Cards/Action/KeepCondition/@(Model.Card.Id)/@(cas.Group.Id)/0')">
                             <span class="fa-solid fa-plus text-highlight-light"></span> Create Keep Condition
                         </button>
+                    </div>
+                </div>
+                <div class="card-body bg-light">
+                    <div class="mb-3">
                         @foreach (var condition in cas.Group.KeepActionConditions)
                         {
                             <div class="border-bottom border-3 mb-2">
-                                <h6 class="page-title"><b>Keep Condition</b></h6>
+                                <div class="clearfix">
+                                    <h6 class="page-title float-start mt-1"><b>Keep Condition</b></h6>
+                                    <button class="btn btn-sm btn-link float-start ml-2" title="Edit keep condition"
+                                            onclick="location.assign('/Objects/Cards/Action/KeepCondition/@(Model.Card.Id)/@(cas.Group.Id)/@(condition.Id)')">
+                                        <span class="fa-solid fa-pencil text-highlight"></span>
+                                    </button>
+                                    <button class="btn btn-sm btn-link float-start" title="Delete keep condition"
+                                            onclick="">
+                                        <span class="fa-solid fa-trash-can text-danger"></span>
+                                    </button>
+                                </div>
                                 @if (condition.GroupLengthType == ActionGroupLengthType.None)
                                 {
                                     <div class="mb-1">
@@ -212,7 +229,7 @@
                                     </div>
                                     <div class="mb-1">
                                         <label class="mr">In-play Length Value:</label>
-                                        <label>@(condition.LengthValue == null ? "First Occurrence" : condition.LengthValue) Turns/Occurrences</label>
+                                        <label>@(condition.LengthValue == null ? "First Occurrence" : $"{condition.LengthValue} Turns/Occurrences")</label>
                                     </div>
                                 }
                                 <div class="mb-1">

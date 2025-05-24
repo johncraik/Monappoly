@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MonappolyLibrary.Extensions;
 using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
@@ -12,10 +13,14 @@ public class JailBoardSpaceAction : ICardAction, IBoardSpaceAction
     
     public int Id { get; set; }
     public int GroupId { get; set; }
+    [DisplayName("Number of Turns to Stay in Jail")]
     public uint TurnLength { get; set; }
     
+    [DisplayName("Can Receive Rent?")]
     public bool CanReceiveRent { get; set; } = true;
+    [DisplayName("Must Stay in Jail?")]
     public bool MustStay { get; set; } 
+    [DisplayName("Get out of Jail?")]
     public bool LeaveJail { get; set; } 
     
     public ObjectPlayer TargetPlayer { get; set; }

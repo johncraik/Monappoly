@@ -9,7 +9,7 @@ using MonappolyLibrary.GameModels.Cards.CardActions;
 using MonappolyLibrary.GameModels.Enums;
 using MonappolyLibrary.GameServices.Cards;
 
-namespace Monappoly_ASP.Pages.Objects.Cards;
+namespace Monappoly_ASP.Pages.Objects.Cards.Action;
 
 public class KeepCondition : PageModel
 {

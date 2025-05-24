@@ -1,7 +1,42 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MonappolyLibrary.Extensions
+@using MonappolyLibrary.GameModels.Enums
 @model MonappolyLibrary.GameModels.Cards.CardActions.BoardSpace.CardBoardSpaceAction
 
 <form method="post" asp-controller="CardAction" asp-action="CardBoardSpaceAction" id="form">
     <input asp-for="GroupId" id="group-id" type="hidden"/>
-    
-    
+    <div class="mb-3">
+        <label asp-for="CardCount" class="form-label"></label>
+        <input asp-for="CardCount" class="form-control"/>
+        <span asp-validation-for="CardCount" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Player" class="form-label"></label>
+        <select asp-for="Player" asp-items="ObjectPlayer.CurrentPlayer.GetSelectList()" class="form-select"></select>
+        <span asp-validation-for="Player" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.IsDoubled)
+        {
+            <input asp-for="IsDoubled" class="form-check-input" type="checkbox" id="is-double" checked/>
+        }
+        else
+        {
+            <input asp-for="IsDoubled" class="form-check-input" type="checkbox" id="is-double"/>
+        }
+        <label asp-for="IsDoubled" class="form-check-label" for="is-double"></label>
+        <span asp-validation-for="IsDoubled" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.IsTripled)
+        {
+            <input asp-for="IsTripled" class="form-check-input" type="checkbox" id="is-triple" checked/>
+        }
+        else
+        {
+            <input asp-for="IsTripled" class="form-check-input" type="checkbox" id="is-triple"/>
+        }
+        <label asp-for="IsTripled" class="form-check-label" for="is-triple"></label>
+        <span asp-validation-for="IsTripled" class="text-danger"></span>
+    </div>
 </form>

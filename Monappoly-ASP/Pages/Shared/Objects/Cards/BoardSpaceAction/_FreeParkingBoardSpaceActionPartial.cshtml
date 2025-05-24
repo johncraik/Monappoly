@@ -1,7 +1,79 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MonappolyLibrary.Extensions
+@using MonappolyLibrary.GameModels.Cards.CardActions.BoardSpace
+@using MonappolyLibrary.GameModels.Enums
 @model MonappolyLibrary.GameModels.Cards.CardActions.BoardSpace.FreeParkingBoardSpaceAction
 
 <form method="post" asp-controller="CardAction" asp-action="FreeParkingBoardSpaceAction" id="form">
     <input asp-for="GroupId" id="group-id" type="hidden"/>
-    
-    
+    <div class="mb-3 form-check form-switch">
+        @if (Model.IsTakeMoney)
+        {
+            <input asp-for="IsTakeMoney" class="form-check-input" type="checkbox" id="is-take-money" checked/>
+        }
+        else
+        {
+            <input asp-for="IsTakeMoney" class="form-check-input" type="checkbox" id="is-take-money"/>
+        }
+        <label asp-for="IsTakeMoney" class="form-check-label" for="is-take-money"></label>
+        <span asp-validation-for="IsTakeMoney" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="PayInAmount" class="form-label"></label>
+        <input asp-for="PayInAmount" class="form-control"/>
+        <span asp-validation-for="PayInAmount" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.IsTakeProperty)
+        {
+            <input asp-for="IsTakeProperty" class="form-check-input" type="checkbox" id="is-take-money" checked/>
+        }
+        else
+        {
+            <input asp-for="IsTakeProperty" class="form-check-input" type="checkbox" id="is-take-money"/>
+        }
+        <label asp-for="IsTakeProperty" class="form-check-label" for="is-take-money"></label>
+        <span asp-validation-for="IsTakeProperty" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="HandInPropertyCount" class="form-label"></label>
+        <input asp-for="HandInPropertyCount" class="form-control"/>
+        <span asp-validation-for="HandInPropertyCount" class="text-danger"></span>
+    </div>
+    <div class="mb-3 form-check form-switch">
+        @if (Model.HandInRestrictions)
+        {
+            <input asp-for="HandInRestrictions" class="form-check-input" type="checkbox" id="is-hand-in-restrictions" checked/>
+        }
+        else
+        {
+            <input asp-for="HandInRestrictions" class="form-check-input" type="checkbox" id="is-hand-in-restrictions"/>
+        }
+        <label asp-for="HandInRestrictions" class="form-check-label" for="is-hand-in-restrictions"></label>
+        <span asp-validation-for="HandInRestrictions" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="FreeParkingTypes" class="form-label"></label>
+        <select asp-for="FreeParkingTypes" asp-items="FreeParkingActionType.Default.GetSelectList()" class="chosen-select form-select mt-1 mb-1"></select>
+        <span asp-validation-for="FreeParkingTypes" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MoneyMultiplier" class="form-label"></label>
+        <select asp-for="MoneyMultiplier" asp-items="ObjectMultiplier.Fixed.GetSelectList()" class="form-select"></select>
+        <span asp-validation-for="MoneyMultiplier" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MultiplierAmount" class="form-label"></label>
+        <input asp-for="MultiplierAmount" class="form-control"/>
+        <span asp-validation-for="MultiplierAmount" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="PropertyMultiplier" class="form-label"></label>
+        <input asp-for="PropertyMultiplier" class="form-control"/>
+        <span asp-validation-for="PropertyMultiplier" class="text-danger"></span>
+    </div>
 </form>
+
+<script>
+    $('.chosen-select').chosen();
+</script>

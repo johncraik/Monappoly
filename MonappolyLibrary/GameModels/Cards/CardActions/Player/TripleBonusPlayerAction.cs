@@ -43,14 +43,9 @@ public class TripleBonusPlayerAction : ICardAction, IPlayerAction
             IsIncreased = false;
         }
 
-        switch (CostMultiplier)
+        if (CostMultiplier == ObjectMultiplier.Custom && CustomMultiplier == 0)
         {
-            case ObjectMultiplier.Fixed when FixedCost == 0:
-                modelState.AddModelError(nameof(FixedCost), "Fixed cost must be greater than 0.");
-                break;
-            case ObjectMultiplier.Custom when CustomMultiplier == 0:
-                modelState.AddModelError(nameof(CustomMultiplier), "Custom multiplier must be greater than 0.");
-                break;
+            modelState.AddModelError(nameof(CustomMultiplier), "Custom multiplier must be greater than 0.");
         }
 
         TurnLength = 0;

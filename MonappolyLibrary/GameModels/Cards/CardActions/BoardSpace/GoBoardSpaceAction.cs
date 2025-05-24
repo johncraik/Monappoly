@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MonappolyLibrary.Extensions;
 using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
@@ -15,9 +16,13 @@ public class GoBoardSpaceAction : ICardAction, IBoardSpaceAction
     public int GroupId { get; set; }
     public uint TurnLength { get; set; }
 
+    [DisplayName("GO Money Multiplied?")]
     public bool IsMultiplied { get; set; } = true;
+    [DisplayName("GO Money Multiplier")]
     public ObjectMultiplier? Multiplier { get; set; }
+    [DisplayName("Custom Multiplier Amount")]
     public uint MultiplierAmount { get; set; }
+    [DisplayName("Target Player for GO Money")]
     public ObjectPlayer? TargetPlayer { get; set; }
     
     public void Validate(ModelStateDictionary modelState)

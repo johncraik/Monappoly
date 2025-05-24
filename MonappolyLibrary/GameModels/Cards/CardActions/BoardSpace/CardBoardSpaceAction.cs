@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MonappolyLibrary.Extensions;
 using MonappolyLibrary.GameModels.Cards.ViewModels.CardActions;
@@ -14,9 +15,12 @@ public class CardBoardSpaceAction : ICardAction, IBoardSpaceAction
     public int GroupId { get; set; }
     public uint TurnLength { get; set; }
 
+    [DisplayName("Number of Cards")]
     public uint CardCount { get; set; } = 1;
     public ObjectPlayer Player { get; set; }
+    [DisplayName("Payments/Money Doubled?")]
     public bool IsDoubled {get; set;}
+    [DisplayName("Payments/Money Tripled?")]
     public bool IsTripled {get; set;}
     
     
